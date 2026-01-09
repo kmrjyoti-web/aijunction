@@ -19,7 +19,7 @@
     "baseUrl": ".",
     "paths": {
       "@ai-junction/platform/*": [
-        "packages/platform/angular/src/*"
+        "packages/platform-angular/src/*"
       ],
       "@ai-junction/ui-kit/*": [
         "packages/ui-kit/angular/src/*"
