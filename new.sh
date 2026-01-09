@@ -1,0 +1,1 @@
+git commit -m "feat: restructure project, add crm and invoicing apps, rename shell-admin to shell"
