@@ -1,0 +1,128 @@
+.marg-layout-wrapper {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: transparent;
+
+    // Grid Definition
+    grid-template-columns: max-content 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas:
+        "sidebar main"
+        "footer footer"; // Footer spans full width at bottom
+
+    &.horizontal-layout {
+        display: flex;
+        flex-direction: column;
+
+        // Reset grid props for flex fallback or just basic column flex
+        // But since we are using grid for main, let's switch entirely?
+        // Actually, Horizontal layout implies NO sidebar usually.
+        // So simple Flex column is easier.
+        .sidebar-area {
+            display: none; // Or handle visibility via service
+        }
+
+        .main-content-wrapper {
+            width: 100%;
+        }
+    }
+}
+
+.sidebar-area {
+    grid-area: sidebar;
+    // width is controlled by the component :host styles (collapsed/expanded)
+    z-index: 100;
+    transition: width 0.3s ease;
+    height: 100%; // Fill the sidebar grid area
+    overflow: visible; // Allow popup to show outside
+
+    // Ensure display block
+    display: block;
+
+    // Hide scrollbar
+    scrollbar-width: none; // Firefox
+
+    &::-webkit-scrollbar {
+        display: none; // Chrome, Safari, Opera
+    }
+}
+
+.main-content-wrapper {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    position: relative;
+    height: 100%;
+    overflow: hidden; // Content area handles scroll
+}
+
+.header-area {
+    flex-shrink: 0;
+    z-index: 90;
+}
+
+.horizontal-menu-area {
+    flex-shrink: 0;
+    z-index: 89;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 15px;
+    position: relative;
+    background-color: transparent;
+
+    // Hide scrollbar
+    scrollbar-width: none; // Firefox
+
+    &::-webkit-scrollbar {
+        display: none; // Chrome, Safari, Opera
+    }
+}
+
+.footer-area {
+    grid-area: footer;
+    z-index: 90;
+    width: 100%;
+}
+
+// Mobile specific styles
+@media (max-width: 768px) {
+    .marg-layout-wrapper {
+        display: flex; // Switch back to flex for mobile simplicity (overlay sidebar)
+        flex-direction: column;
+    }
+
+    .main-content-wrapper {
+        flex: 1;
+    }
+
+    .sidebar-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 200; // Above everything on mobile via overlay
+
+        &.open {
+            transform: translateX(0);
+        }
+    }
+
+    .mobile-sidebar-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 150;
+    }
+}

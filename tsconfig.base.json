@@ -4,7 +4,7 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
@@ -21,14 +21,14 @@
       "@ai-junction/platform/*": [
         "packages/platform-angular/src/*"
       ],
-      "@ai-junction/ui-kit/*": [
-        "packages/ui-kit/angular/src/*"
-      ],
       "@ai-junction/contracts/*": [
         "packages/contracts/src/*"
       ],
       "contracts": [
         "packages/contracts/src/index.ts"
+      ],
+      "custom-layouts": [
+        "packages/custom-layouts/src/index.ts"
       ]
     }
   },
