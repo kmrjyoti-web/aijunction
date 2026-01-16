@@ -1,0 +1,24 @@
+<div
+  class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-20">
+  @for (group of menuConfig(); track group.label) {
+  <div class="py-1" role="menu" aria-orientation="vertical" [attr.aria-labelledby]="group.label">
+    @if (menuConfig().length > 1) {
+    <div class="px-4 py-2">
+      <p class="text-xs text-gray-400 uppercase tracking-wider">{{ group.label }}</p>
+    </div>
+    }
+    @for (item of group.items; track item.label) {
+
+    <a href="javascript:void(0)" (click)="onActionClick(item.action)"
+      class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
+      role="menuitem">
+      <i [class]="item.icon"></i>
+      <span>{{ item.label }}</span>
+    </a>
+    }
+  </div>
+  @if (!$last) {
+  <hr class="border-gray-200">
+  }
+  }
+</div>

@@ -1,0 +1,93 @@
+<div class="bg-white rounded-lg shadow-md border border-gray-200 h-full flex flex-col">
+  <!-- Calendar Header -->
+  <header class="flex items-center justify-between p-4 border-b border-gray-200">
+    <div class="flex items-center gap-4">
+      <button (click)="goToToday()"
+        class="px-4 py-2 text-sm font-medium border rounded-md hover:bg-gray-100">Today</button>
+      <div class="flex items-center gap-2">
+        <button (click)="changeMonth(-1)" title="Previous month" class="p-2 rounded-full hover:bg-gray-100"><i
+            class="pi pi-chevron-left"></i></button>
+        <button (click)="changeMonth(1)" title="Next month" class="p-2 rounded-full hover:bg-gray-100"><i
+            class="pi pi-chevron-right"></i></button>
+      </div>
+    </div>
+    <h2 class="text-lg font-semibold text-center">{{ currentDate() | date:'LLLL yyyy' }}</h2>
+    <div class="w-48 text-right">
+      <p class="text-sm font-medium text-gray-700">
+        Field:
+        <span class="font-semibold text-indigo-600">
+          {{ dateFieldName() }}
+        </span>
+      </p>
+    </div>
+  </header>
+
+  <!-- Calendar Grid -->
+  <div class="grid grid-cols-7 flex-grow">
+    <!-- Day Headers -->
+    @for (day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; track day) {
+    <div class="text-center font-medium text-xs text-gray-500 py-2 border-b border-r border-gray-200">{{ day }}</div>
+    }
+
+    <!-- Day Cells -->
+    @for(day of calendarGrid(); track day.date) {
+    <div class="border-b border-r border-gray-200 p-2 flex flex-col transition-colors"
+      [class.cursor-pointer]="day.contacts.length > 0" [class.hover:bg-slate-50]="day.contacts.length > 0"
+      [class.bg-gray-50]="!day.isCurrentMonth" (click)="selectDay(day)">
+      <time [dateTime]="day.date | date:'yyyy-MM-dd'"
+        class="h-6 w-6 flex items-center justify-center rounded-full text-sm"
+        [class.text-gray-400]="!day.isCurrentMonth" [class.text-white]="isToday(day.date)"
+        [class.bg-slate-900]="isToday(day.date)" [class.font-semibold]="isToday(day.date)">
+        {{ day.date | date:'d' }}
+      </time>
+      @if (day.contacts.length > 0) {
+      <div class="mt-2 text-center">
+        <span
+          class="inline-flex items-center justify-center h-6 w-6 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
+          {{ day.contacts.length }}
+        </span>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>
+
+<!-- AI Summary Modal -->
+@if (selectedDay(); as day) {
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50" (click)="selectedDay.set(null)">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-lg m-4" (click)="$event.stopPropagation()">
+    <header class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold">Activity for {{ day.date | date:'longDate' }}</h3>
+      <button (click)="selectedDay.set(null)" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+    <div class="p-6">
+      <!-- AI Summary -->
+      <div class="bg-gray-50 p-4 rounded-lg mb-4">
+        <h4 class="font-semibold text-sm mb-2 flex items-center"><i class="pi pi-sparkles text-indigo-500 mr-2"></i>AI
+          Summary</h4>
+        @if(isSummaryLoading()) {
+        <div class="h-4 bg-gray-300 rounded w-full animate-pulse"></div>
+        } @else {
+        <p class="text-sm text-gray-700">{{ aiSummary() }}</p>
+        }
+      </div>
+      <!-- Contact List -->
+      <h4 class="font-semibold text-sm mb-2">New Contacts ({{day.contacts.length}})</h4>
+      <ul class="divide-y divide-gray-200 max-h-60 overflow-y-auto">
+        @for(contact of day.contacts; track contact.organization_id) {
+        <li class="py-2 flex items-center gap-3">
+          <img [src]="contact.avatar_url" class="h-8 w-8 rounded-full object-cover" alt="Avatar" />
+          <div>
+            <p class="text-sm font-medium text-gray-900">{{ contact.contact_person }}</p>
+            <p class="text-xs text-gray-500">{{ contact.organization_name }}</p>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+}

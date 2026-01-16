@@ -1,0 +1,23 @@
+/* Global Theme Import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden !important; // Prevent scroll on body, we handle scroll in layout
+}

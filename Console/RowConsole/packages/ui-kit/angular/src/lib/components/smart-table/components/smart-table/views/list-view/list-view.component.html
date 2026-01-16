@@ -1,0 +1,78 @@
+<div class="border border-gray-200 rounded-lg">
+  <ul class="divide-y divide-gray-200">
+    @for(item of data(); track item.organization_id; let i = $index) {
+    <li [id]="'list-item-' + item.organization_id" class="transition-colors duration-150 relative"
+      [class.cursor-pointer]="true" [class.hover:bg-gray-200/50]="!selectedIds().has(item.organization_id)"
+      [class.bg-slate-50]="selectedIds().has(item.organization_id)" [class.ring-2]="keyboardActiveRowIndex() === i"
+      [class.ring-offset-2]="keyboardActiveRowIndex() === i" [class.ring-slate-500]="keyboardActiveRowIndex() === i"
+      (click)="onItemClick(item)">
+      @if(customTemplate(); as template) {
+      <div class="border-2 rounded-lg" [class.border-transparent]="!selectedIds().has(item.organization_id)"
+        [class.border-indigo-500]="selectedIds().has(item.organization_id)">
+        <app-dynamic-item [template]="template" [data]="item" />
+      </div>
+      } @else {
+      <div class="flex items-center justify-between" [class.p-4]="density() === 'comfortable'"
+        [class.p-3]="density() === 'cozy'" [class.p-2]="density() === 'compact'"
+        [class.p-1.5]="density() === 'ultra-compact'">
+        @if(density() !== 'ultra-compact' && imageColumn(); as imgCol) {
+        @if(item[imgCol.code]) {
+        <img [src]="item[imgCol.code]" alt="Avatar" class="rounded-full object-cover flex-shrink-0"
+          [class.h-10]="density() !== 'compact'" [class.w-10]="density() !== 'compact'"
+          [class.mr-4]="density() !== 'compact'" [class.h-8]="density() === 'compact'"
+          [class.w-8]="density() === 'compact'" [class.mr-3]="density() === 'compact'">
+        } @else {
+        <div class="bg-gray-200 flex items-center justify-center rounded-full object-cover flex-shrink-0"
+          [class.h-10]="density() !== 'compact'" [class.w-10]="density() !== 'compact'"
+          [class.mr-4]="density() !== 'compact'" [class.h-8]="density() === 'compact'"
+          [class.w-8]="density() === 'compact'" [class.mr-3]="density() === 'compact'">
+          <span class="font-semibold text-gray-500" [class.text-sm]="density() !== 'compact'"
+            [class.text-xs]="density() === 'compact'">{{ (item['contact_person']?.[0] || 'A') }}</span>
+        </div>
+        }
+        }
+        <div class="flex-1 min-w-0" [class]="densityClass()">
+          @if(headerColumn(); as headerCol) {
+          <p class="font-semibold text-indigo-600 truncate" [class.text-md]="density() === 'comfortable'"
+            [class.text-sm]="density() === 'cozy'"
+            [class.text-xs]="density() === 'compact' || density() === 'ultra-compact'">{{ item[headerCol.code] }}</p>
+          }
+          @if(rowColumns().length > 0) {
+          @let rowCol = rowColumns()[0];
+          @let validationState = getFieldValidationState(item, rowCol);
+          <p class="text-gray-500 truncate p-1 -ml-1 rounded-md"
+            [style.background-color]="!validationState.isValid ? validationState.style?.bgcolor : null"
+            [title]="!validationState.isValid ? validationState.style?.tooltip : ''">
+            @if (rowCol.mask?.enabled) {
+            {{ maskString(item[rowCol.code], rowCol.mask) }}
+            } @else {
+            {{ item[rowCol.code] || 'N/A' }}
+            }
+          </p>
+          }
+        </div>
+        <div class="inline-flex items-center text-base font-semibold text-gray-900"
+          [class.ml-4]="density() !== 'compact'" [class.ml-2]="density() === 'compact'">
+          @if(rowColumns().length > 1) {
+          @let rowCol = rowColumns()[1];
+          @let validationState = getFieldValidationState(item, rowCol);
+          <span class="text-gray-600 p-1 rounded-md" [class]="densityClass()"
+            [style.background-color]="!validationState.isValid ? validationState.style?.bgcolor : null"
+            [title]="!validationState.isValid ? validationState.style?.tooltip : ''">
+            @if (rowCol.mask?.enabled) {
+            {{ maskString(item[rowCol.code], rowCol.mask) }}
+            } @else {
+            {{ item[rowCol.code] || 'N/A' }}
+            }
+          </span>
+          }
+        </div>
+        <button title="View Details" class="text-gray-500 hover:text-gray-700" [class.ml-4]="density() !== 'compact'"
+          [class.ml-2]="density() === 'compact'" (click)="$event.stopPropagation()"><i
+            class="pi pi-chevron-right"></i></button>
+      </div>
+      }
+    </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,10 @@
+<div class="flex items-center gap-1">
+  @for(density of densities; track density.name) {
+  <button (click)="setDensity(density.name)" class="px-4 py-2 rounded-md border text-sm transition-colors duration-200"
+    [class.bg-slate-900]="currentDensity() === density.name" [class.text-white]="currentDensity() === density.name"
+    [class.bg-white]="currentDensity() !== density.name" [class.text-gray-700]="currentDensity() !== density.name"
+    [class.hover:bg-gray-100]="currentDensity() !== density.name" [title]="'Set density to ' + density.name">
+    <i class="pi" [class]="getIconForDensity(density.name)"></i>
+  </button>
+  }
+</div>

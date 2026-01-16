@@ -1,0 +1,79 @@
+<aside
+  class="fixed top-0 right-0 h-full w-[50vw] bg-white shadow-2xl z-40 transform transition-transform duration-300 ease-in-out flex flex-col"
+  [class.translate-x-0]="isOpen()" [class.translate-x-full]="!isOpen()">
+  <!-- Header -->
+  <header class="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0">
+    <h2 class="text-lg font-semibold text-gray-800">Table Configuration</h2>
+    <div class="flex items-center gap-2">
+      <button (click)="handleRestoreDefaults()" class="text-xs text-red-600 hover:text-red-800 underline mr-2">
+        Restore Factory Defaults
+      </button>
+      <button (click)="close.emit()" title="Close Configuration" class="text-gray-500 hover:text-gray-700">
+        <i class="pi pi-times text-xl"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Tab Navigation -->
+  <div class="px-4 border-b border-gray-200 flex-shrink-0 flex justify-between items-center">
+    <nav class="-mb-px flex space-x-6">
+      <button (click)="viewMode.set('ui')"
+        class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm transition-colors"
+        [class.border-indigo-500]="viewMode() === 'ui'" [class.text-indigo-600]="viewMode() === 'ui'"
+        [class.border-transparent]="viewMode() !== 'ui'" [class.text-gray-500]="viewMode() !== 'ui'"
+        [class.hover:text-gray-700]="viewMode() !== 'ui'" [class.hover:border-gray-300]="viewMode() !== 'ui'">
+        UI Editor
+      </button>
+      <button (click)="viewMode.set('json')"
+        class="whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm transition-colors"
+        [class.border-indigo-500]="viewMode() === 'json'" [class.text-indigo-600]="viewMode() === 'json'"
+        [class.border-transparent]="viewMode() !== 'json'" [class.text-gray-500]="viewMode() !== 'json'"
+        [class.hover:text-gray-700]="viewMode() !== 'json'" [class.hover:border-gray-300]="viewMode() !== 'json'">
+        JSON Editor
+      </button>
+    </nav>
+    @if(viewMode() === 'json') {
+    <button (click)="copyToClipboard()"
+      class="text-xs flex items-center gap-1 text-indigo-600 hover:text-indigo-800 transition-colors">
+      <i class="pi" [class.pi-copy]="!copySuccess()" [class.pi-check]="copySuccess()"></i>
+      {{ copySuccess() ? 'Copied!' : 'Copy JSON' }}
+    </button>
+    }
+  </div>
+
+  <!-- Content -->
+  @if(viewMode() === 'json') {
+  <div class="flex-grow p-4 flex flex-col min-h-0 h-full">
+    <div appJsonEditor [value]="configString()" (valueChange)="onJsonConfigChange($event)"
+      class="w-full flex-grow h-full font-mono text-sm border border-indigo-100 rounded-md overflow-hidden config-editor-wrapper flex flex-col shadow-inner bg-slate-50 relative">
+    </div>
+
+    @if (parseError()) {
+    <div class="mt-2 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md text-sm flex-shrink-0">
+      <p class="font-bold">Error parsing JSON</p>
+      <pre class="whitespace-pre-wrap mt-1">{{ parseError() }}</pre>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="flex-grow p-4 overflow-y-auto custom-scrollbar min-h-0">
+    <app-config-form [config]="currentConfig()" (configChange)="onFormConfigChange($event)" />
+  </div>
+  }
+
+  <!-- Footer -->
+  <footer class="flex items-center justify-end p-4 border-t border-gray-200 flex-shrink-0 space-x-3">
+    <button (click)="handleRevertChanges()"
+      class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+      Reset Changes
+    </button>
+    <button (click)="close.emit()"
+      class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+      Cancel
+    </button>
+    <button (click)="handleSave()" [disabled]="!!parseError()"
+      class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 disabled:opacity-50 disabled:cursor-not-allowed">
+      Save and Apply
+    </button>
+  </footer>
+</aside>

@@ -1,0 +1,76 @@
+<div class="space-y-8 font-sans">
+
+  <div class="flex flex-wrap gap-2 justify-center mb-6">
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'invoice'"
+            [class.text-white]="currentMode() === 'invoice'"
+            (click)="switchMode('invoice')">Invoice</button>
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'builder'"
+            [class.text-white]="currentMode() === 'builder'"
+            (click)="switchMode('builder')">AI Builder</button>
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'showcase'"
+            [class.text-white]="currentMode() === 'showcase'"
+            (click)="switchMode('showcase')">Gallery & AI</button>
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'product'"
+            [class.text-white]="currentMode() === 'product'"
+            (click)="switchMode('product')">Product</button>
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'docs'"
+            [class.text-white]="currentMode() === 'docs'"
+            (click)="switchMode('docs')">Docs</button>
+    <button class="px-4 py-2 rounded-md border text-sm"
+            [class.bg-slate-900]="currentMode() === 'avinya'"
+            [class.text-white]="currentMode() === 'avinya'"
+            (click)="switchMode('avinya')">Smart Table</button>
+  </div>
+
+  @switch (currentMode()) {
+    @case ('invoice') {
+      <!-- The Dynamic Form -->
+      <app-dynamic-form [config]="userRegistrationSchema" (formSubmit)="handleFormSubmit($event)">
+      </app-dynamic-form>
+
+      <!-- Results Visualization -->
+      @if (showResult) {
+        <div class="bg-slate-900 rounded-2xl shadow-xl p-8 text-slate-100 overflow-hidden relative">
+          <div class="absolute top-0 right-0 p-4 opacity-20 text-6xl font-bold">JSON</div>
+          <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Form Data Submitted Successfully
+          </h3>
+          <div class="bg-slate-800 rounded-lg p-4 overflow-x-auto">
+            <pre class="font-mono text-sm text-blue-300">{{ submittedData | json }}</pre>
+          </div>
+          <button (click)="showResult = false" class="mt-6 text-sm text-slate-400 hover:text-white underline">
+            Close result
+          </button>
+        </div>
+      }
+    }
+
+    @case ('avinya') {
+      <div class="bg-white rounded-xl shadow p-4">
+        <h2 class="text-lg font-semibold mb-2">Smart Table</h2>
+        <p class="text-sm text-slate-500 mb-4">Server-side smart table demo</p>
+        <app-erp-table
+          class="block"
+          [tableId]="testTableSource.key"
+          [source]="testTableSource"
+          style="min-height: 480px">
+        </app-erp-table>
+      </div>
+    }
+
+    @default {
+      <!-- Keep existing cases for builder/showcase/product/docs as needed -->
+      <p class="text-sm text-slate-500 text-center">Select a mode above.</p>
+    }
+  }
+
+</div>

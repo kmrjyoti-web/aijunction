@@ -1,0 +1,106 @@
+{
+  "name": "shell",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/shell/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/shell",
+        "index": "apps/shell/src/index.html",
+        "main": "apps/shell/src/main.ts",
+        "polyfills": [
+          "zone.js"
+        ],
+        "tsConfig": "apps/shell/tsconfig.app.json",
+        "assets": [
+          "apps/shell/src/favicon.ico",
+          "apps/shell/src/assets",
+          {
+            "input": "packages/ui-kit/assets",
+            "glob": "**/*",
+            "output": "assets/app-master-data"
+          }
+        ],
+        "styles": [
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+          "node_modules/material-icons/iconfont/material-icons.css",
+          "node_modules/codemirror/lib/codemirror.css",
+          "node_modules/codemirror/theme/neo.css",
+          "apps/shell/src/styles.scss"
+        ],
+        "scripts": [],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "node_modules",
+            "apps/shell/src/styles.scss"
+          ]
+        },
+        "allowedCommonJsDependencies": [
+          "feather-icons",
+          "sweetalert2"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "4mb",
+              "maximumError": "6mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "10kb",
+              "maximumError": "20kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "shell:build:production"
+        },
+        "development": {
+          "buildTarget": "shell:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "shell:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "polyfills": [
+          "zone.js",
+          "zone.js/testing"
+        ],
+        "tsConfig": "apps/shell/tsconfig.spec.json",
+        "assets": [],
+        "styles": [
+          "apps/shell/src/styles.scss"
+        ],
+        "scripts": []
+      }
+    }
+  }
+}

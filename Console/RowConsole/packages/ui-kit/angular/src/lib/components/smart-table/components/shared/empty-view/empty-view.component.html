@@ -1,0 +1,57 @@
+@if (config(); as cfg) {
+<div class="flex flex-col items-center justify-center h-full text-center p-8">
+  <!-- Optional Image/Icon -->
+  @if (cfg.imageUrl) {
+  <img [src]="cfg.imageUrl" alt="" class="h-40 w-40 mb-6 text-gray-400">
+  } @else {
+  <!-- Default Icon if no image provided -->
+  <i class="pi pi-inbox text-6xl text-gray-400 mb-6"></i>
+  }
+
+  <!-- Title and Subtitle -->
+  <h2 class="text-2xl font-semibold text-gray-800">{{ cfg.title }}</h2>
+  <p class="mt-2 max-w-lg text-gray-600">{{ cfg.subtitle }}</p>
+
+  <!-- Main Action Buttons -->
+  @if (cfg.actions && cfg.actions.length > 0) {
+  <div class="mt-8 flex items-center justify-center gap-4">
+    @for (act of cfg.actions; track act.key) {
+    <button (click)="action.emit(act.key)" [class]="act.class || 'bg-indigo-600 hover:bg-indigo-700 text-white'"
+      class="px-5 py-2.5 text-sm font-semibold rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex items-center">
+      @if (act.icon) {
+      <i [class]="act.icon + ' mr-2'"></i>
+      }
+      <span>{{ act.label }}</span>
+    </button>
+    }
+  </div>
+  }
+
+  <!-- Migration Block -->
+  @if (cfg.migration?.enabled) {
+  <div class="mt-12 p-8 rounded-lg bg-cyan-50 w-full max-w-2xl border border-cyan-200">
+    <p class="font-medium text-gray-700">{{ cfg.migration.title }}</p>
+    <div class="mt-4 flex justify-center items-center gap-6 flex-wrap">
+      @for (logo of cfg.migration.logos; track logo.src) {
+      <img [src]="logo.src" [alt]="logo.alt" class="h-8 object-contain">
+      }
+      @if (cfg.migration.moreText) {
+      <span class="text-sm text-gray-600">{{ cfg.migration.moreText }}</span>
+      }
+    </div>
+    @if (cfg.migration.action) {
+    <div class="mt-8">
+      <button (click)="action.emit(cfg.migration.action.key)"
+        [class]="cfg.migration.action.class || 'bg-cyan-500 hover:bg-cyan-600 text-white'"
+        class="px-8 py-2.5 text-sm font-semibold rounded-md shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 flex items-center mx-auto">
+        @if (cfg.migration.action.icon) {
+        <i [class]="cfg.migration.action.icon + ' mr-2'"></i>
+        }
+        <span>{{ cfg.migration.action.label }}</span>
+      </button>
+    </div>
+    }
+  </div>
+  }
+</div>
+}

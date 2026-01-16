@@ -1,0 +1,45 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2022",
+    "module": "es2022",
+    "lib": [
+      "es2022",
+      "dom"
+    ],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ai-junction/platform/*": [
+        "packages/platform-angular/src/*"
+      ],
+      "@ai-junction/contracts/*": [
+        "packages/contracts/src/*"
+      ],
+      "contracts": [
+        "packages/contracts/src/index.ts"
+      ],
+      "custom-layouts": [
+        "packages/custom-layouts/src/index.ts"
+      ],
+      "@ai-junction/ui-kit": [
+        "packages/ui-kit/angular/src/index.ts"
+      ],
+      "@ai-junction/core": [
+        "packages/core/src/index.ts"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
+}

@@ -1,0 +1,267 @@
+<div class="p-4 sm:p-6 lg:p-8">
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-[var(--text-primary)]">UI Configuration</h1>
+        <p class="mt-2 text-sm text-[var(--text-secondary)]">Customize the look and feel of your application.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 lg:gap-8">
+
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Color Scheme -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Color Scheme</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <button (click)="layoutService.isDarkMode.set(false)"
+                        class="flex items-center justify-center rounded-md border py-3 text-sm"
+                        [style.borderColor]="!layoutService.isDarkMode() ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="!layoutService.isDarkMode() ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="!layoutService.isDarkMode()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 14.464A1 1 0 106.465 13.05l-.707-.707a1 1 0 00-1.414 1.414l.707.707zm-1.414-2.12a1 1 0 010-1.414l.707-.707a1 1 0 111.414 1.414l-.707.707a1 1 0 01-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1z" />
+                        </svg>
+                        Light
+                    </button>
+                    <button (click)="layoutService.isDarkMode.set(true)"
+                        class="flex items-center justify-center rounded-md border py-3 text-sm"
+                        [style.borderColor]="layoutService.isDarkMode() ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="layoutService.isDarkMode() ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="layoutService.isDarkMode()">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                        </svg>
+                        Dark
+                    </button>
+                </div>
+            </div>
+
+            <!-- Custom Colors -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Custom Colors</h4>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div>
+                        <label for="primaryColor"
+                            class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Primary Color</label>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative h-8 w-8 rounded-md cursor-pointer border border-[var(--border-color)]"
+                                [style.backgroundColor]="layoutService.primaryColor()">
+                                <input type="color" id="primaryColor" [value]="layoutService.primaryColor()"
+                                    (input)="layoutService.setPrimaryColor($any($event.target).value)"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            </div>
+                            <span class="font-mono text-sm">{{ layoutService.primaryColor() }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="secondaryColor"
+                            class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Secondary Color</label>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative h-8 w-8 rounded-md cursor-pointer border border-[var(--border-color)]"
+                                [style.backgroundColor]="layoutService.secondaryColor()">
+                                <input type="color" id="secondaryColor" [value]="layoutService.secondaryColor()"
+                                    (input)="layoutService.setSecondaryColor($any($event.target).value)"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            </div>
+                            <span class="font-mono text-sm">{{ layoutService.secondaryColor() }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="accentColor"
+                            class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Accent Color</label>
+                        <div class="flex items-center space-x-2">
+                            <div class="relative h-8 w-8 rounded-md cursor-pointer border border-[var(--border-color)]"
+                                [style.backgroundColor]="layoutService.accentColor()">
+                                <input type="color" id="accentColor" [value]="layoutService.accentColor()"
+                                    (input)="layoutService.setAccentColor($any($event.target).value)"
+                                    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
+                            </div>
+                            <span class="font-mono text-sm">{{ layoutService.accentColor() }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Typography & Sizing -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Typography & Sizing</h4>
+                <div class="space-y-6">
+                    <!-- Font Family -->
+                    <div>
+                        <label for="fontFamily" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Font
+                            Family</label>
+                        <select id="fontFamily"
+                            class="w-full rounded-md border border-[var(--border-color)] bg-[var(--bg-main)] px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
+                            (change)="setFontFamily($any($event.target).value)">
+                            @for(font of fonts; track font.family) {
+                            <option [value]="font.family" [selected]="layoutService.fontFamily() === font.family">{{
+                                font.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <!-- Font Weight -->
+                    <div>
+                        <label for="fontWeight" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Font
+                            Weight</label>
+                        <select id="fontWeight"
+                            class="w-full rounded-md border border-[var(--border-color)] bg-[var(--bg-main)] px-3 py-2 text-sm focus:border-[var(--primary)] focus:ring-[var(--primary)]"
+                            (change)="setFontWeight($event)">
+                            @for(weight of fontWeights; track weight.value) {
+                            <option [value]="weight.value" [selected]="layoutService.fontWeight() === weight.value">{{
+                                weight.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <!-- Font Size -->
+                    <div>
+                        <label for="fontSize" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                            Font Size <span class="font-mono text-xs">({{ layoutService.fontSize() }}px)</span>
+                        </label>
+                        <input type="range" id="fontSize" min="12" max="18" step="0.5"
+                            [value]="layoutService.fontSize()" (input)="setFontSize($event)"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+                    <!-- Zoom Level -->
+                    <div>
+                        <label for="zoomLevel" class="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                            Zoom Level <span class="font-mono text-xs">({{ (layoutService.zoomLevel() * 100).toFixed(0)
+                                }}%)</span>
+                        </label>
+                        <input type="range" id="zoomLevel" min="0.8" max="1.2" step="0.05"
+                            [value]="layoutService.zoomLevel()" (input)="setZoomLevel($event)"
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Icon Customization -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Icon Customization</h4>
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-[var(--text-secondary)] mb-2">Icon Style</label>
+                        <div class="grid grid-cols-2 gap-4">
+                            @for(style of iconStyles; track style.name) {
+                            <button (click)="setIconStyle(style.name)"
+                                class="flex items-center justify-center rounded-md border py-3 text-sm"
+                                [style.borderColor]="layoutService.iconStyle() === style.name ? 'var(--primary)' : 'var(--border-color)'"
+                                [style.color]="layoutService.iconStyle() === style.name ? 'var(--primary)' : 'inherit'"
+                                [class.bg-[var(--primary-light)]]="layoutService.iconStyle() === style.name">
+                                {{ style.label }}
+                            </button>
+                            }
+                        </div>
+                    </div>
+                    @if (layoutService.iconStyle() === 'outline') {
+                    <div>
+                        <label class="block text-sm font-medium text-[var(--text-secondary)] mb-2">
+                            Stroke Width
+                            <span class="font-mono text-xs">({{ layoutService.iconStrokeWidth().toFixed(1) }})</span>
+                        </label>
+                        <div class="flex items-center space-x-4 mt-2">
+                            <input type="range" id="strokeWidthSlider" min="1" max="2.5" step="0.1"
+                                [value]="layoutService.iconStrokeWidth()" (input)="setIconStrokeWidth($event)"
+                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+                            <input type="number" id="strokeWidthInput" min="1" max="2.5" step="0.1"
+                                [value]="layoutService.iconStrokeWidth()" (input)="setIconStrokeWidth($event)"
+                                class="w-20 rounded-md border border-[var(--border-color)] bg-[var(--bg-main)] px-3 py-1 text-sm text-center focus:border-[var(--primary)] focus:ring-[var(--primary)]">
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Background Image -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Background Image</h4>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <button (click)="selectBackgroundImage(null)"
+                        class="flex items-center justify-center rounded-md border py-3 text-sm h-24"
+                        [style.borderColor]="layoutService.backgroundImage() === null ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="layoutService.backgroundImage() === null ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="layoutService.backgroundImage() === null">
+                        None
+                    </button>
+                    @for(image of backgroundImages; track image.url) {
+                    <button (click)="selectBackgroundImage(image.url)"
+                        class="relative h-24 rounded-md overflow-hidden border-2 transition-all"
+                        [style.borderColor]="layoutService.backgroundImage() === image.url ? 'var(--primary)' : 'transparent'">
+                        <img [src]="image.url" [alt]="image.name" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-end p-2">
+                            <span class="text-white text-xs font-semibold">{{ image.name }}</span>
+                        </div>
+                        @if(layoutService.backgroundImage() === image.url) {
+                        <div class="absolute inset-0 flex items-center justify-center"
+                            [style.backgroundColor]="'rgba(var(--primary-rgb), 0.5)'">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        }
+                    </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Menu Orientation -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Menu Orientation</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    @for(orientation of menuOrientations; track orientation.name) {
+                    <button (click)="selectMenuOrientation(orientation.name)"
+                        class="flex items-center justify-center rounded-md border py-3 text-sm"
+                        [style.borderColor]="layoutService.menuOrientation() === orientation.name ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="layoutService.menuOrientation() === orientation.name ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="layoutService.menuOrientation() === orientation.name">
+                        {{ orientation.label }}
+                    </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Content Width -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Content Width</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    @for(width of contentWidths; track width.name) {
+                    <button (click)="selectContentWidth(width.name)"
+                        class="flex items-center justify-center rounded-md border py-3 text-sm"
+                        [style.borderColor]="layoutService.contentWidth() === width.name ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="layoutService.contentWidth() === width.name ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="layoutService.contentWidth() === width.name">
+                        {{ width.label }}
+                    </button>
+                    }
+                </div>
+            </div>
+
+            <!-- Layout Style -->
+            <div class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] p-6">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Layout Style</h4>
+                <div class="space-y-3">
+                    @for(layout of layouts; track layout.name) {
+                    <button (click)="selectLayout(layout.name)"
+                        class="w-full rounded-md border p-4 text-base text-left transition-all duration-200"
+                        [style.borderColor]="layoutService.layout() === layout.name ? 'var(--primary)' : 'var(--border-color)'"
+                        [style.color]="layoutService.layout() === layout.name ? 'var(--primary)' : 'inherit'"
+                        [class.bg-[var(--primary-light)]]="layoutService.layout() === layout.name"
+                        [class.shadow-md]="layoutService.layout() === layout.name">
+                        {{ layout.label }}
+                    </button>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden lg:block lg:col-span-1">
+            <div class="sticky top-8">
+                <h4 class="text-base font-medium text-[var(--text-secondary)] mb-4">Live Preview</h4>
+                <app-live-preview></app-live-preview>
+            </div>
+        </div>
+    </div>
+</div>

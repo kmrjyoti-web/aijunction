@@ -1,0 +1,124 @@
+<aside
+  class="fixed top-0 right-0 h-full w-96 bg-white shadow-2xl z-40 transform transition-transform duration-300 ease-in-out flex flex-col"
+  [class.translate-x-0]="isOpen()" [class.translate-x-full]="!isOpen()">
+  <!-- Header -->
+  <header class="flex items-center justify-between p-4 border-b border-gray-200 flex-shrink-0">
+    <h2 class="text-lg font-semibold text-gray-800">Filter By</h2>
+    <button (click)="close.emit()" title="Close Filters" class="text-gray-500 hover:text-gray-700">
+      <i class="pi pi-times text-xl"></i>
+    </button>
+  </header>
+
+  <!-- Content -->
+  <div class="flex-grow p-4 overflow-y-auto custom-scrollbar">
+    <!-- Search within filters -->
+    <div class="relative mb-4">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i class="pi pi-search text-gray-400"></i>
+      </div>
+      <input type="search" placeholder="Search"
+        class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-md bg-white focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+
+    <!-- Filter Groups -->
+    @for (group of config().groups; track group.name) {
+    <div class="mb-6">
+      <h3 class="text-sm font-semibold uppercase text-gray-500 mb-2">{{ group.name }}</h3>
+      <ul class="space-y-2">
+        @for (filter of group.filters; track filter.code) {
+        @let activeFilter = localActiveFilters()[filter.code];
+        <li>
+          <div class="flex items-center">
+            <input type="checkbox" [id]="filter.code" [checked]="!!activeFilter" (change)="toggleFilter(filter, $event)"
+              class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 bg-white">
+            <label [for]="filter.code" class="ml-3 text-sm text-gray-700">{{ filter.name }}</label>
+          </div>
+
+          @if (activeFilter) {
+          <div class="mt-2 pl-7 space-y-2">
+            <!-- Text/Numeric Filter -->
+            @if (filter.type === 'text' || filter.type === 'numeric') {
+            <div class="flex items-center gap-2">
+              <div class="relative w-28">
+                <button (click)="toggleDropdown(filter.code)"
+                  class="flex items-center justify-between w-full px-2 py-1.5 text-xs text-left bg-white border border-gray-300 rounded-md">
+                  <span>{{ activeFilter.operator }}</span>
+                  <i class="pi pi-chevron-down text-xs"></i>
+                </button>
+                @if (isDropdownOpen(filter.code)) {
+                <ul (clickOutside)="closeAllDropdowns()"
+                  class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-auto">
+                  @for(op of filter.operators; track op) {
+                  <li (click)="updateFilterOperator(filter.code, op)"
+                    class="px-2 py-1.5 text-xs hover:bg-indigo-50 cursor-pointer">{{ op }}</li>
+                  }
+                </ul>
+                }
+              </div>
+              <input type="text" [value]="activeFilter.value1"
+                (input)="updateFilterValue(filter.code, 'value1', $event)" placeholder="Type here"
+                class="flex-1 w-full px-2 py-1.5 text-xs border border-gray-300 rounded-md bg-white">
+            </div>
+            @if (activeFilter.operator === 'between' || activeFilter.operator === 'not between') {
+            <div class="flex items-center gap-2">
+              <span class="text-xs w-28 text-center">and</span>
+              <input type="text" [value]="activeFilter.value2 || ''"
+                (input)="updateFilterValue(filter.code, 'value2', $event)" placeholder="Type here"
+                class="flex-1 w-full px-2 py-1.5 text-xs border border-gray-300 rounded-md bg-white">
+            </div>
+            }
+            }
+
+            <!-- Date Filter -->
+            @if (filter.type === 'date') {
+            <div class="flex items-center gap-2">
+              <div class="relative w-full">
+                <button (click)="toggleDropdown(filter.code)"
+                  class="flex items-center justify-between w-full px-2 py-1.5 text-xs text-left bg-white border border-gray-300 rounded-md">
+                  <span>{{ activeFilter.operator }}</span>
+                  <i class="pi pi-chevron-down text-xs"></i>
+                </button>
+                @if (isDropdownOpen(filter.code)) {
+                <ul (clickOutside)="closeAllDropdowns()"
+                  class="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-48 overflow-auto">
+                  @for(op of filter.dateOperators; track op) {
+                  <li (click)="updateFilterOperator(filter.code, op)"
+                    class="px-2 py-1.5 text-xs hover:bg-indigo-50 cursor-pointer">{{ op }}</li>
+                  }
+                </ul>
+                }
+              </div>
+            </div>
+            }
+
+            <!-- Select Filter -->
+            @if (filter.type === 'select') {
+            <select (change)="updateFilterValue(filter.code, 'value1', $event)" [value]="activeFilter.value1"
+              class="w-full px-2 py-1.5 text-xs border border-gray-300 rounded-md bg-white focus:ring-indigo-500 focus:border-indigo-500">
+              <option value="">Select...</option>
+              @for (opt of filter.options; track opt) {
+              <option [value]="opt">{{ opt }}</option>
+              }
+            </select>
+            }
+          </div>
+          }
+        </li>
+        }
+      </ul>
+    </div>
+    }
+  </div>
+
+  <!-- Footer -->
+  <footer class="flex items-center justify-end p-4 border-t border-gray-200 flex-shrink-0 space-x-3">
+    <button (click)="clearFilters()"
+      class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+      Clear
+    </button>
+    <button (click)="applyFilters()"
+      class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
+      Apply
+    </button>
+  </footer>
+</aside>

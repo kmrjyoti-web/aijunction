@@ -1,0 +1,91 @@
+<nav class="flex items-center justify-between border-t border-gray-200 px-4 py-3 sm:px-6" aria-label="Pagination">
+  <!-- Left Side: Status & Info -->
+  <div class="flex items-center gap-4">
+    @if(connectionStatus(); as status) {
+    <div class="flex items-center gap-2 text-xs" [title]="'Connection is ' + status.text">
+      <span class="h-2.5 w-2.5 rounded-full" [class]="status.class"></span>
+      <span class="text-gray-600">{{ status.text }}</span>
+    </div>
+    }
+    @if(dataStrategy(); as strategy) {
+    <div class="flex items-center gap-1.5 text-xs text-gray-600" [title]="'Current Data Strategy'">
+      <i class="pi pi-database"></i>
+      <span class="font-medium">{{ strategy }}</span>
+    </div>
+    }
+    <!-- Sync Status -->
+    @if(dataStrategy() === 'SYNC') {
+    <div class="flex items-center gap-1.5 text-xs text-gray-600">
+      <i class="pi pi-history"></i>
+      @if (isSyncing()) {
+      <span class="font-medium animate-pulse">Syncing...</span>
+      } @else {
+      <span [title]="fullSyncTime()">Last sync: {{ relativeSyncTime() }}</span>
+      }
+    </div>
+    }
+    <div class="block h-6 w-px bg-gray-300"></div>
+
+    <p class="text-sm text-gray-700">
+      Showing
+      <span class="font-medium">{{ recordRangeStart() }}</span>
+      to
+      <span class="font-medium">{{ recordRangeEnd() }}</span>
+      of
+      <span class="font-medium">{{ totalRecords() }}</span>
+      results
+    </p>
+
+    <div class="flex items-center text-sm text-gray-700">
+      <label for="pageSize" class="mr-2">Rows:</label>
+      <select id="pageSize" (change)="onPageSizeChange($event)" title="Select number of rows per page"
+        class="px-2 py-1 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+        @for(size of pageSizeOptions(); track size) {
+        <option [value]="size" [selected]="size === pageSize()">{{ size }}</option>
+        }
+      </select>
+    </div>
+    <button (click)="autoSizingToggle.emit()"
+      [title]="autoSizingEnabled() ? 'Disable Auto Page Sizing' : 'Enable Auto Page Sizing'"
+      class="px-4 py-2 rounded-md border transition-colors text-sm" [class.bg-slate-900]="autoSizingEnabled()"
+      [class.text-white]="autoSizingEnabled()" [class.bg-white]="!autoSizingEnabled()"
+      [class.border-gray-300]="!autoSizingEnabled()" [class.hover:bg-gray-100]="!autoSizingEnabled()">
+      <i class="pi pi-arrows-alt"></i>
+    </button>
+  </div>
+
+  <!-- Right Side: Pagination & Actions -->
+  <div class="flex-1 flex justify-between items-center sm:justify-end gap-3">
+    @if (!infiniteScroll()) {
+    <button (click)="previousPage()" [disabled]="currentPage() === 1" title="Go to previous page"
+      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+      Previous
+    </button>
+    <div class="flex items-center">
+      @for(page of pages(); track $index) {
+      @if(page === '...') {
+      <span
+        class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium text-gray-700">...</span>
+      } @else {
+      <button (click)="goToPage(page)" [title]="'Go to page ' + page" [class.bg-slate-900]="page === currentPage()"
+        [class.text-white]="page === currentPage()" [class.border-slate-900]="page === currentPage()"
+        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+        {{ page }}
+      </button>
+      }
+      }
+    </div>
+    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()" title="Go to next page"
+      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+      Next
+    </button>
+    } @else {
+    <!-- Spacer to push chatbot to the right -->
+    <div class="flex-1"></div>
+    }
+    <button (click)="chatbotToggle.emit()" title="Open AI Assistant"
+      class="flex-shrink-0 flex items-center justify-center h-8 w-8 rounded-full bg-indigo-600 text-white shadow-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-transform hover:scale-110">
+      <i class="pi pi-comments text-lg"></i>
+    </button>
+  </div>
+</nav>

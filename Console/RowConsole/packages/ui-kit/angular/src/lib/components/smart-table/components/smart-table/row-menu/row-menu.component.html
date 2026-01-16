@@ -1,0 +1,68 @@
+<div class="w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-20"
+  [class.origin-top-right]="!position()" [class.absolute]="!position()" [class.right-0]="!position()"
+  [class.mt-2]="!position()" [class.fixed]="!!position()" [style.left]="position() ? (position()!.x + 'px') : null"
+  [style.top]="position() ? (position()!.y + 'px') : null">
+  @for (group of menuConfig(); track group.label; let first = $first) {
+  @if (!first) {
+  <hr class="border-gray-200">
+  }
+  <div class="py-1" role="menu" aria-orientation="vertical" [attr.aria-labelledby]="group.label">
+    @if (group.label !== 'Actions') {
+    <div class="px-3 pt-2 pb-1">
+      <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">{{ group.label }}</p>
+    </div>
+    }
+    @for (item of group.items; track item.label) {
+    <div class="relative" (mouseenter)="handleMouseEnter(item)" (mouseleave)="handleMouseLeave(item)">
+      <a [class.cursor-pointer]="!!item.action && !isItemDisabled(item)"
+        [class.hover:bg-gray-100]="!!item.action && !isItemDisabled(item)"
+        [class.hover:bg-gray-100]="!!item.action && !isItemDisabled(item)" [class.opacity-50]="isItemDisabled(item)"
+        [class.cursor-not-allowed]="isItemDisabled(item)" (click)="onActionClick(item)"
+        class="flex items-center justify-between px-3 py-2 text-sm text-gray-700 transition-colors duration-150"
+        role="menuitem">
+        <div class="flex items-center gap-3">
+          @if(item.icon) {<i [class]="item.icon + ' w-4 text-center'"></i>}
+          @else { <span class="w-4"></span> }
+          <span>{{ item.label }}</span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          @if (item.shortcut) {
+          <span class="text-xs text-gray-400">{{ item.shortcut }}</span>
+          }
+          @if (item.items) {
+          <i class="pi pi-chevron-right text-xs text-gray-400"></i>
+          }
+        </div>
+      </a>
+
+      <!-- Sub-menu -->
+      @if (item.items && openSubMenu() === item.label) {
+      <div
+        class="absolute left-full -top-1 ml-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+        <div class="py-1" role="menu" aria-orientation="vertical">
+          @for (subItem of item.items; track subItem.label) {
+          <a (click)="onActionClick(subItem)" [class.cursor-pointer]="!!subItem.action && !isItemDisabled(subItem)"
+            [class.hover:bg-gray-100]="!!subItem.action && !isItemDisabled(subItem)"
+            [class.hover:bg-gray-100]="!!subItem.action && !isItemDisabled(subItem)"
+            [class.opacity-50]="isItemDisabled(subItem)" [class.cursor-not-allowed]="isItemDisabled(subItem)"
+            class="flex items-center justify-between px-3 py-2 text-sm text-gray-700 transition-colors duration-150"
+            role="menuitem">
+            <div class="flex items-center gap-3">
+              @if(subItem.icon) {<i [class]="subItem.icon + ' w-4 text-center'"></i>}
+              @else { <span class="w-4"></span> }
+              <span>{{ subItem.label }}</span>
+            </div>
+            @if (subItem.shortcut) {
+            <span class="text-xs text-gray-400">{{ subItem.shortcut }}</span>
+            }
+          </a>
+          }
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+  }
+</div>

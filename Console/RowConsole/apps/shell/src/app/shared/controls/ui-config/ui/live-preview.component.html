@@ -1,0 +1,57 @@
+<div
+    class="rounded-lg border border-[var(--border-color)] bg-[var(--bg-card)] aspect-[16/10] overflow-hidden shadow-lg">
+    <!-- Mock App Layout -->
+    <div class="flex flex-col h-full">
+        <!-- Header -->
+        <div class="h-8 flex-shrink-0 flex items-center px-2" [style.backgroundColor]="headerBgColor()">
+            <div class="w-4 h-4 rounded-full" [class.bg-white/30]="layoutService.layout() !== 'google'"
+                [class.bg-gray-200]="layoutService.layout() === 'google'"></div>
+            <div class="w-16 h-2 rounded-full ml-2" [class.bg-white/30]="layoutService.layout() !== 'google'"
+                [class.bg-gray-200]="layoutService.layout() === 'google'"></div>
+        </div>
+        <div class="flex flex-grow overflow-hidden">
+            <!-- Sidebar -->
+            <div class="w-16 flex-shrink-0 transition-colors duration-200"
+                [class.bg-slate-800]="layoutService.layout() === 'default'"
+                [class.bg-white]="layoutService.layout() === 'google' || layoutService.layout() === 'outlook'"
+                [class.bg-[#252526]]="layoutService.layout() === 'vscode'"
+                [class.border-r]="layoutService.layout() !== 'default'"
+                [class.border-[var(--border-color)]]="layoutService.layout() === 'google' || layoutService.layout() === 'outlook'"
+                [class.border-black/20]="layoutService.layout() === 'vscode'">
+                <div class="p-3 space-y-4 flex flex-col items-center">
+                    <!-- Active Icon -->
+                    <div class="h-6 w-6 rounded-md flex items-center justify-center"
+                        style="background-color: var(--accent)">
+                        <div class="h-3 w-3 bg-white/80 rounded-sm"></div>
+                    </div>
+                    <!-- Inactive Icons -->
+                    <div class="h-6 w-6 rounded-md bg-gray-500/30"></div>
+                    <div class="h-6 w-6 rounded-md bg-gray-500/30"></div>
+                    <div class="h-6 w-6 rounded-md bg-gray-500/30"></div>
+                </div>
+            </div>
+            <!-- Content -->
+            <div class="flex-grow p-4 space-y-3 bg-cover bg-center"
+                [style.background-image]="layoutService.backgroundImage() ? 'url(' + layoutService.backgroundImage() + ')' : 'none'"
+                style="background-color: var(--bg-main)">
+
+                <div class="p-2 rounded"
+                    [style.background-color]="layoutService.backgroundImage() ? 'rgba(var(--primary-rgb), 0.1)' : 'var(--bg-card)'"
+                    [class.backdrop-blur-sm]="layoutService.backgroundImage()">
+                    <div class="w-1/2 h-3 rounded mb-2" style="background-color: var(--bg-card)">
+                        <p class="text-[8px] pl-1 font-bold" style="color: var(--text-primary)">Sample Title</p>
+                    </div>
+                    <div class="w-3/4 h-2 rounded-full mb-1" style="background-color: var(--bg-card)"></div>
+                    <div class="w-full h-2 rounded-full mb-2" style="background-color: var(--bg-card)"></div>
+                    <div class="flex space-x-2">
+                        <button class="px-2 py-1 text-[8px] rounded"
+                            style="background-color: var(--primary); color: var(--text-inverted)">Primary
+                            Button</button>
+                        <button class="px-2 py-1 text-[8px] rounded"
+                            style="background-color: var(--secondary); color: var(--text-inverted)">Secondary</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

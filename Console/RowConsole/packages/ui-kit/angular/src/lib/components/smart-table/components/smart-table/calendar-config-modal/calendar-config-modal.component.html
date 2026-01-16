@@ -1,0 +1,97 @@
+@if (isOpen()) {
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50" (click)="close.emit()">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl m-4 flex flex-col max-h-[90vh]"
+    (click)="$event.stopPropagation()">
+    <header class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold">Configure Calendar View</h3>
+      <button (click)="close.emit()" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+
+    <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto">
+      <!-- Left side: Configuration -->
+      <div class="space-y-6">
+        <div>
+          <h4 class="font-medium text-gray-800 mb-2">1. Choose a date field to plot</h4>
+          <fieldset class="space-y-2">
+            @for(col of dateColumns(); track col.code) {
+            <div class="relative flex items-start">
+              <div class="flex h-6 items-center">
+                <input [id]="'date-field-' + col.code" name="date-field" type="radio"
+                  class="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                  [checked]="selectedFieldCode() === col.code" (change)="selectField(col.code)">
+              </div>
+              <div class="ml-3 text-sm leading-6">
+                <label [for]="'date-field-' + col.code" class="font-medium text-gray-900">{{ col.name }}</label>
+              </div>
+            </div>
+            }
+          </fieldset>
+        </div>
+
+        @if(selectedFieldCode()) {
+        <div>
+          <h4 class="font-medium text-gray-800 mb-2">2. Save this view for later</h4>
+          <div class="flex items-center gap-2">
+            <input type="text" #nameInput
+              class="flex-grow block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              placeholder="e.g., Contacts by Creation" [value]="newViewName()"
+              (input)="newViewName.set(nameInput.value)">
+            <button (click)="suggestName()" [disabled]="isSuggestingName()"
+              class="p-2 rounded-md bg-indigo-50 text-indigo-600 hover:bg-indigo-100 disabled:opacity-50"
+              title="Suggest a name with AI">
+              <i class="pi" [class.pi-sparkles]="!isSuggestingName()" [class.pi-spin]="isSuggestingName()"
+                [class.pi-spinner]="isSuggestingName()"></i>
+            </button>
+          </div>
+          <button (click)="saveView()" [disabled]="!canSave() || isSaving()"
+            class="mt-3 w-full flex justify-center items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 disabled:opacity-50">
+            @if(isSaving()) {
+            <i class="pi pi-spin pi-spinner"></i> Saving...
+            } @else {
+            <i class="pi pi-save"></i> Save View
+            }
+          </button>
+        </div>
+        }
+      </div>
+
+      <!-- Right side: Saved Views -->
+      <div class="border-t md:border-t-0 md:border-l border-gray-200 md:pl-6 pt-6 md:pt-0">
+        <h4 class="font-medium text-gray-800 mb-2">Saved Calendar Views</h4>
+        @if (savedViews().length > 0) {
+        <ul class="space-y-2">
+          @for(view of savedViews(); track view.id) {
+          <li class="p-2 rounded-md bg-gray-50 flex items-center justify-between">
+            <div>
+              <p class="text-sm font-medium text-gray-900">{{ view.name }}</p>
+              <p class="text-xs text-gray-500">Field: {{ getDateFieldName(view.dateFieldCode) }}</p>
+            </div>
+            <div class="flex items-center gap-1">
+              <button (click)="applyView(view.dateFieldCode)"
+                class="p-2 text-sm rounded-md text-white bg-slate-900 hover:bg-slate-800" title="Apply this view"><i
+                  class="pi pi-check"></i></button>
+              <button (click)="deleteView(view.id)" class="p-2 text-sm rounded-md text-red-600 hover:bg-red-100"
+                title="Delete this view"><i class="pi pi-trash"></i></button>
+            </div>
+          </li>
+          }
+        </ul>
+        } @else {
+        <p class="text-sm text-gray-500 italic">No saved views yet. Select a field and save it to get started.</p>
+        }
+      </div>
+    </div>
+
+    <footer class="p-4 border-t border-gray-200 flex justify-end gap-3">
+      <button (click)="close.emit()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
+      <button (click)="applyView(selectedFieldCode())" [disabled]="!selectedFieldCode()"
+        class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">
+        Apply Selected Field
+      </button>
+    </footer>
+  </div>
+</div>
+}

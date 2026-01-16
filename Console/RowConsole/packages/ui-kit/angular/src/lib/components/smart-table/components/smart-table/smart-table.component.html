@@ -1,0 +1,487 @@
+@if (config(); as cfg) {
+<div class="h-full flex flex-col bg-white text-sm">
+
+  <!-- Header Section -->
+  <header class="flex-shrink-0 border-b border-gray-200 bg-white shadow-sm relative z-40">
+    <!-- Main Toolbar Row -->
+    <div class="flex flex-nowrap items-center justify-between gap-4 p-2">
+
+      <!-- Left: Title (order-1) -->
+      <div class="flex items-center gap-4 flex-shrink-0 min-w-0">
+        <h1 class="text-lg font-bold text-gray-900 truncate">{{ cfg.config.title }}</h1>
+        <div title="Total Records"
+          class="px-2 py-0.5 text-xs font-semibold rounded-full bg-indigo-50 text-indigo-700 flex-shrink-0">
+          {{ totalRecords() }}
+        </div>
+      </div>
+
+      <!-- Center: Search (order-2) -->
+      <div class="flex-1 flex justify-center max-w-xl mx-4 min-w-0" title="Global Search (Alt + G)">
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <i class="pi pi-search text-gray-400"></i>
+          </div>
+          <input id="global-search-input" type="search" (input)="onGlobalSearch($event)" [value]="globalFilterTerm()"
+            placeholder="Search..."
+            class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-md leading-5 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:placeholder-gray-500 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+        </div>
+      </div>
+
+      <!-- Right: Actions (order-3) -->
+      <div class="flex flex-nowrap items-center justify-end gap-1.5 flex-shrink-0">
+
+        <!-- Toolbar Actions (Excluding Filter/Config/Refresh as they are in Menus now) -->
+        @for(action of cfg.config.toolbarActions; track action.key) {
+        @if (action.key !== 'toggle:config-sidebar' && action.key !== 'refresh' && action.key !==
+        'toggle:filter-sidebar') {
+        <app-toolbar-button [iconClass]="action.icon" [label]="action.label"
+          [showLabel]="cfg.config.toolbarButtonMode !== 'iconOnly'"
+          [color]="action.key === 'add:contacts' ? 'primary' : 'default'"
+          [title]="cfg.config.toolbarButtonMode === 'iconOnly' ? action.label : action.label"
+          (clicked)="handleToolbarAction(action.key)">
+        </app-toolbar-button>
+        }
+        }
+
+        <!-- Filter Menu (Consolidated) -->
+        <div class="relative" (clickOutside)="showFilterMenu.set(false)">
+          <app-toolbar-button iconName="filter" label="Filter" endIconName="chevron-down"
+            [endIconRotate]="showFilterMenu()" [active]="showFilterMenu() || showFilterSidebar() || showColumnChooser()"
+            (clicked)="showFilterMenu.set(!showFilterMenu())">
+          </app-toolbar-button>
+          @if (showFilterMenu()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              <!-- Advanced Filters -->
+              <a (click)="handleToolbarAction('toggle:filter-sidebar'); showFilterMenu.set(false)"
+                href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <span class="flex items-center gap-3"><i class="pi pi-filter"></i> Advanced Filters</span>
+                @if (showFilterSidebar()) { <i class="pi pi-check text-indigo-500"></i> }
+              </a>
+
+              <!-- Chips -->
+              @if (cfg.config.enableChipFilters) {
+              <a (click)="showAddChipModal.set(true); showFilterMenu.set(false)" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-tag"></i><span>Add Summary Chip</span>
+              </a>
+              }
+
+              <!-- Column Chooser -->
+              @if (cfg.config.enableColumnChooser) {
+              <a (click)="showColumnChooser.set(!showColumnChooser()); showFilterMenu.set(false)"
+                href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <span class="flex items-center gap-3"><i class="pi pi-columns"></i> Columns</span>
+                @if (showColumnChooser()) { <i class="pi pi-check text-indigo-500"></i> }
+              </a>
+              }
+            </div>
+          </div>
+          }
+          <!-- Render Column Chooser component just outside the menu if it's active -->
+          @if (showColumnChooser()) {
+          <app-column-chooser [allColumns]="chooserColumns()" [visibleColumns]="visibleTableColumns()"
+            (visibilityChange)="toggleColumnVisibility($event)" (orderChange)="handleAllColumnsOrderChange($event)" />
+          }
+        </div>
+
+        @if (!cfg.config.enableChipFilters) {
+        <div class="h-6 w-px bg-gray-300 mx-1"></div>
+        }
+
+        <!-- Card View Options -->
+        @if (viewMode() === 'card') {
+        <div class="relative" (clickOutside)="showCardsPerRowChooser.set(false)">
+          <app-toolbar-button iconName="table" [label]="(cfg.config.cardViewConfig?.cardsPerRow ?? 4) + ' Cards'"
+            [active]="showCardsPerRowChooser()" title="Number of cards per row"
+            (clicked)="showCardsPerRowChooser.set(!showCardsPerRowChooser())">
+          </app-toolbar-button>
+          @if (showCardsPerRowChooser()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              @for (count of [1, 2, 3, 4, 5, 6]; track count) {
+              <a (click)="handleCardsPerRowChange(count); showCardsPerRowChooser.set(false)" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <span>{{ count }} {{ count === 1 ? 'Card' : 'Cards' }} / row</span>
+                @if ((cfg.config.cardViewConfig?.cardsPerRow ?? 4) === count) { <i
+                  class="pi pi-check text-indigo-500"></i> }
+              </a>
+              }
+            </div>
+          </div>
+          }
+        </div>
+        }
+
+        <!-- Freeze Columns -->
+        @if (viewMode() === 'table' && cfg.config.enableFreeze) {
+        <div class="relative" (clickOutside)="showFreezeOptions.set(false)">
+          <app-toolbar-button iconName="freeze" label="Freeze" [active]="showFreezeOptions()" title="Freeze columns"
+            (clicked)="showFreezeOptions.set(!showFreezeOptions())">
+          </app-toolbar-button>
+          @if (showFreezeOptions()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              <a (click)="handleFreezeColumns(0)" href="javascript:void(0)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Unfreeze
+                All</a>
+              <a (click)="handleFreezeColumns(1)" href="javascript:void(0)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Freeze
+                1 Column</a>
+              <a (click)="handleFreezeColumns(2)" href="javascript:void(0)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Freeze
+                2 Columns</a>
+              <a (click)="handleFreezeColumns(3)" href="javascript:void(0)"
+                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Freeze
+                3 Columns</a>
+            </div>
+          </div>
+          }
+        </div>
+        }
+
+
+
+        <!-- Data Strategy -->
+        <div class="relative" (clickOutside)="showStrategyChooser.set(false)">
+          <app-toolbar-button iconName="database" [label]="cfg.config.dataStrategy" endIconName="chevron-down"
+            [endIconRotate]="showStrategyChooser()" [title]="'Current Data Strategy: ' + cfg.config.dataStrategy"
+            (clicked)="showStrategyChooser.set(!showStrategyChooser())">
+          </app-toolbar-button>
+          @if (showStrategyChooser()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              @for(strategy of dataStrategies; track strategy) {
+              <a (click)="changeDataStrategy(strategy); showStrategyChooser.set(false)" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                [title]="strategyDescriptions[strategy]">
+                <span>{{ strategy }}</span>
+                @if (cfg.config.dataStrategy === strategy) { <i class="pi pi-check text-indigo-500"></i> }
+              </a>
+              }
+            </div>
+          </div>
+          }
+        </div>
+
+        @if (cfg.config.exportConfig?.enabled) {
+        <div class="relative" (clickOutside)="showExportOptions.set(false)">
+          <app-toolbar-button iconName="download" label="Export" endIconName="chevron-down"
+            [endIconRotate]="showExportOptions()" [active]="showExportOptions()"
+            (clicked)="showExportOptions.set(!showExportOptions())">
+          </app-toolbar-button>
+          @if (showExportOptions()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              @for (option of cfg.config.exportConfig.options; track option.key) {
+              <a (click)="handleExport(option.key)" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i [class]="option.icon"></i>
+                <span>{{ option.label }}</span>
+              </a>
+              }
+            </div>
+          </div>
+          }
+        </div>
+        }
+
+        <!-- Config Button (Restored) -->
+        <app-toolbar-button iconName="cog" label="Config" [active]="showConfigSidebar()"
+          (clicked)="showConfigSidebar.set(true)" title="Table Configuration">
+        </app-toolbar-button>
+
+        <!-- View Menu (Consolidated) -->
+        <div class="relative" (clickOutside)="showViewOptions.set(false)">
+          <app-toolbar-button iconName="eye" label="View" endIconName="chevron-down" [endIconRotate]="showViewOptions()"
+            [active]="showViewOptions()" (clicked)="showViewOptions.set(!showViewOptions())">
+          </app-toolbar-button>
+          @if (showViewOptions()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              <!-- General Actions (Refresh) -->
+              @if (cfg.config.dataStrategy === 'SYNC') {
+              <a (click)="handleManualSync(); showViewOptions.set(false)" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi" [class.pi-spin]="syncService.isSyncing()" [class.pi-spinner]="syncService.isSyncing()"
+                  [class.pi-sync]="!syncService.isSyncing()"></i>
+                <span>{{ syncService.isSyncing() ? 'Syncing...' : 'Refresh Data' }}</span>
+              </a>
+              <div class="my-1 border-t border-gray-200"></div>
+              }
+
+              <!-- Density / Row Sizing -->
+              <div class="px-4 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Row Sizing</div>
+              <div class="px-2 pb-2 grid grid-cols-2 gap-1">
+                @for(d of cfg.config.sizerConfig.densities; track d.name) {
+                <button (click)="setDensity(d.name)"
+                  class="flex items-center justify-center gap-2 px-2 py-1.5 text-xs border rounded hover:bg-gray-50 transition-colors"
+                  [class.bg-indigo-50]="currentDensity() === d.name"
+                  [class.border-indigo-200]="currentDensity() === d.name"
+                  [class.text-indigo-700]="currentDensity() === d.name"
+                  [class.border-gray-200]="currentDensity() !== d.name">
+                  <i class="pi" [class]="getDensityIcon(d.name)"></i>
+                  <span>{{ d.name | titlecase }}</span>
+                </button>
+                }
+              </div>
+
+              <div class="my-1 border-t border-gray-200"></div>
+
+              <!-- View Modes -->
+              <div class="px-4 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">View Mode</div>
+              <a (click)="changeView('table');" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><span
+                  class="flex items-center gap-3"><i class="pi pi-table"></i> Table</span> @if (viewMode() ===
+                'table') { <i class="pi pi-check text-indigo-500"></i> }</a>
+              <a (click)="changeView('card');" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><span
+                  class="flex items-center gap-3"><i class="pi pi-id-card"></i> Card</span> @if (viewMode() ===
+                'card') { <i class="pi pi-check text-indigo-500"></i> }</a>
+              <a (click)="changeView('list');" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><span
+                  class="flex items-center gap-3"><i class="pi pi-list"></i> List</span> @if (viewMode() === 'list') {
+                <i class="pi pi-check text-indigo-500"></i> }</a>
+              <div class="my-1 border-t border-gray-200"></div>
+              <a (click)="changeView('bi');" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><span
+                  class="flex items-center gap-3"><i class="pi pi-chart-bar"></i> BI Dashboard</span> @if (viewMode()
+                === 'bi') { <i class="pi pi-check text-indigo-500"></i> }</a>
+              <a (click)="changeView('calendar');" href="javascript:void(0)"
+                class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><span
+                  class="flex items-center gap-3"><i class="pi pi-calendar"></i> Calendar</span> @if (viewMode() ===
+                'calendar') { <i class="pi pi-check text-indigo-500"></i> }</a>
+              <div class="my-1 border-t border-gray-200"></div>
+              <a (click)="resetViewAndFilters()" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"><i
+                  class="pi pi-replay w-4 text-center"></i><span>Reset View & Filters</span></a>
+            </div>
+          </div>
+          }
+        </div>
+
+        <div class="relative" (clickOutside)="showAiActions.set(false)">
+          <app-toolbar-button iconName="sparkles" [active]="showAiActions()" title="AI Actions" color="primary"
+            size="md" (clicked)="showAiActions.set(!showAiActions())">
+          </app-toolbar-button>
+          @if (showAiActions()) {
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+            <div class="py-1">
+              <a (click)="handleAiAction('adopt')" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-desktop w-4 text-center"></i><span>Auto-Adopt Layout</span>
+              </a>
+              <a (click)="handleAiAction('narrate')" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-book w-4 text-center"></i><span>Generate Narration</span>
+              </a>
+              <a (click)="handleAiAction('insights')" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-chart-line w-4 text-center"></i><span>Suggest Insights</span>
+              </a>
+              <a (click)="handleAiAction('metrics')" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-sort-numeric-down w-4 text-center"></i><span>Get Quick Metrics</span>
+              </a>
+              <div class="my-1 border-t border-gray-200"></div>
+              <a (click)="showUiGallery.set(true); showAiActions.set(false)" href="javascript:void(0)"
+                class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                <i class="pi pi-palette w-4 text-center"></i><span>Customize UI...</span>
+              </a>
+            </div>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Chip Filter Bar -->
+    @if (cfg.config.enableChipFilters && calculatedChips().length > 0) {
+    <div class="p-2 border-t border-gray-200">
+      <app-chip-filter-bar [chips]="calculatedChips()" (addChip)="showAddChipModal.set(true)"
+        (removeChip)="handleRemoveChip($event)" (chipClicked)="handleApplyChipFilter($event)" />
+    </div>
+    }
+  </header>
+
+  <!-- Top Paginator -->
+  @if (!isInfiniteScroll() && (cfg.config.paginatorPosition === 'top' || cfg.config.paginatorPosition === 'both')) {
+  <div class="flex-shrink-0 border-b border-gray-300">
+    <app-paginator [currentPage]="currentPage()" [pageSize]="pageSize()" [totalRecords]="totalRecords()"
+      [autoSizingEnabled]="autoSizingEnabled()" [infiniteScroll]="isInfiniteScroll()"
+      [infiniteScrollBehavior]="cfg.config.infiniteScrollBehavior ?? 'append'" [currentRecordCount]="data().length"
+      [dataStrategy]="cfg.config.dataStrategy" [connectionStatus]="connectionStatus()"
+      [lastSyncTime]="syncService.lastSyncTime()" [isSyncing]="syncService.isSyncing()"
+      (pageChange)="handlePageChange($event)" (pageSizeChange)="handlePageSizeChange($event)"
+      (autoSizingToggle)="handleAutoSizingToggle()" (chatbotToggle)="showChatbot.set(true)" />
+  </div>
+  }
+
+  <!-- Main Content Area -->
+  <main #scrollContainer class="flex-grow overflow-auto p-2 outline-none" (scroll)="onContentScroll($event)"
+    (keydown)="handleContentKeydown($event)" tabindex="0">
+    @if (loading() && data().length === 0) {
+    @switch (viewMode()) {
+    @case ('table') { <app-table-skeleton-loader [columns]="visibleTableColumns()" [rows]="pageSize()" /> }
+    @case ('card') { <app-card-skeleton-loader [count]="pageSize()" /> }
+    @case ('list') { <app-list-skeleton-loader [count]="pageSize()" /> }
+    @default { <div class="text-center p-8">Loading...</div> }
+    }
+    } @else if (data().length === 0) {
+    @if (cfg.config.emptyStateConfig?.enabled) {
+    <app-empty-view [config]="cfg.config.emptyStateConfig" (action)="handleEmptyStateAction($event)" />
+    } @else {
+    <div class="flex flex-col items-center justify-center h-full text-center text-gray-500">
+      <i class="pi pi-inbox text-5xl mb-3"></i>
+      <span class="text-lg">No Records Found</span>
+    </div>
+    }
+    } @else {
+    @switch (viewMode()) {
+    @case ('table') { <app-table-view [columns]="visibleTableColumns()" [data]="data()" [sortColumn]="sortColumn()"
+      [sortDirection]="sortDirection()" [density]="currentDensity()" [densityClass]="currentDensitySetting().cssClass"
+      [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions" [headerMenuConfig]="cfg.headerMenu"
+      [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [selectedIds]="selectedIds()"
+      [activeFilters]="advancedFilters()" [customTemplate]="activeCustomTemplate()" [loading]="loading()"
+      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" [pageSize]="pageSize()"
+      [isInfiniteScroll]="isInfiniteScroll()" [stripedRows]="cfg.config.stripedRows ?? true"
+      [showGridlines]="cfg.config.showGridlines ?? false" [rowHover]="cfg.config.rowHover ?? true"
+      [footerConfig]="cfg.config.footerConfig" (sortChange)="handleSort($event)" (rowAction)="handleRowAction($event)"
+      (rowClicked)="handleRowClick($event)" (headerAction)="handleHeaderAction($event)"
+      (columnReorder)="handleVisibleColumnReorder($event)" (filterChange)="handleFilterChange($event)"
+      (selectionChange)="handleSelectionChange($event)" /> }
+    @case ('card') { <app-card-view [columns]="allTableColumns()" [data]="data()" [density]="currentDensity()"
+      [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()" [rowMenuConfig]="cfg.rowMenu"
+      [rowActions]="cfg.rowActions" [enableMultiSelect]="cfg.config.enableMultiSelect ?? false"
+      [cardViewConfig]="cfg.config.cardViewConfig" [customTemplate]="activeCustomTemplate()"
+      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" (selectionChange)="handleSelectionChange($event)"
+      (rowAction)="handleRowAction($event)" (rowClicked)="handleRowClick($event)" /> }
+    @case ('list') { <app-list-view [columns]="allTableColumns()" [data]="data()" [density]="currentDensity()"
+      [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()"
+      [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [customTemplate]="activeCustomTemplate()"
+      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" (selectionChange)="handleSelectionChange($event)"
+      (rowClicked)="handleRowClick($event)" /> }
+    @case ('bi') { <app-bi-view [data]="data()" [columns]="allTableColumns()" /> }
+    @case ('calendar') {
+    @if(activeCalendarConfig(); as calConfig) {
+    <app-calendar-view [data]="data()" [columns]="allTableColumns()" [config]="calConfig" />
+    } @else {
+    <div class="text-center p-8 text-gray-500">Please configure the calendar view first by clicking
+      the 'Calendar' view button again.</div>
+    }
+    }
+    }
+    }
+    <!-- Infinite Scroll Loader -->
+    @if (isInfiniteScroll() && loading() && data().length > 0) {
+    <div class="flex justify-center items-center py-4">
+      <i class="pi pi-spin pi-spinner text-2xl text-indigo-500"></i>
+    </div>
+    }
+  </main>
+
+  <!-- Paginator Footer -->
+  @if (!isInfiniteScroll() && (cfg.config.paginatorPosition === 'bottom' || cfg.config.paginatorPosition === 'both' ||
+  !cfg.config.paginatorPosition)) {
+  <footer class="flex-shrink-0 border-t border-gray-300">
+    <app-paginator [currentPage]="currentPage()" [pageSize]="pageSize()" [totalRecords]="totalRecords()"
+      [autoSizingEnabled]="autoSizingEnabled()" [infiniteScroll]="isInfiniteScroll()"
+      [infiniteScrollBehavior]="cfg.config.infiniteScrollBehavior ?? 'append'" [currentRecordCount]="data().length"
+      [dataStrategy]="cfg.config.dataStrategy" [connectionStatus]="connectionStatus()"
+      [lastSyncTime]="syncService.lastSyncTime()" [isSyncing]="syncService.isSyncing()"
+      (pageChange)="handlePageChange($event)" (pageSizeChange)="handlePageSizeChange($event)"
+      (autoSizingToggle)="handleAutoSizingToggle()" (chatbotToggle)="showChatbot.set(true)" />
+  </footer>
+  }
+</div>
+
+<!-- ================================================================= -->
+<!--               Sidebars, Modals, and Floating UI                   -->
+<!-- ================================================================= -->
+
+<!-- Right-side Filter Sidebar -->
+@if (showFilterSidebar()) {
+<app-filter-sidebar [isOpen]="showFilterSidebar()" [config]="cfg.advancedFilters!" [activeFilters]="advancedFilters()"
+  (close)="showFilterSidebar.set(false)" (apply)="handleApplyFilters($event)" />
+}
+
+<!-- Right-side Configuration Sidebar -->
+@if (showConfigSidebar()) {
+<app-config-sidebar [isOpen]="showConfigSidebar()" [config]="config()" (close)="showConfigSidebar.set(false)"
+  (save)="handleConfigSave($event)" (resetToDefaults)="handleConfigReset()" />
+}
+
+<!-- Right-side Theme Settings Sidebar -->
+<app-theme-settings [isOpen]="showThemeSettings()" (close)="showThemeSettings.set(false)" />
+
+<!-- AI Chatbot Floating Window -->
+@if (showChatbot()) {
+<app-ai-chatbot [data]="data()" [columns]="allTableColumns()" (close)="showChatbot.set(false)"
+  (filterApplied)="handleAiFilter($event)" />
+}
+
+<!-- Save Query Modal -->
+<app-save-query-modal [isOpen]="showSaveQueryModal()" (close)="showSaveQueryModal.set(false)"
+  (save)="handleSaveQuery($event)" />
+
+<!-- UI Gallery Modal -->
+<app-ui-gallery [isOpen]="showUiGallery()" [layouts]="customLayouts()" [currentView]="viewMode()"
+  [activeLayouts]="activeLayouts()" (close)="showUiGallery.set(false)" (applyLayout)="handleApplyLayout($event)"
+  (deleteLayout)="handleDeleteLayout($event)" (generateLayout)="handleGenerateLayout($event)" />
+
+<!-- Calendar Config Modal -->
+<app-calendar-config-modal [isOpen]="showCalendarConfigModal()" [dateColumns]="dateColumns()"
+  (close)="showCalendarConfigModal.set(false)" (apply)="handleApplyCalendarConfig($event)" />
+
+<!-- Sync Options Modal -->
+@if(showSyncOptionsModal()) {
+<app-sync-options-modal (close)="showSyncOptionsModal.set(false)" (startSync)="handleStartSync()" />
+}
+
+<!-- Add Chip Modal -->
+<app-add-chip-modal [isOpen]="showAddChipModal()" [columns]="allTableColumns()" (close)="showAddChipModal.set(false)"
+  (addChip)="handleAddChip($event)" />
+
+<!-- AI Loading & Modal Display -->
+@if (isAiLoading() || aiModalContent()) {
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-[70]">
+  @if (isAiLoading() && !aiModalContent()) {
+  <div class="flex flex-col items-center gap-4 bg-white p-8 rounded-lg shadow-xl">
+    <i class="pi pi-spin pi-spinner text-4xl text-indigo-500"></i>
+    <p class="text-lg font-medium text-gray-800">AI is thinking...</p>
+  </div>
+  }
+  @if (aiModalContent(); as modal) {
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl m-4" (click)="$event.stopPropagation()">
+    <header class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><i class="pi pi-sparkles text-indigo-500"></i>{{
+        aiModalFormattedContent().title }}</h3>
+      <button (click)="aiModalContent.set(null)" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+    <div class="p-6 prose max-w-none" [innerHTML]="aiModalFormattedContent().content"></div>
+  </div>
+  }
+</div>
+}
+
+<!-- Export Loading Overlay -->
+@if (isExporting()) {
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-[70]">
+  <div class="flex flex-col items-center gap-4 bg-white p-8 rounded-lg shadow-xl">
+    <i class="pi pi-spin pi-spinner text-4xl text-indigo-500"></i>
+    <p class="text-lg font-medium text-gray-800">{{ exportingMessage() }}</p>
+  </div>
+</div>
+}
+}

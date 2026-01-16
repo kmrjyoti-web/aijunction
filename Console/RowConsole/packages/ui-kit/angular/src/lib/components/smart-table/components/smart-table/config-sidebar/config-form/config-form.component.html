@@ -1,0 +1,236 @@
+@if(form) {
+<form [formGroup]="form" class="space-y-8 px-1">
+
+  <!-- General Section -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">General</h3>
+    <div>
+      <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Table Title</label>
+      <input type="text" id="title" formControlName="title"
+        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 placeholder-gray-400">
+    </div>
+  </section>
+
+  <!-- Data & Paging -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Data & Paging
+    </h3>
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label for="dataStrategy" class="block text-sm font-medium text-gray-700 mb-1">Data Strategy</label>
+        <select id="dataStrategy" formControlName="dataStrategy"
+          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white">
+          @for(strategy of dataStrategies; track strategy) {
+          <option [value]="strategy">{{ strategy }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label for="pagingMode" class="block text-sm font-medium text-gray-700 mb-1">Paging Mode</label>
+        <select id="pagingMode" formControlName="pagingMode"
+          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white">
+          @for(mode of pagingModes; track mode) {
+          <option [value]="mode">{{ mode | titlecase }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    @if(form.get('pagingMode')?.value === 'infinite') {
+    <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
+      <label for="infiniteScrollBehavior" class="block text-sm font-medium text-gray-700 mb-1">Infinite Scroll
+        Behavior</label>
+      <select id="infiniteScrollBehavior" formControlName="infiniteScrollBehavior"
+        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        @for(behavior of infiniteScrollBehaviors; track behavior) {
+        <option [value]="behavior">{{ behavior | titlecase }}</option>
+        }
+      </select>
+    </div>
+    }
+  </section>
+
+  <!-- Appearance -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Appearance</h3>
+
+    <div class="grid grid-cols-2 gap-4 mb-2">
+      <div>
+        <label for="paginatorPosition" class="block text-sm font-medium text-gray-700 mb-1">Paginator</label>
+        <select id="paginatorPosition" formControlName="paginatorPosition"
+          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+          @for(pos of paginatorPositions; track pos) {
+          <option [value]="pos" class="capitalize">{{ pos }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <label for="toolbarButtonMode" class="block text-sm font-medium text-gray-700 mb-1">Toolbar Buttons</label>
+        <select id="toolbarButtonMode" formControlName="toolbarButtonMode"
+          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+          @for(mode of toolbarButtonModes; track mode) {
+          <option [value]="mode">{{ mode === 'iconAndText' ? 'Icon & Text' : 'Icon Only' }}</option>
+          }
+        </select>
+      </div>
+    </div>
+
+    <!-- Appearance Toggles -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-gray-700">Striped Rows</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" formControlName="stripedRows" class="sr-only peer">
+          <div
+            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+          </div>
+        </label>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-gray-700">Grid Lines</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" formControlName="showGridlines" class="sr-only peer">
+          <div
+            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+          </div>
+        </label>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="text-sm text-gray-700">Row Hover Effect</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" formControlName="rowHover" class="sr-only peer">
+          <div
+            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+          </div>
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card View -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Card View</h3>
+    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+      <div class="flex justify-between items-center mb-2">
+        <label for="cardsPerRow" class="block text-sm font-medium text-gray-700">Cards Per Row (Desktop)</label>
+        <span
+          class="inline-flex items-center justify-center px-2 py-1 rounded-md bg-white border border-gray-200 text-xs font-bold text-indigo-600 shadow-sm min-w-[2rem]">
+          {{ form.get('cardsPerRow')?.value }}
+        </span>
+      </div>
+      <input type="range" id="cardsPerRow" formControlName="cardsPerRow" min="1" max="6"
+        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+      <div class="flex justify-between text-xs text-gray-400 mt-1 font-medium px-1">
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Toggles Grid -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Features</h3>
+
+    <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+      <!-- Left Column -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Column Chooser</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableColumnChooser" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Export Button</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableExport" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Multi-Select</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableMultiSelect" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Toolbar Config</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableConfigButton" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Table Footer</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableFooter" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-4">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Row Menu (3-dot)</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableRowMenu" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Header Actions</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableHeaderActions" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Saved Queries</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableSavedQueries" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Summary Chips</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableChipFilters" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Column Freezing</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableFreeze" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</form>
+}

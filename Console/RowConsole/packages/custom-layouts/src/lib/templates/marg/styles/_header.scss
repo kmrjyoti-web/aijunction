@@ -1,0 +1,236 @@
+@import './variables';
+
+.marg-header {
+    height: $header-height;
+    background-color: $marg-header-bg;
+    color: $marg-text-light;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; // Space between Logo/Left and Actions/Right
+    padding: 0 15px;
+    font-family: sans-serif; // Or specific font
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    .left-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            height: 40px;
+
+            img {
+                height: 25px;
+            }
+        }
+
+        .menu-toggle {
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .store-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            border-left: 1px solid $marg-border-color;
+            padding-left: 15px;
+
+            // Hide on Mobile
+            @media (max-width: 768px) {
+                display: none;
+            }
+
+            .store-name {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                cursor: pointer;
+            }
+
+            .status-info {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                color: #aed581; // Greenish text for Wifi/Online
+                font-size: 11px;
+                margin-left: 15px;
+                padding-left: 15px;
+                border-left: 1px solid $marg-border-color;
+            }
+        }
+    }
+
+    .right-section {
+        display: flex;
+        align-items: center;
+        gap: 10px; // Spacing between elements
+
+        .divider {
+            height: 24px;
+            width: 1px;
+            background-color: #E0E0E0; // Light grey divider
+            margin: 0 5px;
+        }
+
+        .header-special-btn {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            background: transparent; // No background
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, opacity 0.2s;
+
+            .special-icon {
+                width: 20px;
+                height: 20px;
+                stroke-width: 2; // Make them slightly bolder
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05); // Subtle hover effect
+                border-radius: 4px;
+            }
+
+            &.quick-action {
+                .special-icon {
+                    color: #ffffff; // White icon
+                }
+            }
+
+            &.app-switch {
+                .special-icon {
+                    color: #ffffff; // White icon
+                }
+            }
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+
+            // Shared Action Item Styles
+            .action-item {
+                display: flex;
+                flex-direction: column; // Default for Desktop
+                align-items: center;
+                justify-content: center;
+                padding: 0 12px;
+                cursor: pointer;
+                border-left: 1px solid $marg-border-color;
+                height: $header-height;
+                transition: background 0.2s;
+                min-width: 50px;
+
+                &:hover {
+                    background-color: rgba(0, 0, 0, 0.1);
+                }
+
+                .icon {
+                    font-size: 18px;
+                    margin-bottom: 2px;
+                    width: 18px;
+                    height: 18px;
+                }
+
+                span {
+                    font-size: 10px;
+                    white-space: nowrap;
+                }
+            }
+
+            // More Button (3 Dots) - Mobile Only
+            .more-actions-btn {
+                display: none; // Hidden on Desktop
+
+                @media (max-width: 768px) {
+                    display: flex;
+                }
+            }
+
+            // Collapsible Items
+            .collapsible-actions {
+                display: flex;
+                align-items: center;
+
+                @media (max-width: 768px) {
+                    display: none; // Hidden by default on Mobile
+
+                    // Mobile Dropdown State
+                    &.mobile-open {
+                        display: flex;
+                        flex-direction: column;
+                        position: absolute;
+                        top: $header-height;
+                        right: 0;
+                        background: white;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                        z-index: 1000;
+                        width: 150px;
+                        border-radius: 0 0 4px 4px;
+                        color: #333; // Ensure text is visible on white bg
+
+                        .action-item {
+                            width: 100%;
+                            flex-direction: row; // Horizontal in dropdown
+                            height: 40px;
+                            justify-content: flex-start;
+                            padding: 0 15px;
+                            border-left: none;
+                            border-bottom: 1px solid #eee;
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+
+                            .icon {
+                                margin-bottom: 0;
+                                margin-right: 10px;
+                                color: #555;
+                            }
+
+                            span {
+                                font-size: 13px;
+                                color: #333;
+                            }
+
+                            &:hover {
+                                background-color: #f5f5f5;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Always Visible
+            .always-visible-actions {
+                display: flex;
+                align-items: center;
+            }
+        }
+
+        .user-profile {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

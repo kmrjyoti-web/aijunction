@@ -1,0 +1,39 @@
+@if (item(); as contact) {
+<footer class="flex-shrink-0 bg-gray-200 p-1.5 border-t-2 border-gray-300 text-gray-800 shadow-inner">
+  <!-- Info Panels -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-1.5 mb-1.5">
+    @for (panel of config().panels; track panel.title) {
+    <div class="bg-gray-50 p-2 rounded-sm border border-gray-300">
+      <h4 class="font-bold text-xs mb-1.5 border-b border-dashed border-gray-400 pb-1">{{ panel.title }}</h4>
+      <div class="grid gap-x-2 gap-y-1 text-xs" [class.grid-cols-2]="panel.gridCols === 2"
+        [class.grid-cols-1]="!panel.gridCols || panel.gridCols === 1">
+        @for (field of panel.fields; track field.code) {
+        <span class="text-gray-600">{{ field.label }}</span>
+        <span class="font-semibold text-right truncate">
+          @switch (field.type) {
+          @case ('currency') {
+          {{ contact[field.code] | number:'1.2-2' }}
+          }
+          @case ('date') {
+          {{ contact[field.code] | date:'mediumDate' }}
+          }
+          @default {
+          {{ contact[field.code] || 'N/A' }}
+          }
+          }
+        </span>
+        }
+      </div>
+    </div>
+    }
+  </div>
+  <!-- Action Buttons -->
+  @if(config().buttons.length > 0) {
+  <div class="flex items-center gap-1">
+    @for(button of config().buttons; track button.key) {
+    <button [class]="button.class + ' px-2 py-1 rounded-sm text-xs'">{{ button.label }}</button>
+    }
+  </div>
+  }
+</footer>
+}

@@ -1,0 +1,20 @@
+<div class="flex items-center gap-2 flex-wrap">
+  @for(chip of chips(); track chip.id) {
+  <div class="flex items-center gap-2 pl-3 pr-1 py-1 rounded-full text-xs font-medium bg-gray-200 text-gray-800"
+    [class.cursor-pointer]="chip.aggregation === 'count' && chip.filterValue"
+    [class.hover:bg-indigo-200]="chip.aggregation === 'count' && chip.filterValue"
+    [title]="(chip.aggregation === 'count' && chip.filterValue) ? 'Click to filter' : ''" (click)="onChipClick(chip)">
+    <span>{{ chip.label }}: <span class="font-bold">{{ chip.displayValue }}</span></span>
+    <button (click)="$event.stopPropagation(); removeChip.emit(chip.id)" class="p-1 rounded-full hover:bg-gray-300"
+      title="Remove chip">
+      <i class="pi pi-times text-xs"></i>
+    </button>
+  </div>
+  }
+  <button (click)="addChip.emit()"
+    class="flex items-center gap-1.5 px-2 py-1 rounded-full text-xs font-medium border border-dashed border-gray-400 text-gray-600 hover:bg-gray-100"
+    title="Add another chip">
+    <i class="pi pi-plus text-xs"></i>
+    <span>Add</span>
+  </button>
+</div>

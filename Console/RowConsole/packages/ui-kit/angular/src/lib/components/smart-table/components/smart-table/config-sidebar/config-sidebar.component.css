@@ -1,0 +1,40 @@
+/* Ensure CodeMirror takes full height and has custom background */
+.CodeMirror {
+  height: 100% !important;
+  background-color: #f8fafc;
+  /* slight off-white/gray for code background */
+}
+
+/* Optional: styling for the neo theme override if needed */
+.cm-s-neo.CodeMirror {
+  background-color: #f8fafc;
+}
+
+/* Fix for slider/toggle button if needed */
+/* Ensure range slider looks good */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #4f46e5;
+  /* indigo-600 */
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: #e2e8f0;
+  /* gray-200 */
+  border-radius: 2px;
+}

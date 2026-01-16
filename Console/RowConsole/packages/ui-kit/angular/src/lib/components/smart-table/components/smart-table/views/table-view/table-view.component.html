@@ -1,0 +1,194 @@
+<div class="h-full overflow-auto border-x border-b border-gray-300">
+  <table class="min-w-full border-collapse bg-white">
+    <thead class="sticky top-0 z-20 bg-gray-100">
+      <tr>
+        @for(col of columns(); track col.code; let i = $index; let isLast = $last) {
+        <th scope="col" [style.width]="col.width" [style.left]="col.frozen ? columnOffsets()[i] : null"
+          class="p-2 border-b border-t border-l border-gray-300 font-semibold text-gray-600 transition-all duration-150 relative text-xs"
+          [class.border-r]="isLast || col.frozen || showGridlines()" [class.sticky]="col.frozen"
+          [class.z-30]="col.frozen" [class.bg-gray-100]="col.frozen" [class.opacity-50]="draggedColumnIndex() === i"
+          (dragover)="onDragOver($event)" (drop)="onDrop($event, i)" (dragend)="onDragEnd()">
+          <div
+            class="flex items-center gap-2 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1"
+            [class.justify-center]="col.align === 'center'" [class.justify-end]="col.align === 'right'"
+            [class.justify-between]="col.align !== 'center' && col.align !== 'right'"
+            [class.cursor-pointer]="col.sortable"
+            [class.cursor-move]="col.columnType !== 'CHECKBOX' && col.columnType !== 'ACTION' && !col.frozen"
+            [attr.draggable]="col.columnType !== 'CHECKBOX' && col.columnType !== 'ACTION' && !col.frozen"
+            [attr.tabindex]="col.sortable ? 0 : -1" (dragstart)="onDragStart(i)" (click)="onSort(col.code)"
+            (keydown.enter)="$event.preventDefault(); onSort(col.code)"
+            (keydown.space)="$event.preventDefault(); onSort(col.code)"
+            [title]="col.sortable ? (sortColumn() === col.code ? (sortDirection() === 'asc' ? 'Sort descending' : 'Sort ascending') : 'Sort by ' + col.name) : null">
+            @if (col.columnType === 'CHECKBOX' && enableMultiSelect()) {
+            <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              [checked]="isAllSelectedOnPage()" (change)="toggleSelectAll()" (click)="$event.stopPropagation()"
+              title="Select all on page">
+            } @else if (col.columnType === 'ACTION' && headerMenuConfig()) {
+            <div class="relative mx-auto">
+              <button (click)="$event.stopPropagation(); isHeaderMenuOpen.set(!isHeaderMenuOpen())"
+                class="p-1 rounded-full hover:bg-gray-200" [disabled]="selectedIds().size === 0"
+                [class.opacity-50]="selectedIds().size === 0" title="Bulk actions">
+                <i class="pi pi-ellipsis-v"></i>
+              </button>
+              @if (isHeaderMenuOpen()) {
+              <app-header-menu [menuConfig]="headerMenuConfig()!" (actionClicked)="handleHeaderMenuAction($event)"
+                (clickOutside)="isHeaderMenuOpen.set(false)"></app-header-menu>
+              }
+            </div>
+            } @else {
+            <div class="flex items-center">
+              <span>{{ col.name }}</span>
+              @if (sortColumn() === col.code) {
+              <i class="pi ml-2 text-xs" [class.pi-sort-amount-up-alt]="sortDirection() === 'asc'"
+                [class.pi-sort-amount-down]="sortDirection() === 'desc'"></i>
+              }
+            </div>
+            }
+
+            @if(col.filterable) {
+            <div class="relative">
+              <button (click)="openFilterMenu(col, $event)" class="p-1 rounded-full hover:bg-gray-200"
+                [class.text-indigo-500]="activeFilters()?.[col.code]" title="Filter column">
+                <i class="pi pi-filter"></i>
+              </button>
+              @if(openFilterMenuForColumn() === col) {
+              <app-excel-filter [column]="col" [data]="data()" [activeFilter]="activeFilters()?.[col.code]"
+                (apply)="handleApplyExcelFilter($event, col.code)" (close)="closeFilterMenu()" />
+              }
+            </div>
+            }
+          </div>
+        </th>
+        }
+      </tr>
+    </thead>
+    <tbody class="">
+      @for(row of data(); track row.organization_id; let rowIndex = $index) {
+      @let isRowActive = selectedIds().has(row.organization_id) || keyboardActiveRowIndex() === rowIndex;
+      <tr [id]="'table-item-' + row.organization_id"
+        class="transition-colors duration-150 cursor-pointer relative group border-b border-gray-200"
+        (click)="onRowClick(row)" (contextmenu)="onRowContextMenu($event, row)"
+        [class.odd:bg-gray-50]="stripedRows() && !isRowActive" [class.hover:bg-gray-100]="rowHover() && !isRowActive"
+        [class.z-10]="isRowActive" [class.border-y-2]="isRowActive" [class.border-y-indigo-400]="isRowActive"
+        [class.-my-px]="isRowActive">
+        @for(col of columns(); track col.code; let colIndex = $index; let isLast = $last) {
+        <td class="whitespace-nowrap p-1.5 border-l border-gray-200 transition-all duration-150"
+          [class]="densityClass()" [class.font-bold]="isRowActive"
+          [class.!text-sm]="isRowActive && (density() === 'compact' || density() === 'ultra-compact')"
+          [class.!text-base]="isRowActive && density() === 'cozy'"
+          [class.!text-lg]="isRowActive && density() === 'comfortable'"
+          [class.border-r]="isLast || col.frozen || showGridlines()" [class.sticky]="col.frozen"
+          [class.z-10]="col.frozen" [style.left]="col.frozen ? columnOffsets()[colIndex] : null"
+          [class.bg-white]="col.frozen && !selectedIds().has(row.organization_id)"
+          [class.group-hover:bg-gray-100]="col.frozen && rowHover() && !selectedIds().has(row.organization_id)"
+          [class.bg-transparent]="isRowActive" [class.text-center]="col.align === 'center'"
+          [class.text-right]="col.align === 'right'"
+          [class.text-left]="col.align !== 'center' && col.align !== 'right'">
+          @switch (col.columnType) {
+          @case('CHECKBOX') {
+          @if (enableMultiSelect()) {
+          <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+            [checked]="selectedIds().has(row.organization_id)" (change)="toggleRowSelection(row.organization_id)"
+            (click)="$event.stopPropagation()">
+          }
+          }
+          @case('ACTION') {
+          <div class="flex justify-center items-center gap-1 relative">
+            <div
+              class="flex items-center gap-1 transition-opacity opacity-0 group-hover:opacity-100 focus-within:opacity-100"
+              [class.opacity-100]="keyboardActiveRowIndex() === rowIndex">
+              @if(rowActions(); as actions) {
+              @for(action of actions; track action.action) {
+              <button (click)="$event.stopPropagation(); rowAction.emit({ action: action.action, row: row })"
+                class="p-1.5 rounded-full" [class]="action.color" [title]="action.label">
+                <i [class]="action.icon"></i>
+              </button>
+              }
+              }
+            </div>
+            <button (click)="toggleRowMenu($event, row.organization_id)"
+              class="p-1.5 rounded-full transition-opacity opacity-0 group-hover:opacity-100 focus-within:opacity-100 hover:bg-gray-200"
+              [class.opacity-100]="keyboardActiveRowIndex() === rowIndex" title="More actions">
+              <i class="pi pi-ellipsis-v text-xs"></i>
+            </button>
+            @if (openMenuRowId() === row.organization_id) {
+            <app-row-menu [menuConfig]="rowMenuConfig()" [row]="row" [position]="contextMenuPosition()"
+              (actionClicked)="handleRowMenuAction($event)" (clickOutside)="closeRowMenu()" />
+            }
+          </div>
+          }
+          @case('DATE') {
+          <span>{{ row[col.code] | date:'mediumDate' }}</span>
+          }
+          @default {
+          @if (col.cellTemplate) {
+          @if (density() === 'ultra-compact') {
+          <span class="font-semibold text-gray-800">{{ row['contact_person'] }}</span>
+          <span class="text-gray-500 ml-1">({{ row['organization_name'] }})</span>
+          } @else {
+          <div class="flex items-center gap-2">
+            @for(item of col.cellTemplate; track item.code) {
+            @if(item.columnType === 'IMAGE') {
+            @if (row[item.code]) {
+            <img [src]="row[item.code]" alt="Avatar" class="h-6 w-6 object-cover flex-shrink-0 rounded-full">
+            } @else {
+            <div class="h-6 w-6 bg-gray-200 flex items-center justify-center flex-shrink-0 rounded-full">
+              <span class="text-xs font-semibold text-gray-500">{{ (row['contact_person']?.[0] || 'A') }}</span>
+            </div>
+            }
+            }
+            }
+            <div>
+              @for (item of col.cellTemplate; track item.code) {
+              @if(item.columnType !== 'IMAGE') {
+              @let value = row[item.code];
+              @switch (item.tag || 'span') {
+              @case ('p') { <p class="font-semibold text-gray-800" [class.font-bold]="item.bold">{{ value }}</p> }
+              @case ('small') { <small class="text-gray-500" [class.font-bold]="item.bold">{{ value }}</small> }
+              @case ('span') { <span [class.font-bold]="item.bold">{{ value }}</span> }
+              }
+              }
+              }
+            </div>
+          </div>
+          }
+          } @else {
+          <span>{{ row[col.code] }}</span>
+          }
+          }
+          }
+        </td>
+        }
+      </tr>
+      }
+      @for (empty of emptyRows(); track $index) {
+      <tr class="border-b border-gray-200">
+        @for(col of columns(); track col.code; let isLast = $last) {
+        <td class="whitespace-nowrap p-1.5 border-l border-gray-200" [class.border-r]="isLast || showGridlines()"
+          [class]="densityClass()">&nbsp;</td>
+        }
+      </tr>
+      }
+    </tbody>
+    @if(footerConfig()?.enabled && footerData(); as data) {
+    <tfoot class="sticky bottom-0 z-20 bg-gray-100">
+      <tr>
+        @for(col of columns(); track col.code; let i = $index; let isLast = $last) {
+        <td [style.left]="col.frozen ? columnOffsets()[i] : null"
+          class="p-2 border-t border-l border-gray-300 font-semibold text-gray-700 text-xs"
+          [class.border-r]="isLast || col.frozen || showGridlines()" [class.sticky]="col.frozen"
+          [class.z-10]="col.frozen" [class.bg-gray-100]="col.frozen" [class.text-center]="col.align === 'center'"
+          [class.text-right]="col.align === 'right'"
+          [class.text-left]="col.align !== 'center' && col.align !== 'right'">
+          @if(data[col.code]) {
+          <div [innerHTML]="data[col.code]"></div>
+          } @else {
+          <span>&nbsp;</span>
+          }
+        </td>
+        }
+      </tr>
+    </tfoot>
+    }
+  </table>
+</div>

@@ -1,0 +1,119 @@
+@if (isOpen()) {
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50" (click)="close.emit()">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-lg m-4 flex flex-col max-h-[90vh]"
+        (click)="$event.stopPropagation()">
+        <header class="flex items-center justify-between p-4 border-b border-gray-200">
+            <h3 class="text-lg font-semibold">Add Summary Chip</h3>
+            <button (click)="close.emit()" class="p-2 rounded-full hover:bg-gray-100">
+                <i class="pi pi-times"></i>
+            </button>
+        </header>
+
+        <div class="p-6 overflow-y-auto">
+            <!-- Tab Navigation -->
+            <div class="border-b border-gray-200">
+                <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                    <button (click)="activeTab.set('manual')" [class.border-indigo-500]="activeTab() === 'manual'"
+                        [class.text-indigo-600]="activeTab() === 'manual'"
+                        class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+                        Manual
+                    </button>
+                    <button (click)="activeTab.set('ai')" [class.border-indigo-500]="activeTab() === 'ai'"
+                        [class.text-indigo-600]="activeTab() === 'ai'"
+                        class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+                        Create with AI
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="pt-6">
+                @if (activeTab() === 'manual') {
+                <div class="space-y-4">
+                    <div>
+                        <label for="chipLabel" class="block text-sm font-medium text-gray-700">Chip Label</label>
+                        <input type="text" id="chipLabel" #labelInput (input)="label.set(labelInput.value)"
+                            [value]="label()" placeholder="e.g., Total Revenue"
+                            class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                    </div>
+                    <div>
+                        <label for="chipColumn" class="block text-sm font-medium text-gray-700">Column</label>
+                        <select id="chipColumn" #columnSelect
+                            (change)="selectedColumnCode.set(columnSelect.value); selectedAggregation.set('count')"
+                            [value]="selectedColumnCode()"
+                            class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            <option value="" disabled>Select a column...</option>
+                            <optgroup label="Numeric Fields">
+                                @for(col of numericColumns(); track col.code) { <option [value]="col.code">{{ col.name
+                                    }}</option> }
+                            </optgroup>
+                            <optgroup label="Other Fields">
+                                @for(col of categoricalColumns(); track col.code) { <option [value]="col.code">{{
+                                    col.name }}</option> }
+                            </optgroup>
+                        </select>
+                    </div>
+                    @if (selectedColumnCode()) {
+                    <div>
+                        <label for="chipAggregation" class="block text-sm font-medium text-gray-700">Calculation</label>
+                        <select id="chipAggregation" #aggSelect (change)="selectedAggregation.set(aggSelect.value)"
+                            [value]="selectedAggregation()"
+                            class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                            @for (agg of availableAggregations(); track agg) {
+                            <option [value]="agg" class="capitalize">{{ agg }}</option>
+                            }
+                        </select>
+                    </div>
+                    }
+                    @if (isCategoricalCount()) {
+                    <div>
+                        <label for="chipFilterValue" class="block text-sm font-medium text-gray-700">Value to
+                            Count</label>
+                        <input type="text" id="chipFilterValue" #filterValueInput
+                            (input)="filterValue.set(filterValueInput.value)" [value]="filterValue()"
+                            placeholder="e.g., Web"
+                            class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                        <p class="mt-1 text-xs text-gray-500">Specify which value in the selected column to count (e.g.,
+                            'Web' for Lead Source).</p>
+                    </div>
+                    }
+                </div>
+                } @else {
+                <div class="space-y-4">
+                    <div>
+                        <label for="aiPrompt" class="block text-sm font-medium text-gray-700">What do you want to
+                            see?</label>
+                        <textarea id="aiPrompt" #promptInput (input)="aiPrompt.set(promptInput.value)"
+                            [value]="aiPrompt()" rows="4"
+                            placeholder="e.g., 'Show total revenue' or 'Count of leads from Web'"
+                            class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 font-mono"></textarea>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+
+        <footer class="p-4 border-t border-gray-200 flex justify-end gap-3">
+            <button (click)="close.emit()"
+                class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
+            @if (activeTab() === 'manual') {
+            <button (click)="handleManualSave()" [disabled]="!manualFormIsValid()"
+                class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                Add Chip
+            </button>
+            } @else {
+            <button (click)="handleAiGenerate()" [disabled]="!aiPrompt().trim() || isGenerating()"
+                class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2">
+                @if(isGenerating()) {
+                <i class="pi pi-spin pi-spinner"></i>
+                <span>Generating...</span>
+                } @else {
+                <i class="pi pi-sparkles"></i>
+                <span>Generate & Add</span>
+                }
+            </button>
+            }
+        </footer>
+    </div>
+</div>
+}

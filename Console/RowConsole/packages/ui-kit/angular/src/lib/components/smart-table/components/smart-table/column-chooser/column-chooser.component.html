@@ -1,0 +1,21 @@
+<div
+  class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+  <div class="py-1">
+    <div class="px-4 py-2">
+      <p class="text-xs text-gray-400 uppercase tracking-wider">Show/Hide Columns</p>
+      <p class="text-xs text-gray-400">Drag to reorder</p>
+    </div>
+    <ul class="space-y-1">
+      @for(col of allColumns(); track col.code; let i = $index) {
+      <li class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors duration-150"
+        [class.opacity-50]="draggedColumnIndex() === i" draggable="true" (dragstart)="onDragStart(i)"
+        (dragover)="onDragOver($event)" (drop)="onDrop($event, i)" (dragend)="onDragEnd()">
+        <input type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          [checked]="isColumnVisible(col.code)" (change)="onVisibilityChange(col, $event)">
+        <span class="ml-3">{{ col.name }}</span>
+        <i class="pi pi-bars ml-auto cursor-move text-gray-400" title="Drag to reorder"></i>
+      </li>
+      }
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+// Marg Layout Theme Variables - Dynamic
+
+:root {
+    --marg-primary: #006064;
+    --marg-header-bg: #1e5f74;
+    --marg-sidebar-bg: #0d1e25;
+    --marg-sidebar-text: #b0bec5;
+    --marg-sidebar-hover: rgba(255, 255, 255, 0.05);
+    --marg-accent: #26a69a;
+    --marg-icon-color: #90a4ae;
+    --marg-font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --marg-base-font-size: 14px;
+    --marg-content-bg: #f5f7f9;
+}
+
+$marg-primary: var(--marg-primary);
+$marg-secondary: #00838f;
+$marg-header-bg: var(--marg-header-bg);
+$marg-sidebar-bg: var(--marg-sidebar-bg);
+$marg-sidebar-hover: var(--marg-sidebar-hover);
+$marg-text-light: #ffffff;
+$marg-text-muted: var(--marg-sidebar-text);
+$marg-border-color: rgba(255, 255, 255, 0.1);
+$marg-accent: var(--marg-accent);
+$marg-content-bg: var(--marg-content-bg); // Missing variable
+
+// Header Specifics
+$header-height: 50px;
+$footer-height: 30px;
+
+// Typography
+$marg-font-stack: var(--marg-font-family);

@@ -1,0 +1,104 @@
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50" (click)="close.emit()">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl m-4 flex flex-col max-h-[90vh]"
+    (click)="$event.stopPropagation()">
+    <header class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><i class="pi pi-sparkles text-indigo-500"></i>Create
+        Layout with AI</h3>
+      <button (click)="close.emit()" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+
+    <div class="p-6 space-y-6 overflow-y-auto">
+      <!-- Step 1: Name and Target -->
+      <div>
+        <h4 class="font-medium text-gray-800 mb-2">1. Name and Target</h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="layoutName" class="block text-sm font-medium text-gray-700">Layout Name</label>
+            <input type="text" id="layoutName" #nameInput [value]="layoutName()"
+              (input)="layoutName.set(nameInput.value)"
+              class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              placeholder="e.g., 'Modern Contact Card'">
+          </div>
+          <div>
+            <label for="targetView" class="block text-sm font-medium text-gray-700">Target View</label>
+            <select id="targetView" #targetSelect [value]="targetView()"
+              (change)="targetView.set($any(targetSelect.value))"
+              class="mt-1 block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+              <option value="card">Card</option>
+              <option value="list-item">List Item</option>
+              <option value="table-row">Table Row</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Provide Input -->
+      <div>
+        <h4 class="font-medium text-gray-800 mb-2">2. Provide Design Input</h4>
+        <!-- Tabs -->
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+            <button (click)="activeTab.set('image')" [class.border-indigo-500]="activeTab() === 'image'"
+              [class.text-indigo-600]="activeTab() === 'image'"
+              class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+              Upload Image
+            </button>
+            <button (click)="activeTab.set('html')" [class.border-indigo-500]="activeTab() === 'html'"
+              [class.text-indigo-600]="activeTab() === 'html'"
+              class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm">
+              Use HTML
+            </button>
+          </nav>
+        </div>
+
+        <!-- Tab Panels -->
+        <div class="pt-4">
+          @if (activeTab() === 'image') {
+          <div>
+            <label for="file-upload"
+              class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500">
+              <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                <div class="space-y-1 text-center">
+                  <i class="pi pi-image mx-auto h-12 w-12 text-gray-400"></i>
+                  <div class="flex text-sm text-gray-600">
+                    <p class="pl-1">
+                      @if (fileName()) {
+                      <span class="font-semibold">{{ fileName() }}</span> selected
+                      } @else {
+                      <span>Upload a file</span> or drag and drop
+                      }
+                    </p>
+                  </div>
+                  <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                </div>
+              </div>
+            </label>
+            <input id="file-upload" name="file-upload" type="file" class="sr-only" (change)="handleFileChange($event)"
+              accept="image/*">
+          </div>
+          } @else {
+          <div>
+            <textarea #htmlInput rows="8"
+              class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 font-mono"
+              placeholder="e.g., <div><h2>{{ organization_name }}</h2></div>" [value]="htmlPrompt()"
+              (input)="htmlPrompt.set(htmlInput.value)"></textarea>
+            <p class="mt-2 text-xs text-gray-500">Provide a simple HTML structure. The AI will add styling and map the
+              data fields.</p>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <footer class="p-4 border-t border-gray-200 flex justify-end gap-3">
+      <button (click)="close.emit()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
+      <button (click)="handleGenerate()" [disabled]="!formIsValid()"
+        class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed">
+        Generate
+      </button>
+    </footer>
+  </div>
+</div>

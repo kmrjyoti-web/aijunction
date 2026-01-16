@@ -1,0 +1,70 @@
+<div
+  class="fixed bottom-20 right-8 w-96 h-[60vh] max-h-[700px] bg-white rounded-lg shadow-2xl z-50 flex flex-col border border-gray-200">
+  <!-- Header -->
+  <header class="flex items-center justify-between p-3 border-b border-gray-200 flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="p-1.5 bg-indigo-100 rounded-full">
+        <i class="pi pi-sparkles text-indigo-600"></i>
+      </div>
+      <h2 class="text-md font-semibold text-gray-800">AI Assistant</h2>
+    </div>
+    <button (click)="close.emit()" title="Close Chat"
+      class="p-2 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100">
+      <i class="pi pi-times"></i>
+    </button>
+  </header>
+
+  <!-- Message List -->
+  <div class="flex-grow p-4 overflow-y-auto">
+    <div class="space-y-4">
+      @for(msg of messages(); track $index) {
+      @switch(msg.sender) {
+      @case('system') {
+      <div class="text-center text-xs text-gray-500 italic">
+        {{ msg.text }}
+      </div>
+      }
+      @case('user') {
+      <div class="flex justify-end">
+        <div class="bg-indigo-600 text-white rounded-lg rounded-br-none py-2 px-3 max-w-xs">
+          <p class="text-sm">{{ msg.text }}</p>
+        </div>
+      </div>
+      }
+      @case('ai') {
+      <div class="flex justify-start">
+        <div class="bg-gray-200 text-gray-800 rounded-lg rounded-bl-none py-2 px-3 max-w-xs">
+          <p class="text-sm" [innerHTML]="msg.text.replace(/\n/g, '<br>')"></p>
+        </div>
+      </div>
+      }
+      }
+      }
+      @if (isLoading()) {
+      <div class="flex justify-start">
+        <div class="bg-gray-200 rounded-lg rounded-bl-none py-2 px-3">
+          <div class="flex items-center space-x-1">
+            <span class="h-2 w-2 bg-indigo-400 rounded-full animate-pulse [animation-delay:-0.3s]"></span>
+            <span class="h-2 w-2 bg-indigo-400 rounded-full animate-pulse [animation-delay:-0.15s]"></span>
+            <span class="h-2 w-2 bg-indigo-400 rounded-full animate-pulse"></span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Input Form -->
+  <footer class="p-3 border-t border-gray-200 flex-shrink-0">
+    <div class="flex items-center gap-2">
+      <input #chatInput type="text" (keydown.enter)="sendMessage()" placeholder="Type your question..."
+        class="flex-1 w-full px-3 py-2 text-sm border border-gray-300 rounded-md bg-white focus:ring-indigo-500 focus:border-indigo-500 disabled:opacity-50"
+        [disabled]="isLoading()">
+      <button (click)="sendMessage()"
+        class="px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="isLoading()">
+        <i class="pi pi-send"></i>
+      </button>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,364 @@
+@import './variables';
+
+// Host styling controls the "Flow" width in the layout
+:host {
+    display: block;
+    width: 230px; // Default expanded width
+    transition: width 0.3s ease;
+    flex-shrink: 0;
+    position: relative; // Anchor for absolute children
+    z-index: 100; // Ensure high z-index for overlay
+
+    &.collapsed {
+        width: 60px; // Collapsed flow width
+    }
+
+    // Mobile Reset
+    @media (max-width: 768px) {
+        position: absolute; // Float everything on mobile
+        height: 100%;
+
+        // If not collapsed (Open), width is 230px (default)
+        // If collapsed (Closed), width is 0
+        &.collapsed {
+            width: 0 !important;
+            overflow: hidden;
+            border: none;
+        }
+    }
+}
+
+.marg-sidebar-wrapper {
+    width: 100%;
+    height: 100%; // Fill host height (defined by grid)
+    margin-top: 0; // Start from top to align logo with header
+    background-color: $marg-sidebar-bg;
+    color: $marg-text-muted;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid $marg-border-color;
+    transition: width 0.3s ease, box-shadow 0.3s ease; // Animate width and shadow
+    flex-shrink: 0;
+    overflow: hidden;
+    font-family: $marg-font-stack;
+    -webkit-font-smoothing: antialiased; // Enhance font quality
+    -moz-osx-font-smoothing: grayscale;
+
+    &.collapsed {
+        width: 100%; // Match host width (60px)
+
+        // Hide elements when collapsed AND not hovered
+        &:not(.hover-expanded) {
+
+            // Hide Text Labels and Arrow
+            .menu-text,
+            .arrow-icon,
+            .sub-menu-list {
+                display: none !important;
+            }
+
+            // Search Area Styling
+            .search-area {
+                padding: 10px 0;
+                display: flex;
+                justify-content: center;
+
+                .search-input-wrapper {
+                    padding: 8px;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 5px;
+                    justify-content: center;
+                    border: none;
+                    background: rgba(255, 255, 255, 0.05);
+
+                    input {
+                        display: none; // Hide Input
+                    }
+
+                    i {
+                        margin: 0;
+                        width: 18px;
+                        height: 18px;
+                        color: white;
+                    }
+                }
+            }
+
+            // Menu Items Centering
+            .menu-item {
+                justify-content: center;
+                padding: 15px 0;
+                position: relative; // For active border
+                transition: background 0.2s;
+
+                .menu-icon {
+                    margin-right: 0;
+                    width: 24px; // Increased from 20px
+                    height: 24px;
+                }
+            }
+
+            // Active Item Indicator (Left Border) for Collapsed State
+            .active>.menu-item {
+                border-left-width: 0; // Reset default border
+                background-color: transparent; // Clean background if preferred
+
+                // Create a distinct left border line
+                &::before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    bottom: 0;
+                    width: 4px;
+                    background-color: $marg-accent;
+                }
+
+                .menu-icon {
+                    color: $marg-accent;
+                }
+            }
+        }
+    }
+
+    // Hover Expanded State: Behave like full width but absolute/floating
+    &.hover-expanded {
+        width: 230px !important; // Force expansion
+        position: absolute; // Float over content
+        top: 0;
+        left: 0;
+        height: 100%; // Match host height
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.4);
+        z-index: 9999; // Ensure very top
+
+        // Ensure BG is opaque
+        background-color: $marg-sidebar-bg;
+
+        // Ensure styling logic applies if class is removed
+        .menu-text,
+        .arrow-icon,
+        .sub-menu-list {
+            display: block !important;
+        }
+
+        .sidebar-content {
+            overflow-y: auto !important; // Force scroll capability
+        }
+    }
+
+    // Logo area
+    .logo-area {
+        height: $header-height;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        padding: 5px;
+    }
+
+    .sidebar-content {
+        flex: 1;
+        overflow-y: auto; // Default scroll
+        overflow-x: hidden;
+        padding-top: 10px;
+
+        // Slim Scrollbar
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.4);
+            }
+        }
+
+        .search-area {
+            padding: 0 10px 10px 10px;
+
+            .search-input-wrapper {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 6px 10px;
+                border: 1px solid $marg-border-color;
+
+                input {
+                    background: transparent;
+                    border: none;
+                    color: white;
+                    width: 100%;
+                    font-size: 13px;
+                    outline: none;
+                    font-family: inherit;
+
+                    &::placeholder {
+                        color: #78909c;
+                    }
+                }
+
+                i {
+                    color: #78909c;
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+
+            >li {
+
+                // Parent items
+                // Focus State (Keyboard Nav)
+                &.focused>.menu-item {
+                    background-color: rgba(255, 255, 255, 0.05); // Slight highlight
+                    border-left: 3px solid $marg-accent; // Match active/hover style
+
+                    .menu-icon,
+                    .menu-text,
+                    .arrow-icon {
+                        color: white !important;
+                    }
+                }
+            }
+
+            .menu-item {
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                cursor: pointer;
+                transition: all 0.2s;
+                border-left: 3px solid transparent; // Active indicator
+                color: $marg-text-muted;
+                font-size: var(--marg-base-font-size); // Dynamic size
+                font-weight: 500;
+                letter-spacing: 0.3px;
+
+                &:hover {
+                    background-color: $marg-sidebar-hover;
+                    color: white;
+                }
+
+                .menu-icon {
+                    width: 18px;
+                    height: 18px;
+                    margin-right: 12px;
+                    color: var(--marg-icon-color);
+                }
+
+                .menu-text {
+                    flex: 1;
+                }
+
+                .arrow-icon {
+                    width: 14px;
+                    height: 14px;
+                    opacity: 0.7;
+                    transition: transform 0.2s ease;
+
+                    &.rotated {
+                        transform: rotate(180deg); // Rotate 180 for full flip
+                    }
+                }
+            }
+
+            // Active Parent
+            .active>.menu-item {
+                background-color: rgba(38, 166, 154, 0.1); // Teal Tint
+                color: white;
+                border-left-color: $marg-accent; // Teal line
+
+                .menu-icon {
+                    color: $marg-accent;
+                }
+            }
+
+            // Sub Menu with Tree Lines
+            .sub-menu-list {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                background-color: rgba(0, 0, 0, 0.2); // Darker BG
+                position: relative;
+
+                .sub-menu-item {
+                    display: flex;
+                    align-items: center;
+                    padding: 8px 15px 8px 26px; // Adjust padding
+                    cursor: pointer;
+                    font-size: 13px; // Smaller font
+                    color: #b0bec5;
+                    transition: color 0.2s;
+                    position: relative;
+                    margin-left: 24px; // Indent for tree structure
+                    border-left: 1px solid rgba(255, 255, 255, 0.1); // Vertical Tree Line
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 50%;
+                        width: 10px; // Horizontal Tree Line Length
+                        height: 1px;
+                        background-color: rgba(255, 255, 255, 0.1);
+                    }
+
+                    &:hover,
+                    &.focused {
+                        color: white;
+                        background-color: rgba(255, 255, 255, 0.05); // Visible selection
+                    }
+
+                    .sub-menu-text {
+                        flex: 1;
+                    }
+
+                    .plus-icon {
+                        width: 14px;
+                        height: 14px;
+                        opacity: 0.5;
+
+                        &:hover {
+                            opacity: 1;
+                            color: $marg-accent;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .user-support {
+        padding: 15px;
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid $marg-border-color;
+
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid $marg-accent;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}

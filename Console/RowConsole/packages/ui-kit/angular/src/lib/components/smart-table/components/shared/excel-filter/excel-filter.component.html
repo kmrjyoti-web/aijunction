@@ -1,0 +1,108 @@
+<div (clickOutside)="close.emit()" (click)="$event.stopPropagation()"
+  class="absolute top-full right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30 flex flex-col max-h-[28rem]">
+  <!-- Sort Buttons -->
+  <div class="p-2 border-b border-gray-200 flex-shrink-0">
+    <button (click)="handleSort('asc')"
+      class="flex items-center gap-2 w-full px-2 py-1.5 text-sm rounded-md text-gray-700 hover:bg-gray-100">
+      <i class="pi pi-sort-amount-up-alt w-4 text-center"></i>
+      <span>Sort Ascending</span>
+    </button>
+    <button (click)="handleSort('desc')"
+      class="flex items-center gap-2 w-full px-2 py-1.5 text-sm rounded-md text-gray-700 hover:bg-gray-100">
+      <i class="pi pi-sort-amount-down w-4 text-center"></i>
+      <span>Sort Descending</span>
+    </button>
+  </div>
+
+  @if (column().columnType === 'DATE') {
+  <!-- Calendar Body -->
+  <div class="p-3">
+    <!-- Calendar header -->
+    <div class="flex items-center justify-between mb-2">
+      <button (click)="changeMonth(-1)" class="p-2 rounded-full hover:bg-gray-100" title="Previous month"><i
+          class="pi pi-chevron-left text-xs"></i></button>
+      <span class="text-sm font-semibold">{{ currentMonth() | date:'LLLL yyyy' }}</span>
+      <button (click)="changeMonth(1)" class="p-2 rounded-full hover:bg-gray-100" title="Next month"><i
+          class="pi pi-chevron-right text-xs"></i></button>
+    </div>
+    <!-- Calendar grid -->
+    <div class="grid grid-cols-7 text-center text-xs text-gray-500">
+      @for (day of ['S','M','T','W','T','F','S']; track day) {
+      <div class="w-8 h-8 flex items-center justify-center font-medium">{{day}}</div>
+      }
+    </div>
+    <div class="grid grid-cols-7 text-center text-sm">
+      @for (day of calendarGrid(); track day.date.getTime()) {
+      <div class="flex justify-center items-center">
+        <button (click)="selectDate(day.date)" class="w-8 h-8 rounded-full transition-colors"
+          [class.text-gray-400]="!day.isCurrentMonth" [class.font-semibold]="isToday(day.date)"
+          [class.bg-indigo-600]="isToday(day.date)" [class.text-white]="isToday(day.date)"
+          [class.hover:bg-gray-200]="!isDateInRange(day.date)" [class.bg-indigo-100]="isDateInRange(day.date)"
+          [class.text-indigo-700]="isDateInRange(day.date)"
+          [class.rounded-l-full]="isRangeStart(day.date) && !!rangeEnd()" [class.rounded-r-full]="isRangeEnd(day.date)"
+          [class.rounded-full]="(isRangeStart(day.date) && !rangeEnd()) || (isRangeStart(day.date) && isRangeEnd(day.date))">
+          {{ day.date | date:'d' }}
+        </button>
+      </div>
+      }
+    </div>
+    <!-- Selected range display -->
+    <div class="mt-3 text-xs text-center text-gray-500">
+      @if(rangeStart() && rangeEnd()) {
+      <span>{{ rangeStart() | date:'shortDate' }} - {{ rangeEnd() | date:'shortDate' }}</span>
+      } @else if(rangeStart()) {
+      <span>{{ rangeStart() | date:'shortDate' }}</span>
+      } @else {
+      <span>Select a date or a range</span>
+      }
+    </div>
+  </div>
+  } @else {
+  <!-- Search Input -->
+  <div class="p-2 border-b border-gray-200 flex-shrink-0">
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+        <i class="pi pi-search text-gray-400 text-xs"></i>
+      </div>
+      <input #searchInput type="search" (input)="searchTerm.set(searchInput.value)" placeholder="Search values..."
+        class="block w-full pl-8 pr-3 py-1.5 border border-gray-300 rounded-md bg-white text-sm focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+    </div>
+  </div>
+  <!-- Value List -->
+  <div class="flex-grow p-2 overflow-y-auto">
+    <div class="flex items-center px-1">
+      <input type="checkbox" id="select-all-filter"
+        class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" [checked]="isAllSelected()"
+        (change)="toggleSelectAll()">
+      <label for="select-all-filter" class="ml-2 text-sm font-medium text-gray-900">(Select All)</label>
+    </div>
+    <hr class="my-2 border-gray-200">
+    <ul class="space-y-1">
+      @for(value of filteredValues(); track value) {
+      <li class="flex items-center p-1 rounded-md hover:bg-gray-100">
+        <input type="checkbox" [id]="'filter-val-' + value"
+          class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          [checked]="selectedValues().has(value)" (change)="toggleValue(value)">
+        <label [for]="'filter-val-' + value" class="ml-2 text-sm text-gray-700 truncate" [title]="value">{{ value
+          }}</label>
+      </li>
+      }
+      @if(filteredValues().length === 0) {
+      <li class="px-2 py-1 text-sm text-center text-gray-500">No values found.</li>
+      }
+    </ul>
+  </div>
+  }
+
+  <!-- Footer Actions -->
+  <div class="p-2 border-t border-gray-200 flex-shrink-0 flex justify-end gap-2">
+    <button (click)="handleClear()"
+      class="px-3 py-1.5 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+      Clear
+    </button>
+    <button (click)="handleApply()"
+      class="px-3 py-1.5 text-xs font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700">
+      Apply
+    </button>
+  </div>
+</div>

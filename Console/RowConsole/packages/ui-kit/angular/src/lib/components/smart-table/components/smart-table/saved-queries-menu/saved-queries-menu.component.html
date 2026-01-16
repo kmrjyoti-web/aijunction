@@ -1,0 +1,27 @@
+<div
+  class="origin-top-right absolute right-0 mt-2 w-64 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+  <div class="py-1">
+    <a (click)="saveCurrent.emit()" href="javascript:void(0)"
+      class="flex items-center gap-3 px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-gray-100">
+      <i class="pi pi-plus-circle w-4 text-center"></i><span>Save current view...</span>
+    </a>
+  </div>
+  <div class="my-1 border-t border-gray-200"></div>
+  <div class="py-1">
+    @if (queries().length === 0) {
+    <div class="px-4 py-2 text-sm text-gray-500 italic">No saved views yet.</div>
+    } @else {
+    @for (query of queries(); track query.id) {
+    <div class="flex items-center justify-between group px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+      <a (click)="selectQuery.emit(query.id)" href="javascript:void(0)" class="flex-grow truncate" [title]="query.name">
+        {{ query.name }}
+      </a>
+      <button (click)="deleteQuery.emit(query.id)" title="Delete this view"
+        class="ml-2 p-1 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-100 text-red-500 transition-opacity">
+        <i class="pi pi-trash text-xs"></i>
+      </button>
+    </div>
+    }
+    }
+  </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="fixed inset-0 bg-gray-900/60 flex items-center justify-center z-50" (click)="close.emit()">
+  <div class="bg-white rounded-lg shadow-xl w-full max-w-md m-4" (click)="$event.stopPropagation()">
+    <header class="flex items-center justify-between p-4 border-b border-gray-200">
+      <h3 class="text-lg font-semibold flex items-center gap-2"><i class="pi pi-sync text-indigo-500"></i>Enable Offline
+        Sync?</h3>
+      <button (click)="close.emit()" class="p-2 rounded-full hover:bg-gray-100">
+        <i class="pi pi-times"></i>
+      </button>
+    </header>
+    <div class="p-6 text-sm text-gray-600 space-y-4">
+      <p>
+        Switching to <strong>SYNC</strong> mode will download all contact data to your device for fast, offline access.
+      </p>
+      <p>
+        The initial download may take a moment. Future loads will be instantaneous.
+      </p>
+    </div>
+    <footer class="p-4 border-t border-gray-200 flex justify-end gap-3">
+      <button (click)="close.emit()"
+        class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancel</button>
+      <button (click)="startSync.emit()"
+        class="px-4 py-2 text-sm font-medium text-white bg-slate-900 border border-transparent rounded-md hover:bg-slate-800">
+        Start Sync
+      </button>
+    </footer>
+  </div>
+</div>
