@@ -8,14 +8,7 @@ import { LayoutService, GoogleLayoutComponent, OutlookLayoutComponent, ModernLay
   standalone: true,
   imports: [
     CommonModule,
-    NgComponentOutlet,
-    GoogleLayoutComponent,
-    OutlookLayoutComponent,
-    ModernLayoutComponent,
-    MetaLayoutComponent,
-    MargLayoutComponent,
-    BitrixLayoutComponent,
-    GmailLayoutComponent
+    NgComponentOutlet
   ],
   template: `
     <ng-container *ngComponentOutlet="activeComponent()"></ng-container>

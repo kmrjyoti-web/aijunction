@@ -90,12 +90,20 @@ export interface Config {
   defaultRows: number;
   role: string;
   toolbarActions: ToolbarAction[];
-  toolbarButtonMode?: 'iconAndText' | 'iconOnly'; // New property
+  toolbarButtonMode?: 'iconAndText' | 'iconOnly';
   sizerConfig: SizerConfig;
   encryptionConfig?: EncryptionConfig;
   cardViewConfig?: CardViewConfig;
   emptyStateConfig?: EmptyStateConfig;
   footerConfig?: FooterConfig;
+  styleConfig?: StyleConfig;
+}
+
+export interface StyleConfig {
+  headerBackgroundColor?: string;
+  footerBackgroundColor?: string;
+  enableTransparency: boolean;
+  backgroundImageUrl?: string; // Optional URL for background image
 }
 
 export interface ToolbarAction {

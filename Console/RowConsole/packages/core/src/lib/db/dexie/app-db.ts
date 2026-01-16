@@ -33,6 +33,8 @@ export class AppDb extends Dexie {
     TableMaster!: Table<TableMaster, string>;
     ApiConfiguration!: Table<ApiConfiguration, string>;
     _recycleBin!: Table<any, number>;
+    RowContact!: Table<any, string>; // Using any for now to avoid circular dependency with UI-Kit
+    SyncLog!: Table<any, number>;    // Using any for now
 
     constructor() {
         super('AIJunctionDB_Refactored'); // New DB name to avoid conflict or reuse? User might want reuse. 
@@ -43,7 +45,9 @@ export class AppDb extends Dexie {
         this.version(1).stores({
             TableMaster: 'Table_Code, Table_Name, Sync_Frequency',
             ApiConfiguration: 'API_CODE, Api_End_point',
-            _recycleBin: '++id, originalTable, deletedAt'
+            _recycleBin: '++id, originalTable, deletedAt',
+            RowContact: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus', // PK & Indexable fields
+            SyncLog: '++id, entityType, status, timestamp' // PK & Indexable fields
         });
     }
 
@@ -58,7 +62,9 @@ export class AppDb extends Dexie {
         const newStores: { [key: string]: string } = {
             TableMaster: 'Table_Code, Table_Name, Sync_Frequency',
             ApiConfiguration: 'API_CODE, Api_End_point',
-            _recycleBin: '++id, originalTable, deletedAt'
+            _recycleBin: '++id, originalTable, deletedAt',
+            RowContact: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus',
+            SyncLog: '++id, entityType, status, timestamp'
         };
 
         masterTables.forEach((t: TableMaster) => {

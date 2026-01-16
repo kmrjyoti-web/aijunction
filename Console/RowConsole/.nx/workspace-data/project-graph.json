@@ -16738,17 +16738,22 @@
       },
       {
         "source": "core",
-        "target": "npm:dexie",
-        "type": "static"
-      },
-      {
-        "source": "core",
         "target": "npm:@angular/core",
         "type": "static"
       },
       {
         "source": "core",
+        "target": "npm:@angular/common",
+        "type": "static"
+      },
+      {
+        "source": "core",
         "target": "npm:crypto-js",
+        "type": "static"
+      },
+      {
+        "source": "core",
+        "target": "npm:dexie",
         "type": "static"
       },
       {
@@ -16800,12 +16805,12 @@
       },
       {
         "source": "shell",
-        "target": "npm:rxjs",
+        "target": "core",
         "type": "static"
       },
       {
         "source": "shell",
-        "target": "core",
+        "target": "npm:rxjs",
         "type": "static"
       },
       {
@@ -38904,5 +38909,5 @@
   },
   "version": "6.0",
   "errors": [],
-  "computedAt": 1768560926765
+  "computedAt": 1768591653832
 }

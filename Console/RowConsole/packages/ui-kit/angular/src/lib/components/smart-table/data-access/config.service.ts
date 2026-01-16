@@ -106,6 +106,12 @@ export class ConfigService {
             "display": "Total Revenue: {value}"
           }
         ]
+      },
+      "styleConfig": {
+        "enableTransparency": false,
+        "headerBackgroundColor": "var(--marg-header-bg)",
+        "footerBackgroundColor": "var(--marg-header-bg)",
+        "backgroundImageUrl": ""
       }
     },
     "advancedFilters": {
@@ -122,7 +128,7 @@ export class ConfigService {
           "name": "Date Filters",
           "collapsible": true,
           "filters": [
-             { "code": "created_time", "name": "Created Date", "type": "date", "dateOperators": ["in the last 30 days", "this month", "this year", "today"] }
+            { "code": "created_time", "name": "Created Date", "type": "date", "dateOperators": ["in the last 30 days", "this month", "this year", "today"] }
           ]
         },
         {
@@ -161,9 +167,9 @@ export class ConfigService {
         "listRow": true,
         "filterOnCodes": ["contact_person", "organization_name"],
         "cellTemplate": [
-            { "code": "avatar_url", "columnType": "IMAGE", "imageConfig": { "shape": "circle" } },
-            { "code": "contact_person", "tag": "p", "bold": true },
-            { "code": "organization_name", "tag": "small" }
+          { "code": "avatar_url", "columnType": "IMAGE", "imageConfig": { "shape": "circle" } },
+          { "code": "contact_person", "tag": "p", "bold": true },
+          { "code": "organization_name", "tag": "small" }
         ]
       },
       {
@@ -185,11 +191,11 @@ export class ConfigService {
         "filterable": true,
         "cardRow": true,
         "mask": {
-            "enabled": true,
-            "unmaskEnabled": true,
-            "visibleStart": 0,
-            "visibleEnd": 4,
-            "maskChar": "X"
+          "enabled": true,
+          "unmaskEnabled": true,
+          "visibleStart": 0,
+          "visibleEnd": 4,
+          "maskChar": "X"
         }
       },
       {
@@ -272,7 +278,7 @@ export class ConfigService {
       }
     ],
     "headerMenu": [
-       {
+      {
         "label": "Bulk Actions",
         "items": [
           { "label": "Delete Selected", "icon": "pi pi-trash", "action": "delete_selected" }
@@ -292,13 +298,27 @@ export class ConfigService {
 
   constructor() {
     effect(() => {
-        this.persistenceService.saveState(this.STORAGE_KEY, this.configSignal());
+      this.persistenceService.saveState(this.STORAGE_KEY, this.configSignal());
     });
   }
 
   private loadConfig(): TableConfig {
     const saved = this.persistenceService.loadState<TableConfig>(this.STORAGE_KEY);
-    return saved ? saved : this.initialTableConfig;
+    if (!saved) {
+      return this.initialTableConfig;
+    }
+
+    // Migration: Ensure styleConfig exists
+    if (!saved.config.styleConfig) {
+      saved.config.styleConfig = { ...this.initialTableConfig.config.styleConfig! };
+    }
+
+    // Ensure footerConfig exists (from previous steps)
+    if (!saved.config.footerConfig) {
+      saved.config.footerConfig = { ...this.initialTableConfig.config.footerConfig! };
+    }
+
+    return saved;
   }
 
   updateDataStrategy(strategy: DataStrategy) {
@@ -313,11 +333,11 @@ export class ConfigService {
 
   updateInfiniteScrollBehavior(behavior: 'append' | 'replace') {
     this.configSignal.update(currentConfig => ({
-        ...currentConfig,
-        config: {
-            ...currentConfig.config,
-            infiniteScrollBehavior: behavior
-        }
+      ...currentConfig,
+      config: {
+        ...currentConfig.config,
+        infiniteScrollBehavior: behavior
+      }
     }));
   }
 

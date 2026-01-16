@@ -1,5 +1,4 @@
-// fix: Corrected import path for Contact model.
-import { Contact } from "../data-access/online-data.service";
+// fix: Removed circular dependency on UI-Kit
 
 export interface SearchFilter {
   parameter_name: string | null;
@@ -24,7 +23,7 @@ export interface ApiRequest {
   select_column?: string;
 }
 
-export interface ApiResponse {
-  data: Contact[];
+export interface ApiResponse<T = any> {
+  data: T;
   total_records: number;
 }

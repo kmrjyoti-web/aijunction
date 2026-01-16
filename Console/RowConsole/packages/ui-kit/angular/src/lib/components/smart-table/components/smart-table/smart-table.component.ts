@@ -70,7 +70,7 @@ interface TableState {
 @Component({
   selector: 'app-smart-table',
   standalone: true,
-  imports: [CommonModule, TableViewComponent, CardViewComponent, ListViewComponent, BiViewComponent, CalendarViewComponent, PaginatorComponent, ColumnChooserComponent, ClickOutsideDirective, TableSkeletonLoaderComponent, CardSkeletonLoaderComponent, ListSkeletonLoaderComponent, FilterSidebarComponent, ConfigSidebarComponent, AiChatbotComponent, SaveQueryModalComponent, SavedQueriesMenuComponent, UiGalleryComponent, CalendarConfigModalComponent, DensityChooserComponent, SyncOptionsModalComponent, AddChipModalComponent, ChipFilterBarComponent, ThemeSettingsComponent, EmptyViewComponent, ToolbarButtonComponent],
+  imports: [CommonModule, TableViewComponent, CardViewComponent, ListViewComponent, BiViewComponent, CalendarViewComponent, PaginatorComponent, ColumnChooserComponent, ClickOutsideDirective, TableSkeletonLoaderComponent, CardSkeletonLoaderComponent, ListSkeletonLoaderComponent, FilterSidebarComponent, ConfigSidebarComponent, AiChatbotComponent, SaveQueryModalComponent, UiGalleryComponent, CalendarConfigModalComponent, SyncOptionsModalComponent, AddChipModalComponent, ChipFilterBarComponent, ThemeSettingsComponent, EmptyViewComponent, ToolbarButtonComponent],
   templateUrl: './smart-table.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

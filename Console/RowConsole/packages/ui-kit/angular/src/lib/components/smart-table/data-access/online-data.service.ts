@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { of, delay, Observable } from 'rxjs';
-import { ApiRequest, ApiResponse, SearchFilter } from '../models/api.model';
+import { ApiRequest, ApiResponse, SearchFilter } from '@ai-junction/core';
 import { ConfigService } from './config.service';
 
 export interface Contact {
@@ -81,7 +81,7 @@ export class OnlineDataService {
       filteredData = filteredData.filter(contact => {
         return request.search_filters.every(filter => {
           if (!filter.parameter_code || !filter.parameter_value) return true;
-          
+
           const filterValue = filter.parameter_value.toLowerCase();
 
           // Handle Global Search
@@ -140,26 +140,26 @@ export class OnlineDataService {
 
           const columnDef = this.configService.config().columns.find(c => c.code === filter.parameter_code);
           if (columnDef?.columnType === 'DATE') {
-              const contactDateVal = contact[filter.parameter_code];
-              if (!contactDateVal) return false;
-              const contactDate = new Date(contactDateVal as string);
-              if (isNaN(contactDate.getTime())) return false;
-              contactDate.setUTCHours(0, 0, 0, 0);
+            const contactDateVal = contact[filter.parameter_code];
+            if (!contactDateVal) return false;
+            const contactDate = new Date(contactDateVal as string);
+            if (isNaN(contactDate.getTime())) return false;
+            contactDate.setUTCHours(0, 0, 0, 0);
 
-              if (filter.wildcard_operator === 'BETWEEN') {
-                  if (!filter.parameter_value.includes(',')) return false;
-                  const [startStr, endStr] = filter.parameter_value.split(',');
-                  const startDate = new Date(startStr + 'T00:00:00Z');
-                  const endDate = new Date(endStr + 'T00:00:00Z');
-                  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return false;
-                  endDate.setUTCHours(23, 59, 59, 999);
-                  return contactDate >= startDate && contactDate <= endDate;
-              } else if (filter.wildcard_operator === 'EXACT') {
-                  const filterDate = new Date(filter.parameter_value + 'T00:00:00Z');
-                  if (isNaN(filterDate.getTime())) return false;
-                  return contactDate.getTime() === filterDate.getTime();
-              }
-              return false; // Fail safe for unsupported date operators
+            if (filter.wildcard_operator === 'BETWEEN') {
+              if (!filter.parameter_value.includes(',')) return false;
+              const [startStr, endStr] = filter.parameter_value.split(',');
+              const startDate = new Date(startStr + 'T00:00:00Z');
+              const endDate = new Date(endStr + 'T00:00:00Z');
+              if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return false;
+              endDate.setUTCHours(23, 59, 59, 999);
+              return contactDate >= startDate && contactDate <= endDate;
+            } else if (filter.wildcard_operator === 'EXACT') {
+              const filterDate = new Date(filter.parameter_value + 'T00:00:00Z');
+              if (isNaN(filterDate.getTime())) return false;
+              return contactDate.getTime() === filterDate.getTime();
+            }
+            return false; // Fail safe for unsupported date operators
           }
 
           const contactValue = String(contact[filter.parameter_code] || '').toLowerCase();
@@ -180,7 +180,7 @@ export class OnlineDataService {
       filteredData.sort((a, b) => {
         const valA = a[sort.coloum_id];
         const valB = b[sort.coloum_id];
-        
+
         if (valA < valB) return sort.short_type === 'asc' ? -1 : 1;
         if (valA > valB) return sort.short_type === 'asc' ? 1 : -1;
         return 0;

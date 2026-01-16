@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { OnlineDataService } from '../online-data.service';
 import { OfflineDataService } from '../offline/offline-data.service';
-import { ApiRequest } from '../../models/api.model';
+import { ApiRequest } from '@ai-junction/core';
 import { SyncLogService } from './sync-log.service';
 import { finalize } from 'rxjs';
 import { ConnectionStatusService } from '../connection-status.service';
@@ -20,7 +20,7 @@ export class SyncService {
   private connectionStatusService = inject(ConnectionStatusService);
   private persistenceService = inject(PersistenceService);
   private readonly LAST_SYNC_KEY = 'smartTableLastSync';
-  
+
   /** A signal that becomes true once the initial data priming is complete. */
   isPrimed = signal(false);
   lastSyncTime = signal<number | null>(this.persistenceService.loadState<number>(this.LAST_SYNC_KEY));
@@ -59,12 +59,12 @@ export class SyncService {
       console.log('[SyncService] Sync already in progress.');
       return;
     }
-    
+
     console.log('[SyncService] Starting to prime data from server...');
     this.isSyncing.set(true);
     this.isPrimed.set(false); // Reset primed status before starting
     this.connectionStatusService.setConnecting();
-    
+
     // A mock request to get ALL data. A real API might have a dedicated endpoint for this.
     const request: ApiRequest = {
       page_number: 1,

@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DbManagementFacade } from '../services/db-management.facade';
-// Note: In real implementation, we'd import the page/components separately.
-// For brevity, I am assuming we reuse the previously created components but wire them to the Facade.
-// Wait, I should create the specific components mentioned in the plan: `TableSchemaEditor`.
+import { SyncDashboardComponent } from '../components/sync-dashboard/sync-dashboard.component';
 
 @Component({
-    selector: 'app-db-management-page',
-    standalone: true,
-    imports: [CommonModule],
-    template: `
+   selector: 'app-db-management-page',
+   standalone: true,
+   imports: [CommonModule, SyncDashboardComponent],
+   template: `
     <div class="p-6">
        <h1 class="text-2xl font-bold">DB Management (Refactored)</h1>
        <div class="grid grid-cols-2 gap-4 mt-6">
@@ -28,31 +26,34 @@ import { DbManagementFacade } from '../services/db-management.facade';
              </ul>
           </div>
        </div>
+
+       <!-- Sync Dashboard -->
+       <app-sync-dashboard></app-sync-dashboard>
     </div>
   `
 })
 export class DbManagementPage implements OnInit {
-    constructor(public facade: DbManagementFacade) { }
+   constructor(public facade: DbManagementFacade) { }
 
-    ngOnInit() {
-        this.facade.loadAll();
-    }
+   ngOnInit() {
+      this.facade.loadAll();
+   }
 
-    addExample() {
-        this.facade.addTable({
-            Table_Code: 'TBL_' + Date.now(),
-            Table_Name: 'New Table',
-            Table_Schema: '++id, name',
-            Sync_Frequency: 'D',
-            sync_frequency_value: 1,
-            What_Operation_Allowed: ['R'],
-            Recycle_Soft_Delete: false,
-            schema_validate_server: 'DAILY',
-            sync_warning_type: 'WARNING',
-            Encryption: false,
-            encryption_field: [],
-            caching: false,
-            caching_ttl: 0
-        });
-    }
+   addExample() {
+      this.facade.addTable({
+         Table_Code: 'TBL_' + Date.now(),
+         Table_Name: 'New Table',
+         Table_Schema: '++id, name',
+         Sync_Frequency: 'D',
+         sync_frequency_value: 1,
+         What_Operation_Allowed: ['R'],
+         Recycle_Soft_Delete: false,
+         schema_validate_server: 'DAILY',
+         sync_warning_type: 'WARNING',
+         Encryption: false,
+         encryption_field: [],
+         caching: false,
+         caching_ttl: 0
+      });
+   }
 }

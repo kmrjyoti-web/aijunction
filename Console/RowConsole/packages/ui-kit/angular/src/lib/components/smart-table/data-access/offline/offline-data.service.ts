@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { from, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ApiRequest, ApiResponse } from '../../models/api.model';
+import { ApiRequest, ApiResponse } from '@ai-junction/core';
 import { Contact } from '../online-data.service';
 import { DatabaseService } from './database.service';
 import { EncryptionService } from './encryption.service';
@@ -34,7 +34,7 @@ export class OfflineDataService {
   getData(request: ApiRequest): Observable<ApiResponse> {
     const { page_number, page_size, sort_column, search_filters } = request;
     const globalFilterFields = this.configService.config().config.globalFilterFields;
-    
+
     let collection;
 
     // --- Sorting ---
@@ -60,7 +60,7 @@ export class OfflineDataService {
 
         return search_filters.every(filter => {
           if (!filter.parameter_code || !filter.parameter_value) return true;
-          
+
           const filterValue = filter.parameter_value.toLowerCase();
 
           // Handle Global Search
@@ -73,16 +73,16 @@ export class OfflineDataService {
             let isDateRange = false;
             let fromDate: Date | null = null;
             let toDate: Date | null = null;
-            
+
             if (range.length === 2) {
-                const from = new Date(range[0].trim());
-                const to = new Date(range[1].trim());
-                if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
-                    isDateRange = true;
-                    fromDate = from;
-                    toDate = to;
-                    toDate.setHours(23, 59, 59, 999);
-                }
+              const from = new Date(range[0].trim());
+              const to = new Date(range[1].trim());
+              if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
+                isDateRange = true;
+                fromDate = from;
+                toDate = to;
+                toDate.setHours(23, 59, 59, 999);
+              }
             }
 
             if (globalFilterFields && globalFilterFields.length > 0) {
@@ -94,14 +94,14 @@ export class OfflineDataService {
                 if (dateColumns.includes(field)) {
                   const contactDate = new Date(fieldValue as string);
                   if (isNaN(contactDate.getTime())) return false;
-                  
+
                   if (isDateRange) {
                     return contactDate >= fromDate! && contactDate <= toDate!;
                   } else {
                     return String(fieldValue).toLowerCase().includes(filterValue);
                   }
                 }
-                
+
                 // Non-date field logic
                 return String(fieldValue).toLowerCase().includes(filterValue);
               });
@@ -115,31 +115,31 @@ export class OfflineDataService {
               String(decryptedContact.created_time || '').toLowerCase().includes(filterValue)
             );
           }
-          
+
           const columnDef = this.configService.config().columns.find(c => c.code === filter.parameter_code);
           if (columnDef?.columnType === 'DATE') {
-              const contactDateVal = decryptedContact[filter.parameter_code];
-              if (!contactDateVal) return false;
-              const contactDate = new Date(contactDateVal as string);
-              if (isNaN(contactDate.getTime())) return false;
-              contactDate.setUTCHours(0, 0, 0, 0);
+            const contactDateVal = decryptedContact[filter.parameter_code];
+            if (!contactDateVal) return false;
+            const contactDate = new Date(contactDateVal as string);
+            if (isNaN(contactDate.getTime())) return false;
+            contactDate.setUTCHours(0, 0, 0, 0);
 
-              if (filter.wildcard_operator === 'BETWEEN') {
-                  if (!filter.parameter_value.includes(',')) return false;
-                  const [startStr, endStr] = filter.parameter_value.split(',');
-                  const startDate = new Date(startStr + 'T00:00:00Z');
-                  const endDate = new Date(endStr + 'T00:00:00Z');
-                  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return false;
-                  endDate.setUTCHours(23, 59, 59, 999);
-                  return contactDate >= startDate && contactDate <= endDate;
-              } else if (filter.wildcard_operator === 'EXACT') {
-                  const filterDate = new Date(filter.parameter_value + 'T00:00:00Z');
-                  if (isNaN(filterDate.getTime())) return false;
-                  return contactDate.getTime() === filterDate.getTime();
-              }
-              return false; // Fail safe
+            if (filter.wildcard_operator === 'BETWEEN') {
+              if (!filter.parameter_value.includes(',')) return false;
+              const [startStr, endStr] = filter.parameter_value.split(',');
+              const startDate = new Date(startStr + 'T00:00:00Z');
+              const endDate = new Date(endStr + 'T00:00:00Z');
+              if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return false;
+              endDate.setUTCHours(23, 59, 59, 999);
+              return contactDate >= startDate && contactDate <= endDate;
+            } else if (filter.wildcard_operator === 'EXACT') {
+              const filterDate = new Date(filter.parameter_value + 'T00:00:00Z');
+              if (isNaN(filterDate.getTime())) return false;
+              return contactDate.getTime() === filterDate.getTime();
+            }
+            return false; // Fail safe
           }
-          
+
           const contactValue = String(decryptedContact[filter.parameter_code] || '').toLowerCase();
           // Handle multi-select from Excel-like filter (comma-separated values)
           if (filterValue.includes(',')) {

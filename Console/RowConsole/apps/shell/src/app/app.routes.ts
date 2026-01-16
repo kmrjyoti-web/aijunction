@@ -1,7 +1,4 @@
 import { Routes } from '@angular/router';
-import { TableMasterPage } from './features/db-management/pages/table-master.page';
-import { ApiEndpointsPage } from './features/db-management/pages/api-endpoints.page';
-import { CacheManagementPage } from './features/db-management/pages/cache-management.page';
 import { StartupGuardService } from './platform/runtime/startup-guard.service';
 
 export const appRoutes: Routes = [
@@ -12,12 +9,7 @@ export const appRoutes: Routes = [
       {
         path: 'management',
         canActivate: [StartupGuardService],
-        children: [
-          { path: 'db', component: TableMasterPage },
-          { path: 'api', component: ApiEndpointsPage },
-          { path: 'cache', component: CacheManagementPage },
-          { path: '', redirectTo: 'db', pathMatch: 'full' }
-        ]
+        loadChildren: () => import('./features/db-management/db-management.routes').then(m => m.dbManagementRoutes)
       },
       {
         path: 'health-check',

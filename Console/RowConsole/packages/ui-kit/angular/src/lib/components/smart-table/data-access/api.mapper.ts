@@ -1,8 +1,8 @@
-import { ApiRequest, SearchFilter, SortColumn } from '../models/api.model';
+import { ApiRequest, SearchFilter, SortColumn } from '@ai-junction/core';
 import { ActiveFilter, Column, DateOperator, FilterOperator } from '../models/table-config.model';
 
 function mapOperator(operator: FilterOperator | DateOperator): SearchFilter['wildcard_operator'] {
-  switch(operator) {
+  switch (operator) {
     case '=': return 'EXACT';
     case '!=': return 'NOT_EQUAL';
     case '>': return 'GREATER_THAN';
@@ -26,9 +26,9 @@ export function mapToApiRequest(
   advancedFilters: { [key: string]: ActiveFilter },
   columns: Column[]
 ): ApiRequest {
-  
+
   const search_filters: SearchFilter[] = [];
-  
+
   // Global Search
   if (globalSearchTerm) {
     search_filters.push({
@@ -44,13 +44,13 @@ export function mapToApiRequest(
   for (const key in advancedFilters) {
     const filter = advancedFilters[key];
     if (filter && filter.value1 !== undefined && filter.value1 !== '') {
-       search_filters.push({
-          parameter_name: filter.name,
-          parameter_code: filter.code,
-          parameter_value: `${filter.value1}${filter.value2 ? ',' + filter.value2 : ''}`,
-          conditional_operator: 'AND',
-          wildcard_operator: mapOperator(filter.operator)
-       });
+      search_filters.push({
+        parameter_name: filter.name,
+        parameter_code: filter.code,
+        parameter_value: `${filter.value1}${filter.value2 ? ',' + filter.value2 : ''}`,
+        conditional_operator: 'AND',
+        wildcard_operator: mapOperator(filter.operator)
+      });
     }
   }
 

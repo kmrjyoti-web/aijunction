@@ -32,628 +32,136 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.ts",
-        "hash": "17587373539097957090"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/chip.model.ts",
-        "hash": "13743396857274237143"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.ts",
-        "hash": "16701452715581478550"
-      },
-      {
-        "file": "dist/apps/shell-admin/runtime.264c93021a6946f1.js",
-        "hash": "6089493962459085131"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/styles.css",
-        "hash": "1457465478912623794"
-      },
-      {
-        "file": ".nx/workspace-data/parsed-lock-file.json",
-        "hash": "1947867386759580842"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.html",
-        "hash": "9863134624298651835"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.css",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.ts",
-        "hash": "11897200643033735509"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.ts",
-        "hash": "2011385875138062099"
-      },
-      {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.html",
         "hash": "17814863953723594019"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/online-data.service.ts",
-        "hash": "4438917407191164654"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.ts",
+        "hash": "2921152224858636184"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/offline-data.service.ts",
-        "hash": "13558267869908733513"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/click-outside.directive.ts",
-        "hash": "1932893406289840029"
-      },
-      {
-        "file": "dist/apps/shell/504.6584b965713991d8.js",
-        "hash": "1705039142349187024"
-      },
-      {
-        "file": "packages/platform-angular/src/layout/layout.types.ts",
-        "hash": "455439413108934483"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.ts",
-        "hash": "1739489235950921741"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.html",
-        "hash": "6219168069137951403"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.html",
-        "hash": "12524532066811709374"
-      },
-      {
-        "file": "packages/platform-angular/src/theming/theme.service.ts",
-        "hash": "4864889965166830181"
-      },
-      {
-        "file": "dist/apps/shell/855.1435abf0f154aeee.js",
-        "hash": "11937694940130747706"
-      },
-      {
-        "file": "dist/apps/shell-admin/main.129d7b316ff48da4.js",
-        "hash": "3506859679794175639"
-      },
-      {
-        "file": "jest.config.ts",
-        "hash": "6870352021923392442"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.ts",
-        "hash": "10099116880963684883"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/connection-status.service.ts",
-        "hash": "8399452342767483671"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/dynamic-item/dynamic-item.component.ts",
-        "hash": "1381927282582209607"
-      },
-      {
-        "file": "dist/apps/shell-admin/index.html",
-        "hash": "4295642922288702419"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/offline-management/placeholder.ts",
-        "hash": "9934027837170429018"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/generic-validation.util.ts",
-        "hash": "6365094035478649501"
-      },
-      {
-        "file": ".nx/workspace-data/nx_files.nxt",
-        "hash": "2905975915834445606"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync.service.ts",
-        "hash": "5664402734577136508"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/keyboard-navigation.util.ts",
-        "hash": "15667610208707705501"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/index.ts",
-        "hash": "12450559244979197152"
-      },
-      {
-        "file": "dist/apps/shell-admin/styles.479d8838618f72e7.css",
-        "hash": "16738408235941761237"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.ts",
-        "hash": "4628287505591328198"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/helpers/icon.helper.ts",
-        "hash": "17329788796504585987"
-      },
-      {
-        "file": "eslint.config.mjs",
-        "hash": "12926286793420397906"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.ts",
-        "hash": "12533958766014264811"
-      },
-      {
-        "file": "dist/apps/shell-admin/polyfills.5c5d5bfa495f9272.js",
-        "hash": "6725751608402901613"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data.service.ts",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/email-validation.util.ts",
-        "hash": "13822258082784060147"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.html",
+        "hash": "5027758215480839344"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/helpers/global-icon.helper.ts",
         "hash": "5383489276498872414"
       },
       {
-        "file": "dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
-        "hash": "4365534675956496783"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.html",
-        "hash": "15264773918826604170"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/custom-layout.service.ts",
-        "hash": "1024851014916520490"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/auto-height.util.ts",
-        "hash": "4499427164982331018"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-summary.service.ts",
-        "hash": "17418840666984339722"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.ts",
-        "hash": "16982936754546058237"
-      },
-      {
-        "file": "packages/platform-angular/src/layout/layout.service.ts",
-        "hash": "9650231485457307535"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/toolbar-button/toolbar-button.component.ts",
-        "hash": "5796974658078665665"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/page-size.util.ts",
-        "hash": "821265886088423827"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/persistence.service.ts",
-        "hash": "16405227610566885350"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/json-editor.directive.ts",
-        "hash": "11337302932305121602"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.html",
-        "hash": "2473356646273445075"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.ts",
-        "hash": "10394861400144115126"
-      },
-      {
-        "file": "dist/apps/shell-admin/264.f2883a1452c33399.js",
-        "hash": "16197986700494767367"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-layout.service.ts",
-        "hash": "7441791601422015794"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/custom-layout.model.ts",
-        "hash": "842872963307829671"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.html",
-        "hash": "13565695845837888330"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/validation.util.ts",
-        "hash": "9405077998790906382"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/density.service.ts",
-        "hash": "7798303221687932786"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.ts",
-        "hash": "269759788489113887"
-      },
-      {
-        "file": "dist/apps/shell/417.23c942a6cd16a27e.js",
-        "hash": "6846184663032504316"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.html",
-        "hash": "2474946990900399189"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-client.service.ts",
-        "hash": "12118504474208675760"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.ts",
-        "hash": "16049660432705616010"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.ts",
-        "hash": "10270897448735721151"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chip-generator.service.ts",
-        "hash": "2077282083316997209"
-      },
-      {
-        "file": "dist/apps/shell/831.892ca664b50d53a5.js",
-        "hash": "11139313285839138581"
-      },
-      {
-        "file": "dist/apps/shell/659.66158dcc5f8cd33c.js",
-        "hash": "15408308243459097724"
-      },
-      {
-        "file": ".nx/workspace-data/eslint-2654242865465226088.hash",
-        "hash": "15693946098289629790"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/config.service.ts",
-        "hash": "7554227047140843863"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/api.mapper.ts",
-        "hash": "1615453747687477821"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/encryption.service.ts",
-        "hash": "15459215446178186620"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/tailwind.config.js",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "10600408962671723222"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.html",
-        "hash": "1331016845043007911"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-dashboard.service.ts",
-        "hash": "14395782628183282284"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.html",
-        "hash": "2610718774693829855"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.html",
-        "hash": "16083882376077173156"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.ts",
-        "hash": "1677169054766237475"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.ts",
-        "hash": "4864981594262962158"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-naming.service.ts",
-        "hash": "14213675270583132972"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-skeleton-loader.component.ts",
-        "hash": "6149982741745285767"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.html",
-        "hash": "3343571740149176278"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.html",
-        "hash": "16122768359670942133"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.html",
-        "hash": "16746464852993660381"
-      },
-      {
-        "file": "tsconfig.json",
-        "hash": "13336014555689740568"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.html",
-        "hash": "3516100617875883612"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/database.service.ts",
-        "hash": "3346397993985352752"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.html",
-        "hash": "8459261081450856080"
-      },
-      {
-        "file": "packages/ui-kit/assets/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
-        "hash": "9402064429934460589"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.ts",
-        "hash": "3421494233637893713"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.ts",
-        "hash": "1738256637266251030"
-      },
-      {
-        "file": "dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
-        "hash": "9402064429934460589"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.ts",
-        "hash": "3024402910517502634"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.html",
-        "hash": "10423530478251793767"
-      },
-      {
-        "file": "dist/apps/shell-admin/94.917bd6371144353b.js",
-        "hash": "15498305376612431932"
-      },
-      {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.ts",
         "hash": "5955705265815747161"
-      },
-      {
-        "file": "package-lock.json",
-        "hash": "14173913268288369876"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.html",
-        "hash": "3837851447139890596"
-      },
-      {
-        "file": "package.json",
-        "hash": "10866976932571981789"
-      },
-      {
-        "file": "dist/apps/shell-admin/169.1881c211a7446786.js",
-        "hash": "98076277333128798"
-      },
-      {
-        "file": "dist/apps/shell/130.093e00f699dc0b2b.js",
-        "hash": "7365435663417219729"
-      },
-      {
-        "file": "packages/ui-kit/assets/table/row_contact/row_contact.row_contact_default.bundle.json",
-        "hash": "4365534675956496783"
-      },
-      {
-        "file": "dist/apps/shell/main.0c44c94e4c8ebd69.js",
-        "hash": "1808415770189906393"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.ts",
-        "hash": "10998787848226030594"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.html",
-        "hash": "2871121259369980832"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-calendar-view.model.ts",
-        "hash": "5219974179881375294"
-      },
-      {
-        "file": "tailwind.config.js",
-        "hash": "15941124140466914686"
-      },
-      {
-        "file": "nx.json",
-        "hash": "8568041673754767757"
-      },
-      {
-        "file": "new.sh",
-        "hash": "9013716282642754527"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.html",
-        "hash": "2544195235702374528"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-query.model.ts",
-        "hash": "6530156717159687146"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/d3-bar-chart.directive.ts",
-        "hash": "9350760369657011781"
-      },
-      {
-        "file": "dist/apps/shell/823.15689d6db6e6ff34.js",
-        "hash": "17362707951322921569"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync-log.service.ts",
-        "hash": "17052663658805537920"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.html",
-        "hash": "1209307010912208989"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.css",
-        "hash": "17050781972319424747"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.ts",
-        "hash": "11299249436294586965"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.ts",
-        "hash": "17197249191409389753"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.html",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/saved-queries.service.ts",
-        "hash": "9719390605803251294"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/export.service.ts",
-        "hash": "16558842458692232753"
-      },
-      {
-        "file": "dist/apps/shell/styles.03d7690116eeee31.css",
-        "hash": "16912760348294057503"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data-manager.service.ts",
-        "hash": "6298666613808744284"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/api.model.ts",
-        "hash": "15107042705971005042"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.html",
         "hash": "17101008954144946186"
       },
       {
-        "file": "packages/platform-angular/src/theming/theme.types.ts",
-        "hash": "6241578021139991261"
-      },
-      {
-        "file": ".nx/workspace-data/lockfile.hash",
-        "hash": "4837486363147653129"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.html",
-        "hash": "13944759715971286388"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.html",
-        "hash": "7636558982808595721"
+        "file": "dist/apps/shell-admin/index.html",
+        "hash": "4295642922288702419"
       },
       {
         "file": "dist/apps/shell/3rdpartylicenses.txt",
         "hash": "6131908408422259293"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.ts",
-        "hash": "2145628092085789919"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.ts",
+        "hash": "1677169054766237475"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-skeleton-loader.component.ts",
-        "hash": "14784045739881883851"
+        "file": "packages/platform-angular/src/layout/layout.service.ts",
+        "hash": "9650231485457307535"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.css",
-        "hash": "8333462465883880269"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.ts",
+        "hash": "3024402910517502634"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.ts",
-        "hash": "17920605333732284791"
+        "file": ".nx/workspace-data/eslint-2654242865465226088.hash",
+        "hash": "14089324183460990103"
       },
       {
-        "file": "dist/apps/shell/polyfills.60c7391a41017486.js",
-        "hash": "8241224696577022298"
+        "file": ".nx/workspace-data/source-maps.json",
+        "hash": "17912595509951387985"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chatbot.service.ts",
-        "hash": "15139607590153262314"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.ts",
+        "hash": "10998787848226030594"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/ai-actions.service.ts",
-        "hash": "3244421341483603138"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/density.service.ts",
+        "hash": "7798303221687932786"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.html",
-        "hash": "8846574596650777099"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.ts",
+        "hash": "11897200643033735509"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.ts",
-        "hash": "9065357986426747377"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.html",
+        "hash": "2610718774693829855"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/chip-filter.service.ts",
-        "hash": "10179485262677297808"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.css",
+        "hash": "17050781972319424747"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/density.model.ts",
-        "hash": "13695051222071131292"
+        "file": "packages/platform-angular/src/layout/layout.types.ts",
+        "hash": "455439413108934483"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/theme.service.ts",
-        "hash": "16039422449850167075"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.ts",
-        "hash": "14472867709237717931"
+        "file": "packages/ui-kit/angular/src/index.ts",
+        "hash": "1515985054567833283"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/masking.util.ts",
         "hash": "7682585038864513699"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/table-config.model.ts",
-        "hash": "127903905198061162"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/d3-bar-chart.directive.ts",
+        "hash": "9350760369657011781"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.ts",
-        "hash": "17121512190306163977"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync-log.service.ts",
+        "hash": "17052663658805537920"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.html",
-        "hash": "2120105108730077836"
+        "file": ".nx/workspace-data/file-map.json",
+        "hash": "11408705126755207814"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.html",
-        "hash": "2693821531367041451"
+        "file": "packages/ui-kit/angular/src/lib/helpers/icon.helper.ts",
+        "hash": "17329788796504585987"
       },
       {
-        "file": "dist/apps/shell/index.html",
-        "hash": "12557436121294579218"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.ts",
+        "hash": "11299249436294586965"
       },
       {
-        "file": "dist/apps/shell/455.4a36275dae002d84.js",
-        "hash": "10905025230326288128"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/export.service.ts",
+        "hash": "16558842458692232753"
       },
       {
-        "file": "dist/apps/shell-admin/3rdpartylicenses.txt",
-        "hash": "17899895658948168659"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/density.model.ts",
+        "hash": "13695051222071131292"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.ts",
-        "hash": "2921152224858636184"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.html",
+        "hash": "5509531937571452328"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/calendar-view-config.service.ts",
+        "hash": "11169069248762876727"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/sync-indicator/sync-indicator.component.ts",
+        "hash": "305005069907411909"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-layout.service.ts",
+        "hash": "7441791601422015794"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.html",
+        "hash": "13944759715971286388"
       },
       {
         "file": "dist/apps/shell/runtime.9d821669438802d3.js",
@@ -664,11 +172,992 @@
         "hash": "2238369308582065043"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/calendar-view-config.service.ts",
-        "hash": "11169069248762876727"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-naming.service.ts",
+        "hash": "14213675270583132972"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-calendar-view.model.ts",
+        "hash": "5219974179881375294"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "10600408962671723222"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-dashboard.service.ts",
+        "hash": "14395782628183282284"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.ts",
+        "hash": "3861073303853069057"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/chip.model.ts",
+        "hash": "13743396857274237143"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data-manager.service.ts",
+        "hash": "7290585015855110607"
+      },
+      {
+        "file": "dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": "dist/apps/shell-admin/runtime.264c93021a6946f1.js",
+        "hash": "6089493962459085131"
+      },
+      {
+        "file": "dist/apps/shell/417.23c942a6cd16a27e.js",
+        "hash": "6846184663032504316"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.html",
+        "hash": "2474946990900399189"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.ts",
+        "hash": "2145628092085789919"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/custom-layout.service.ts",
+        "hash": "1024851014916520490"
+      },
+      {
+        "file": "packages/platform-angular/src/theming/theme.types.ts",
+        "hash": "6241578021139991261"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.ts",
+        "hash": "17587373539097957090"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/connection-status.service.ts",
+        "hash": "8399452342767483671"
+      },
+      {
+        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db-wal",
+        "hash": "11097420279468065981"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/chip-filter.service.ts",
+        "hash": "10179485262677297808"
+      },
+      {
+        "file": "dist/apps/shell-admin/94.917bd6371144353b.js",
+        "hash": "15498305376612431932"
+      },
+      {
+        "file": "dist/apps/shell/455.4a36275dae002d84.js",
+        "hash": "10905025230326288128"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-skeleton-loader.component.ts",
+        "hash": "14784045739881883851"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.html",
+        "hash": "12524532066811709374"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-skeleton-loader.component.ts",
+        "hash": "6149982741745285767"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.html",
+        "hash": "2120105108730077836"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.html",
+        "hash": "16122768359670942133"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.ts",
+        "hash": "16049660432705616010"
+      },
+      {
+        "file": "dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/table-config.model.ts",
+        "hash": "15730828245383682021"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.html",
+        "hash": "3837851447139890596"
+      },
+      {
+        "file": "dist/apps/shell/855.1435abf0f154aeee.js",
+        "hash": "11937694940130747706"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.html",
+        "hash": "13565695845837888330"
+      },
+      {
+        "file": "package-lock.json",
+        "hash": "14173913268288369876"
+      },
+      {
+        "file": "dist/apps/shell/main.0c44c94e4c8ebd69.js",
+        "hash": "1808415770189906393"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data.service.ts",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.html",
+        "hash": "1331016845043007911"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.html",
+        "hash": "2544195235702374528"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.html",
+        "hash": "15264773918826604170"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/generic-validation.util.ts",
+        "hash": "6365094035478649501"
+      },
+      {
+        "file": "dist/apps/shell-admin/3rdpartylicenses.txt",
+        "hash": "17899895658948168659"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-query.model.ts",
+        "hash": "6530156717159687146"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.html",
+        "hash": "3516100617875883612"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/auto-height.util.ts",
+        "hash": "4499427164982331018"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.ts",
+        "hash": "10394861400144115126"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.ts",
+        "hash": "2011385875138062099"
+      },
+      {
+        "file": "dist/apps/shell-admin/264.f2883a1452c33399.js",
+        "hash": "16197986700494767367"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/styles.css",
+        "hash": "1457465478912623794"
+      },
+      {
+        "file": "dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/workspace-data/nx_files.nxt",
+        "hash": "5743431780803665621"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/theme.service.ts",
+        "hash": "16039422449850167075"
+      },
+      {
+        "file": "dist/apps/shell/index.html",
+        "hash": "12557436121294579218"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.html",
+        "hash": "8846574596650777099"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-client.service.ts",
+        "hash": "12118504474208675760"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.html",
+        "hash": "9863134624298651835"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/saved-queries.service.ts",
+        "hash": "9719390605803251294"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/custom-layout.model.ts",
+        "hash": "842872963307829671"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.html",
+        "hash": "10423530478251793767"
+      },
+      {
+        "file": "tailwind.config.js",
+        "hash": "15941124140466914686"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chatbot.service.ts",
+        "hash": "15139607590153262314"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.ts",
+        "hash": "269759788489113887"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.ts",
+        "hash": "1739489235950921741"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.ts",
+        "hash": "3421494233637893713"
+      },
+      {
+        "file": "packages/ui-kit/assets/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/email-validation.util.ts",
+        "hash": "13822258082784060147"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/api.mapper.ts",
+        "hash": "10562390608222510729"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.ts",
+        "hash": "17920605333732284791"
+      },
+      {
+        "file": ".nx/workspace-data/project-graph.json",
+        "hash": "1879764955924860242"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/json-editor.directive.ts",
+        "hash": "11337302932305121602"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.html",
+        "hash": "6219168069137951403"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.ts",
+        "hash": "10099116880963684883"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.html",
+        "hash": "8459261081450856080"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.ts",
+        "hash": "7362251547930831786"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.ts",
+        "hash": "17197249191409389753"
+      },
+      {
+        "file": "dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.html",
+        "hash": "2871121259369980832"
+      },
+      {
+        "file": "packages/platform-angular/src/theming/theme.service.ts",
+        "hash": "4864889965166830181"
+      },
+      {
+        "file": "packages/ui-kit/assets/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync.service.ts",
+        "hash": "1979388629767239497"
+      },
+      {
+        "file": "nx.json",
+        "hash": "8568041673754767757"
+      },
+      {
+        "file": "dist/apps/shell-admin/styles.479d8838618f72e7.css",
+        "hash": "16738408235941761237"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.ts",
+        "hash": "14472867709237717931"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.ts",
+        "hash": "17121512190306163977"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/ai-actions.service.ts",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "6870352021923392442"
+      },
+      {
+        "file": "new.sh",
+        "hash": "9013716282642754527"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "13336014555689740568"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/database.service.ts",
+        "hash": "3346397993985352752"
+      },
+      {
+        "file": "dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/encryption.service.ts",
+        "hash": "15459215446178186620"
+      },
+      {
+        "file": "dist/apps/shell/styles.03d7690116eeee31.css",
+        "hash": "16912760348294057503"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/page-size.util.ts",
+        "hash": "821265886088423827"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chip-generator.service.ts",
+        "hash": "2077282083316997209"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.html",
+        "hash": "16746464852993660381"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.html",
+        "hash": "3343571740149176278"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/tailwind.config.js",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "dist/apps/shell-admin/polyfills.5c5d5bfa495f9272.js",
+        "hash": "6725751608402901613"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.html",
+        "hash": "7636558982808595721"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.ts",
+        "hash": "12533958766014264811"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.html",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/offline-data.service.ts",
+        "hash": "5934592703886489848"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.html",
+        "hash": "1209307010912208989"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.css",
+        "hash": "8333462465883880269"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.ts",
+        "hash": "16701452715581478550"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/online-data.service.ts",
+        "hash": "6391264893774188894"
+      },
+      {
+        "file": "package.json",
+        "hash": "10866976932571981789"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/keyboard-navigation.util.ts",
+        "hash": "15667610208707705501"
+      },
+      {
+        "file": "dist/apps/shell/130.093e00f699dc0b2b.js",
+        "hash": "7365435663417219729"
+      },
+      {
+        "file": "dist/apps/shell-admin/main.129d7b316ff48da4.js",
+        "hash": "3506859679794175639"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/click-outside.directive.ts",
+        "hash": "1932893406289840029"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/persistence.service.ts",
+        "hash": "16405227610566885350"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.ts",
+        "hash": "4864981594262962158"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/toolbar-button/toolbar-button.component.ts",
+        "hash": "5796974658078665665"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "12926286793420397906"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.ts",
+        "hash": "10270897448735721151"
+      },
+      {
+        "file": "dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": "dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db",
+        "hash": "6240709564311096908"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.html",
+        "hash": "16083882376077173156"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/dynamic-item/dynamic-item.component.ts",
+        "hash": "1381927282582209607"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/config.service.ts",
+        "hash": "3201732145553893948"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-summary.service.ts",
+        "hash": "17418840666984339722"
+      },
+      {
+        "file": "dist/apps/shell-admin/169.1881c211a7446786.js",
+        "hash": "98076277333128798"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.ts",
+        "hash": "9065357986426747377"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.ts",
+        "hash": "16982936754546058237"
+      },
+      {
+        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db-shm",
+        "hash": "1701451326890522501"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/validation.util.ts",
+        "hash": "9405077998790906382"
       }
     ],
     "projectFileMap": {
+      "core": [
+        {
+          "file": "packages/core/README.md",
+          "hash": "9810432091555253122"
+        },
+        {
+          "file": "packages/core/eslint.config.mjs",
+          "hash": "5385050500626891584",
+          "deps": [
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "packages/core/jest.config.cts",
+          "hash": "13641579194166581081"
+        },
+        {
+          "file": "packages/core/project.json",
+          "hash": "14136024270046192527"
+        },
+        {
+          "file": "packages/core/src/index.ts",
+          "hash": "10315130147653140634"
+        },
+        {
+          "file": "packages/core/src/lib/caching/local-storage.service.ts",
+          "hash": "9227561928681389234",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:crypto-js"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/dexie/app-db.ts",
+          "hash": "13632808219505686733",
+          "deps": [
+            "npm:dexie",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/dexie/db-migrations.ts",
+          "hash": "999224948930385731"
+        },
+        {
+          "file": "packages/core/src/lib/db/encryption/crypto.service.ts",
+          "hash": "6761901553368130695",
+          "deps": [
+            "npm:@angular/core",
+            "npm:crypto-js"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/encryption/field-encryption.util.ts",
+          "hash": "1585621634787260157"
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/api-endpoint.repo.ts",
+          "hash": "17210980777071536553",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/dynamic-row.repo.ts",
+          "hash": "18137485578370155660",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/table-master.repo.ts",
+          "hash": "5254355591900680600",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/schema/schema-validator.service.ts",
+          "hash": "12994469057962695692",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/data-access/row-contact-offline.repository.ts",
+          "hash": "16845403180007712072",
+          "deps": [
+            "npm:@angular/core",
+            "npm:dexie"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.dto.ts",
+          "hash": "9810679178399408235"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.entity.ts",
+          "hash": "5762083437671870785"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.mapper.ts",
+          "hash": "13611383944203355646"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.model.ts",
+          "hash": "5474571656547307289"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/services/row-contact-data.service.ts",
+          "hash": "1218267023154363994",
+          "deps": [
+            "npm:rxjs",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/api-http-helper.service.ts",
+          "hash": "4090615703382720607",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/http-module.service.ts",
+          "hash": "12204160814985980322",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/models/api-config.token.ts",
+          "hash": "5471691897019127197",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/models/api.model.ts",
+          "hash": "14077123864914763470"
+        },
+        {
+          "file": "packages/core/src/lib/sync/handlers/row-contact-sync.service.ts",
+          "hash": "8426037596676923052",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/logging/sync-log.entity.ts",
+          "hash": "5874434045798216408"
+        },
+        {
+          "file": "packages/core/src/lib/sync/logging/sync-log.repository.ts",
+          "hash": "5221548127417544080",
+          "deps": [
+            "npm:dexie",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/management/sync-manager.service.ts",
+          "hash": "11080380936670810956",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/models/sync-handler.interface.ts",
+          "hash": "4912486032398332947"
+        },
+        {
+          "file": "packages/core/src/lib/sync/models/sync-status.enum.ts",
+          "hash": "17863981369291688061"
+        },
+        {
+          "file": "packages/core/src/test-setup.ts",
+          "hash": "15311061684404854706",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "packages/core/tsconfig.json",
+          "hash": "5322752655305925185"
+        },
+        {
+          "file": "packages/core/tsconfig.lib.json",
+          "hash": "10623358221419076094"
+        },
+        {
+          "file": "packages/core/tsconfig.spec.json",
+          "hash": "17594897064854416467"
+        }
+      ],
+      "contracts": [
+        {
+          "file": "packages/contracts/README.md",
+          "hash": "1675072428336869475"
+        },
+        {
+          "file": "packages/contracts/eslint.config.mjs",
+          "hash": "4493137641332673223",
+          "deps": [
+            [
+              "npm:jsonc-eslint-parser",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "packages/contracts/jest.config.cts",
+          "hash": "11660543322096674508"
+        },
+        {
+          "file": "packages/contracts/package.json",
+          "hash": "17201860731215208798",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "packages/contracts/project.json",
+          "hash": "16769285638304340714"
+        },
+        {
+          "file": "packages/contracts/src/index.ts",
+          "hash": "6487015511169846770"
+        },
+        {
+          "file": "packages/contracts/src/lib/contracts.spec.ts",
+          "hash": "12274991089430456301"
+        },
+        {
+          "file": "packages/contracts/src/lib/contracts.ts",
+          "hash": "12083078625047109554"
+        },
+        {
+          "file": "packages/contracts/tsconfig.json",
+          "hash": "12975668481162286788"
+        },
+        {
+          "file": "packages/contracts/tsconfig.lib.json",
+          "hash": "3269066908872457000"
+        },
+        {
+          "file": "packages/contracts/tsconfig.spec.json",
+          "hash": "4809000387131895544"
+        }
+      ],
+      "crm": [
+        {
+          "file": "apps/crm/eslint.config.mjs",
+          "hash": "15052851186193004871",
+          "deps": [
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "apps/crm/jest.config.cts",
+          "hash": "8708918332031062154"
+        },
+        {
+          "file": "apps/crm/project.json",
+          "hash": "14547038267655067241"
+        },
+        {
+          "file": "apps/crm/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/crm/src/app/app.config.ts",
+          "hash": "4436923392211261843",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.html",
+          "hash": "4502330629693433266"
+        },
+        {
+          "file": "apps/crm/src/app/app.routes.ts",
+          "hash": "6185150965714414910",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/crm/src/app/app.spec.ts",
+          "hash": "7929493829094894225",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.ts",
+          "hash": "12344290283069299174",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.html",
+          "hash": "17428751941442521546"
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.ts",
+          "hash": "4195081991037427500",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/nx-welcome.ts",
+          "hash": "2569891918329222800",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/crm/src/index.html",
+          "hash": "3431698068758704741"
+        },
+        {
+          "file": "apps/crm/src/main.ts",
+          "hash": "3314327030169821486",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/crm/src/styles.scss",
+          "hash": "5195668842064076916"
+        },
+        {
+          "file": "apps/crm/src/test-setup.ts",
+          "hash": "13317557134094625390",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "apps/crm/tsconfig.app.json",
+          "hash": "11156570204639688975"
+        },
+        {
+          "file": "apps/crm/tsconfig.json",
+          "hash": "9495375784689799492"
+        },
+        {
+          "file": "apps/crm/tsconfig.spec.json",
+          "hash": "1029128818174064697"
+        }
+      ],
+      "invoicing": [
+        {
+          "file": "apps/invoicing/eslint.config.mjs",
+          "hash": "15052851186193004871",
+          "deps": [
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "apps/invoicing/jest.config.cts",
+          "hash": "14838942012883750003"
+        },
+        {
+          "file": "apps/invoicing/project.json",
+          "hash": "7537008061255774747"
+        },
+        {
+          "file": "apps/invoicing/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/invoicing/src/app/app.config.ts",
+          "hash": "4436923392211261843",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/app/app.html",
+          "hash": "11987652264972370457"
+        },
+        {
+          "file": "apps/invoicing/src/app/app.routes.ts",
+          "hash": "6185150965714414910",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/app/app.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/invoicing/src/app/app.spec.ts",
+          "hash": "1805298386671450987",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/app/app.ts",
+          "hash": "17805880116935573906",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/app/nx-welcome.ts",
+          "hash": "7790763513171492467",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/index.html",
+          "hash": "8295370890801753929"
+        },
+        {
+          "file": "apps/invoicing/src/main.ts",
+          "hash": "3314327030169821486",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/invoicing/src/styles.scss",
+          "hash": "5195668842064076916"
+        },
+        {
+          "file": "apps/invoicing/src/test-setup.ts",
+          "hash": "13317557134094625390",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "apps/invoicing/tsconfig.app.json",
+          "hash": "11156570204639688975"
+        },
+        {
+          "file": "apps/invoicing/tsconfig.json",
+          "hash": "9495375784689799492"
+        },
+        {
+          "file": "apps/invoicing/tsconfig.spec.json",
+          "hash": "1029128818174064697"
+        }
+      ],
       "custom-layouts": [
         {
           "file": "packages/custom-layouts/README.md",
@@ -1213,61 +1702,6 @@
           "hash": "5331518322626158299"
         }
       ],
-      "contracts": [
-        {
-          "file": "packages/contracts/README.md",
-          "hash": "1675072428336869475"
-        },
-        {
-          "file": "packages/contracts/eslint.config.mjs",
-          "hash": "4493137641332673223",
-          "deps": [
-            [
-              "npm:jsonc-eslint-parser",
-              "dynamic"
-            ]
-          ]
-        },
-        {
-          "file": "packages/contracts/jest.config.cts",
-          "hash": "11660543322096674508"
-        },
-        {
-          "file": "packages/contracts/package.json",
-          "hash": "17201860731215208798",
-          "deps": [
-            "npm:tslib"
-          ]
-        },
-        {
-          "file": "packages/contracts/project.json",
-          "hash": "16769285638304340714"
-        },
-        {
-          "file": "packages/contracts/src/index.ts",
-          "hash": "6487015511169846770"
-        },
-        {
-          "file": "packages/contracts/src/lib/contracts.spec.ts",
-          "hash": "12274991089430456301"
-        },
-        {
-          "file": "packages/contracts/src/lib/contracts.ts",
-          "hash": "12083078625047109554"
-        },
-        {
-          "file": "packages/contracts/tsconfig.json",
-          "hash": "12975668481162286788"
-        },
-        {
-          "file": "packages/contracts/tsconfig.lib.json",
-          "hash": "3269066908872457000"
-        },
-        {
-          "file": "packages/contracts/tsconfig.spec.json",
-          "hash": "4809000387131895544"
-        }
-      ],
       "shell": [
         {
           "file": "apps/shell/project.json",
@@ -1283,7 +1717,7 @@
         },
         {
           "file": "apps/shell/src/app/app.config.ts",
-          "hash": "1554854247524620024",
+          "hash": "8575713371432907950",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/router",
@@ -1291,12 +1725,13 @@
             "npm:@ngx-translate/core",
             "npm:@ngx-translate/http-loader",
             "npm:ngx-toastr",
-            "npm:@angular/platform-browser"
+            "npm:@angular/platform-browser",
+            "core"
           ]
         },
         {
           "file": "apps/shell/src/app/app.routes.ts",
-          "hash": "5231095645448231139",
+          "hash": "395299363565718309",
           "deps": [
             "npm:@angular/router"
           ]
@@ -1383,6 +1818,31 @@
           ]
         },
         {
+          "file": "apps/shell/src/app/features/db-management/components/db-layout/db-layout.component.ts",
+          "hash": "8622874102268962037",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/shell/src/app/features/db-management/components/sync-dashboard/sync-dashboard.component.ts",
+          "hash": "4486490410769161512",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "core"
+          ]
+        },
+        {
+          "file": "apps/shell/src/app/features/db-management/db-management.routes.ts",
+          "hash": "17766564314708078167",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
           "file": "apps/shell/src/app/features/db-management/pages/api-endpoints.page.ts",
           "hash": "8080795703590157823",
           "deps": [
@@ -1400,7 +1860,15 @@
         },
         {
           "file": "apps/shell/src/app/features/db-management/pages/db-management.page.ts",
-          "hash": "8546009282730091361",
+          "hash": "8337702791924011005",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/shell/src/app/features/db-management/pages/sync-log.page.ts",
+          "hash": "9107986166488489522",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/common"
@@ -1416,7 +1884,7 @@
         },
         {
           "file": "apps/shell/src/app/features/db-management/services/db-management.facade.ts",
-          "hash": "11171764492573183919",
+          "hash": "12982400436216117539",
           "deps": [
             "npm:@angular/core",
             "core"
@@ -2153,7 +2621,7 @@
         },
         {
           "file": "apps/shell/src/app/shell/shell.host.component.ts",
-          "hash": "1321441908158113958",
+          "hash": "6087618630643529469",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/common",
@@ -2194,306 +2662,6 @@
         {
           "file": "apps/shell/tsconfig.spec.json",
           "hash": "8657069660228457346"
-        }
-      ],
-      "invoicing": [
-        {
-          "file": "apps/invoicing/eslint.config.mjs",
-          "hash": "15052851186193004871",
-          "deps": [
-            "npm:@nx/eslint-plugin"
-          ]
-        },
-        {
-          "file": "apps/invoicing/jest.config.cts",
-          "hash": "14838942012883750003"
-        },
-        {
-          "file": "apps/invoicing/project.json",
-          "hash": "7537008061255774747"
-        },
-        {
-          "file": "apps/invoicing/public/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/invoicing/src/app/app.config.ts",
-          "hash": "4436923392211261843",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/app/app.html",
-          "hash": "11987652264972370457"
-        },
-        {
-          "file": "apps/invoicing/src/app/app.routes.ts",
-          "hash": "6185150965714414910",
-          "deps": [
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/app/app.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/invoicing/src/app/app.spec.ts",
-          "hash": "1805298386671450987",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/app/app.ts",
-          "hash": "17805880116935573906",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/app/nx-welcome.ts",
-          "hash": "7790763513171492467",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/index.html",
-          "hash": "8295370890801753929"
-        },
-        {
-          "file": "apps/invoicing/src/main.ts",
-          "hash": "3314327030169821486",
-          "deps": [
-            "npm:@angular/platform-browser"
-          ]
-        },
-        {
-          "file": "apps/invoicing/src/styles.scss",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/invoicing/src/test-setup.ts",
-          "hash": "13317557134094625390",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "apps/invoicing/tsconfig.app.json",
-          "hash": "11156570204639688975"
-        },
-        {
-          "file": "apps/invoicing/tsconfig.json",
-          "hash": "9495375784689799492"
-        },
-        {
-          "file": "apps/invoicing/tsconfig.spec.json",
-          "hash": "1029128818174064697"
-        }
-      ],
-      "core": [
-        {
-          "file": "packages/core/README.md",
-          "hash": "9810432091555253122"
-        },
-        {
-          "file": "packages/core/eslint.config.mjs",
-          "hash": "5385050500626891584",
-          "deps": [
-            "npm:@nx/eslint-plugin"
-          ]
-        },
-        {
-          "file": "packages/core/jest.config.cts",
-          "hash": "13641579194166581081"
-        },
-        {
-          "file": "packages/core/project.json",
-          "hash": "14136024270046192527"
-        },
-        {
-          "file": "packages/core/src/index.ts",
-          "hash": "17042175743139224201"
-        },
-        {
-          "file": "packages/core/src/lib/db/dexie/app-db.ts",
-          "hash": "5045873326099743348",
-          "deps": [
-            "npm:dexie",
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/dexie/db-migrations.ts",
-          "hash": "999224948930385731"
-        },
-        {
-          "file": "packages/core/src/lib/db/encryption/crypto.service.ts",
-          "hash": "6761901553368130695",
-          "deps": [
-            "npm:@angular/core",
-            "npm:crypto-js"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/encryption/field-encryption.util.ts",
-          "hash": "1585621634787260157"
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/api-endpoint.repo.ts",
-          "hash": "17210980777071536553",
-          "deps": [
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/dynamic-row.repo.ts",
-          "hash": "18137485578370155660",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/table-master.repo.ts",
-          "hash": "5254355591900680600",
-          "deps": [
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/schema/schema-validator.service.ts",
-          "hash": "12994469057962695692",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/test-setup.ts",
-          "hash": "15311061684404854706",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "packages/core/tsconfig.json",
-          "hash": "5322752655305925185"
-        },
-        {
-          "file": "packages/core/tsconfig.lib.json",
-          "hash": "10623358221419076094"
-        },
-        {
-          "file": "packages/core/tsconfig.spec.json",
-          "hash": "17594897064854416467"
-        }
-      ],
-      "crm": [
-        {
-          "file": "apps/crm/eslint.config.mjs",
-          "hash": "15052851186193004871",
-          "deps": [
-            "npm:@nx/eslint-plugin"
-          ]
-        },
-        {
-          "file": "apps/crm/jest.config.cts",
-          "hash": "8708918332031062154"
-        },
-        {
-          "file": "apps/crm/project.json",
-          "hash": "14547038267655067241"
-        },
-        {
-          "file": "apps/crm/public/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/crm/src/app/app.config.ts",
-          "hash": "4436923392211261843",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.html",
-          "hash": "11987652264972370457"
-        },
-        {
-          "file": "apps/crm/src/app/app.routes.ts",
-          "hash": "6185150965714414910",
-          "deps": [
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/crm/src/app/app.spec.ts",
-          "hash": "7929493829094894225",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.ts",
-          "hash": "12344290283069299174",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/nx-welcome.ts",
-          "hash": "2569891918329222800",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "apps/crm/src/index.html",
-          "hash": "3431698068758704741"
-        },
-        {
-          "file": "apps/crm/src/main.ts",
-          "hash": "3314327030169821486",
-          "deps": [
-            "npm:@angular/platform-browser"
-          ]
-        },
-        {
-          "file": "apps/crm/src/styles.scss",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/crm/src/test-setup.ts",
-          "hash": "13317557134094625390",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "apps/crm/tsconfig.app.json",
-          "hash": "11156570204639688975"
-        },
-        {
-          "file": "apps/crm/tsconfig.json",
-          "hash": "9495375784689799492"
-        },
-        {
-          "file": "apps/crm/tsconfig.spec.json",
-          "hash": "1029128818174064697"
         }
       ]
     }

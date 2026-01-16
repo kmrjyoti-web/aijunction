@@ -8,8 +8,12 @@ import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
+import { API_CONFIG } from '@ai-junction/core';
+import { environment } from '../environments/environment';
+
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: API_CONFIG, useValue: environment.api },
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideHttpClient(withInterceptors(coreInterceptors)),

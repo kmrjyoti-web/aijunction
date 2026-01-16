@@ -1,8 +1,14 @@
 @if (config(); as cfg) {
-<div class="h-full flex flex-col bg-white text-sm">
+<div class="h-full flex flex-col text-sm transition-colors duration-300"
+  [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
+  [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency"
+  [style.background-image]="cfg.config.styleConfig?.backgroundImageUrl ? 'url(' + cfg.config.styleConfig?.backgroundImageUrl + ')' : null"
+  [style.background-size]="'cover'" [style.background-position]="'center'">
 
   <!-- Header Section -->
-  <header class="flex-shrink-0 border-b border-gray-200 bg-white shadow-sm relative z-40">
+  <header class="flex-shrink-0 border-b border-gray-200 shadow-sm relative z-40 transition-colors duration-300"
+    [style.background-color]="cfg.config.styleConfig?.headerBackgroundColor"
+    [class.bg-white]="!cfg.config.styleConfig?.headerBackgroundColor && !cfg.config.styleConfig?.enableTransparency">
     <!-- Main Toolbar Row -->
     <div class="flex flex-nowrap items-center justify-between gap-4 p-2">
 
@@ -392,7 +398,9 @@
   <!-- Paginator Footer -->
   @if (!isInfiniteScroll() && (cfg.config.paginatorPosition === 'bottom' || cfg.config.paginatorPosition === 'both' ||
   !cfg.config.paginatorPosition)) {
-  <footer class="flex-shrink-0 border-t border-gray-300">
+  <footer class="flex-shrink-0 border-t border-gray-300 transition-colors duration-300"
+    [style.background-color]="cfg.config.styleConfig?.footerBackgroundColor"
+    [class.bg-white]="!cfg.config.styleConfig?.footerBackgroundColor && !cfg.config.styleConfig?.enableTransparency">
     <app-paginator [currentPage]="currentPage()" [pageSize]="pageSize()" [totalRecords]="totalRecords()"
       [autoSizingEnabled]="autoSizingEnabled()" [infiniteScroll]="isInfiniteScroll()"
       [infiniteScrollBehavior]="cfg.config.infiniteScrollBehavior ?? 'append'" [currentRecordCount]="data().length"
