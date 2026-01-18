@@ -17,6 +17,9 @@ export class SyncManagerService implements OnDestroy {
     private syncStateSubject = new BehaviorSubject<SyncStatus>(SyncStatus.PENDING); // Default or Idle
     syncState$ = this.syncStateSubject.asObservable();
 
+    private dataPrimedSubject = new BehaviorSubject<string | null>(null);
+    dataPrimed$ = this.dataPrimedSubject.asObservable();
+
     // Connectivity State
     readonly isOnline = signal<boolean>(true);
 
@@ -29,6 +32,11 @@ export class SyncManagerService implements OnDestroy {
             this.isOnline.set(navigator.onLine);
             window.addEventListener('online', () => this.handleConnectionChange(true));
             window.addEventListener('offline', () => this.handleConnectionChange(false));
+
+            // Initial data fetch if online
+            if (this.isOnline()) {
+                setTimeout(() => this.primeData(), 1000); // Small delay to allow handlers to register
+            }
         }
 
         // Auto-sync effect
@@ -48,6 +56,7 @@ export class SyncManagerService implements OnDestroy {
         if (status) {
             console.log('[SyncManager] Online. Attempting sync...');
             this.processQueue();
+            this.primeData(); // Fetch fresh data
         } else {
             console.log('[SyncManager] Offline. Sync paused.');
         }
@@ -55,6 +64,23 @@ export class SyncManagerService implements OnDestroy {
 
     registerHandler(entityType: string, handler: SyncHandler) {
         this.handlers.set(entityType, handler);
+    }
+
+    async primeData() {
+        if (!this.isOnline()) return;
+
+        console.log('[SyncService] Starting to prime data from server...');
+        for (const [key, handler] of this.handlers.entries()) {
+            if (handler.syncDown) {
+                try {
+                    await handler.syncDown();
+                    console.log(`[SyncService] Data priming finished for ${key}.`);
+                    this.dataPrimedSubject.next(key);
+                } catch (err) {
+                    console.error(`[SyncService] Data priming failed for ${key}`, err);
+                }
+            }
+        }
     }
 
     async processQueue() {

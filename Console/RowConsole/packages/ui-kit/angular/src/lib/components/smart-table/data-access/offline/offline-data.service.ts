@@ -39,10 +39,10 @@ export class OfflineDataService {
 
     // --- Sorting ---
     // Start with sorting if a sort column is provided, as orderBy must be called on a Table.
-    if (sort_column.length > 0 && sort_column[0].coloum_id) {
-      const { coloum_id, short_type } = sort_column[0];
-      collection = this.db.contacts.orderBy(coloum_id);
-      if (short_type === 'desc') {
+    if (sort_column.length > 0 && sort_column[0].column_name) {
+      const { column_name, sortOrder } = sort_column[0];
+      collection = this.db.contacts.orderBy(column_name);
+      if (sortOrder === 'desc') {
         collection = collection.reverse();
       }
     } else {

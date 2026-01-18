@@ -1,30 +1,35 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, tap, catchError } from 'rxjs/operators';
-import { ApiRequest, ApiResponse } from '@ai-junction/core';
+import { ApiRequest, ApiResponse, SyncManagerService } from '@ai-junction/core';
 import { ConfigService } from './config.service';
 import { OnlineDataService } from './online-data.service';
 import { OfflineDataService } from './offline/offline-data.service';
 import { ConnectionStatusService } from './connection-status.service';
-// Core imports
-import { RowContactDataService, RowContactSyncHandler, SyncManagerService } from '@ai-junction/core';
 import { TableConfig } from '../models/table-config.model';
+// Core imports
+import { Inject, InjectionToken, Optional, Injector } from '@angular/core';
+import { IDataProvider, DATA_PROVIDER_TOKEN } from '../models/data-provider.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataManagerService {
   private configService = inject(ConfigService);
-  private onlineDataService = inject(OnlineDataService);
-  private offlineDataService = inject(OfflineDataService);
+
   private connectionStatusService = inject(ConnectionStatusService);
-
-  // Specific Data Services
-  private rowContactDataService = inject(RowContactDataService);
-
-  // Ensure Sync Handler is initialized (eagerly loading it)
-  private rowContactSyncHandler = inject(RowContactSyncHandler);
   private syncManager = inject(SyncManagerService);
+  private injector = inject(Injector);
+
+  private get onlineDataService() { return this.injector.get(OnlineDataService); }
+  private get offlineDataService() { return this.injector.get(OfflineDataService); }
+
+  constructor(
+    @Optional() @Inject(DATA_PROVIDER_TOKEN) private customDataProvider: IDataProvider
+  ) {
+    console.log('[DataManagerService] Initialized');
+    console.log('[DataManagerService] Custom Provider Present:', !!this.customDataProvider);
+  }
 
   /**
    * Gets data based on the configured data strategy.
@@ -36,13 +41,9 @@ export class DataManagerService {
     const config: TableConfig = this.configService.config();
     const strategy = config.config.dataStrategy;
 
-    // Delegate to specific services based on feature/key
-    // Assuming 'RowContact' as the key or feature identifier
-    if (config.key === 'RowContact' || config.feature === 'RowContact') {
-      // For RowContact, we currently force Offline First / Sync logic via the service
-      // regardless of global strategy, OR we can respect the strategy if RowContactDataService supports it.
-      // RowContactDataService as implemented is Offline-Backed.
-      return this.rowContactDataService.getData(request);
+    // Delegate to custom provider if available (e.g. RowContactDataService)
+    if (this.customDataProvider) {
+      return this.customDataProvider.getData(request);
     }
 
     switch (strategy) {

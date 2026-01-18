@@ -108,6 +108,18 @@ export class PaginatorComponent {
     }
   }
 
+  toFirstPage(): void {
+    if (this.currentPage() > 1) {
+      this.goToPage(1);
+    }
+  }
+
+  toLastPage(): void {
+    if (this.currentPage() < this.totalPages()) {
+      this.goToPage(this.totalPages());
+    }
+  }
+
   previousPage(): void {
     if (this.currentPage() > 1) {
       this.goToPage(this.currentPage() - 1);

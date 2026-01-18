@@ -57,28 +57,51 @@
   <!-- Right Side: Pagination & Actions -->
   <div class="flex-1 flex justify-between items-center sm:justify-end gap-3">
     @if (!infiniteScroll()) {
-    <button (click)="previousPage()" [disabled]="currentPage() === 1" title="Go to previous page"
-      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-      Previous
-    </button>
-    <div class="flex items-center">
+    <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+      <!-- First Page -->
+      <button (click)="toFirstPage()" [disabled]="currentPage() === 1" title="Go to first page"
+        class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        <span class="sr-only">First</span>
+        <i class="pi pi-angle-double-left text-xs"></i>
+      </button>
+
+      <!-- Previous Page -->
+      <button (click)="previousPage()" [disabled]="currentPage() === 1" title="Go to previous page"
+        class="relative inline-flex items-center px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        <span class="sr-only">Previous</span>
+        <i class="pi pi-angle-left text-xs"></i>
+      </button>
+
+      <!-- Page Numbers -->
       @for(page of pages(); track $index) {
       @if(page === '...') {
       <span
-        class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium text-gray-700">...</span>
+        class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0">...</span>
       } @else {
-      <button (click)="goToPage(page)" [title]="'Go to page ' + page" [class.bg-slate-900]="page === currentPage()"
-        [class.text-white]="page === currentPage()" [class.border-slate-900]="page === currentPage()"
-        class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+      <button (click)="goToPage(page)" [title]="'Go to page ' + page"
+        [class]="page === currentPage() 
+            ? 'relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' 
+            : 'relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0'"
+        [attr.aria-current]="page === currentPage() ? 'page' : null">
         {{ page }}
       </button>
       }
       }
-    </div>
-    <button (click)="nextPage()" [disabled]="currentPage() === totalPages()" title="Go to next page"
-      class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
-      Next
-    </button>
+
+      <!-- Next Page -->
+      <button (click)="nextPage()" [disabled]="currentPage() === totalPages()" title="Go to next page"
+        class="relative inline-flex items-center px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        <span class="sr-only">Next</span>
+        <i class="pi pi-angle-right text-xs"></i>
+      </button>
+
+      <!-- Last Page -->
+      <button (click)="toLastPage()" [disabled]="currentPage() === totalPages()" title="Go to last page"
+        class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        <span class="sr-only">Last</span>
+        <i class="pi pi-angle-double-right text-xs"></i>
+      </button>
+    </nav>
     } @else {
     <!-- Spacer to push chatbot to the right -->
     <div class="flex-1"></div>

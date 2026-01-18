@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, WritableSignal, viewChild, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, WritableSignal, viewChild, ElementRef, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfigService } from '../../data-access/config.service';
-import { Contact } from '../../data-access/online-data.service';
+
 import { TableViewComponent } from './views/table-view/table-view.component';
 import { CardViewComponent } from './views/card-view/card-view.component';
 import { ListViewComponent } from './views/list-view/list-view.component';
@@ -93,7 +93,8 @@ export class SmartTableComponent {
   private exportService = inject(ExportService);
 
   config = this.configService.config;
-  data = signal<Contact[]>([]);
+  primaryKey = computed(() => this.config().config.primaryKey || 'organization_id');
+  data = signal<any[]>([]);
   totalRecords = signal(0);
   loading = signal(true);
 
@@ -153,6 +154,12 @@ export class SmartTableComponent {
   showMobileActionsMenu = signal(false);
   allTableColumns = signal<Column[]>([]);
   visibleTableColumns = signal<Column[]>([]);
+
+  // Generic Outputs
+  toolbarAction = output<string>();
+
+  rowAction = output<{ action: string; row: any }>();
+  syncTriggered = output<void>();
 
   scrollContainer = viewChild<ElementRef<HTMLElement>>('scrollContainer');
 
@@ -304,7 +311,7 @@ export class SmartTableComponent {
   private readonly initialState: Omit<TableState, 'visibleColumnCodes'>;
 
   // Selection state
-  selectedIds = signal(new Set<number>());
+  selectedIds = signal(new Set<any>());
 
   constructor() {
     // 1. Define initial state defaults
@@ -312,7 +319,7 @@ export class SmartTableComponent {
       viewMode: this.isMobile() ? 'card' : 'table',
       currentPage: 1,
       pageSize: this.config().api.defaultPageSize,
-      sortColumn: 'organization_name',
+      sortColumn: null,
       sortDirection: 'asc',
       globalFilterTerm: '',
       advancedFilters: {},
@@ -336,6 +343,7 @@ export class SmartTableComponent {
     this.loadCustomLayouts();
 
     const performInitialFetch = () => {
+      console.log('[SmartTable] performInitialFetch called. Loading:', this.loading(), 'RestoredPage:', this.currentPage());
       this.loading.set(true);
       const restoredPage = this.currentPage();
 
@@ -360,6 +368,7 @@ export class SmartTableComponent {
     effect(() => {
       const isSync = this.config().config.dataStrategy === 'SYNC';
       if (isSync && this.syncService.isPrimed() && !this.initialFetchDone()) {
+        console.log('[SmartTable] SYNC effect triggering initial fetch...');
         performInitialFetch();
 
         if (this.showSyncOptionsModal()) {
@@ -368,14 +377,26 @@ export class SmartTableComponent {
       }
     }, { allowSignalWrites: true });
 
-    // Initial data source setup. This runs only ONCE at component creation.
     const strategy = this.config().config.dataStrategy;
     if (strategy === 'SYNC') {
       if (this.syncService.isPrimed()) {
         performInitialFetch();
       } else {
-        this.showSyncOptionsModal.set(true);
-        this.loading.set(false);
+        if (this.config().config.autoSync) {
+          console.log('[SmartTable] Auto Sync Enabled. Triggering Sync...');
+          // We need to defer this slightly or ensure the parent is listening. 
+          // Since this is constructor/init context, let's use an effect or just call it.
+          // But output emission in constructor might be too early for parent subscription in some cases.
+          // Safe bet: effect or setTimeout.
+          setTimeout(() => {
+            this.syncTriggered.emit();
+            // When auto-syncing, we might want to show loading state
+            this.loading.set(true);
+          }, 0);
+        } else {
+          this.showSyncOptionsModal.set(true);
+          this.loading.set(false);
+        }
       }
     } else {
       performInitialFetch();
@@ -428,8 +449,32 @@ export class SmartTableComponent {
           if (containerEl) {
             const densitySetting = sizerConfig.densities.find(d => d.name === density) ?? sizerConfig.densities[1];
             const rowHeight = densitySetting.rowHeight;
-            const reservedSpace = sizerConfig.additionalReservedSpace ?? 0;
-            const newSize = calculatePageSizeFromElement(containerEl, rowHeight, reservedSpace);
+            const reservedSpace = (sizerConfig.additionalReservedSpace ?? 0) + (sizerConfig.autoSizeOffset ?? 0);
+
+            // If offset is provided, use window height calculation logic if needed, 
+            // but the utility takes container element. 
+            // The user requested: "minus height in total windows height".
+            // If they want window based calculation, we might need a different approach 
+            // BUT given the utility signature `calculatePageSizeFromElement(element, ...)`
+            // it seems the intention is to adjust the available height *of the container* 
+            // OR to derive container height from window. 
+
+            // Let's assume the user wants access to window height calc.
+            // If autoSizeOffset is present, we might want to say: 
+            // Available Height = Window Height - autoSizeOffset
+            // Page Size = Available Height / Row Height.
+
+            let availableHeight: number;
+
+            if (sizerConfig.autoSizeOffset !== undefined) {
+              availableHeight = window.innerHeight - sizerConfig.autoSizeOffset;
+              // Ensure we don't go negative
+              if (availableHeight < 0) availableHeight = 100; // fallback
+            } else {
+              availableHeight = containerEl.clientHeight - (sizerConfig.additionalReservedSpace ?? 0);
+            }
+
+            const newSize = Math.max(1, Math.floor(availableHeight / rowHeight));
 
             if (newSize !== this.pageSize()) {
               this.pageSize.set(newSize);
@@ -756,6 +801,7 @@ export class SmartTableComponent {
 
     this.dataManager.getData(request).subscribe({
       next: response => {
+        console.log(`[SmartTable] fetchPage success. Data received: ${response.data.length} records. Total: ${response.total_records}`);
         this.data.set(response.data);
         this.totalRecords.set(response.total_records);
         this.currentPage.set(page);
@@ -767,11 +813,11 @@ export class SmartTableComponent {
         const newData = this.data();
         if (focus === 'first' && newData.length > 0) {
           this.keyboardActiveRowIndex.set(0);
-          this.scrollActiveItemIntoView(newData[0].organization_id);
+          this.scrollActiveItemIntoView(newData[0][this.primaryKey()]);
         } else if (focus === 'last' && newData.length > 0) {
           const lastIndex = newData.length - 1;
           this.keyboardActiveRowIndex.set(lastIndex);
-          this.scrollActiveItemIntoView(newData[lastIndex].organization_id);
+          this.scrollActiveItemIntoView(newData[lastIndex][this.primaryKey()]);
         } else {
           this.keyboardActiveRowIndex.set(null);
         }
@@ -819,7 +865,7 @@ export class SmartTableComponent {
   }
 
   // --- Data Fetching and Resetting ---
-  private resetAndFetch(): void {
+  resetAndFetch(): void {
     this.currentPage.set(1);
     this.keyboardActiveRowIndex.set(null);
     this.selectedIds.set(new Set()); // Clear selection on re-fetch
@@ -892,8 +938,17 @@ export class SmartTableComponent {
         const sizerConfig = this.config().config.sizerConfig;
         const densitySetting = sizerConfig.densities.find(d => d.name === density) ?? sizerConfig.densities[1];
         const rowHeight = densitySetting.rowHeight;
-        const reservedSpace = sizerConfig.additionalReservedSpace ?? 0;
-        const newSize = calculatePageSizeFromElement(containerEl, rowHeight, reservedSpace);
+
+        let availableHeight: number;
+        if (sizerConfig.autoSizeOffset !== undefined) {
+          availableHeight = window.innerHeight - sizerConfig.autoSizeOffset;
+          if (availableHeight < 0) availableHeight = 100;
+        } else {
+          availableHeight = containerEl.clientHeight - (sizerConfig.additionalReservedSpace ?? 0);
+        }
+
+        const newSize = Math.max(1, Math.floor(availableHeight / rowHeight));
+
         if (newSize !== this.pageSize()) {
           this.pageSize.set(newSize);
           this.resetAndFetch();
@@ -908,15 +963,16 @@ export class SmartTableComponent {
     this.showFilterSidebar.set(false);
   }
 
-  handleRowClick(contact: Contact): void {
-    const index = this.data().findIndex(item => item.organization_id === contact.organization_id);
+  handleRowClick(row: any): void {
+    const pk = this.primaryKey();
+    const index = this.data().findIndex(item => item[pk] === row[pk]);
     if (index > -1) {
       this.keyboardActiveRowIndex.set(index);
       this.selectionAnchorIndex.set(index); // Set anchor on direct interaction
     }
   }
 
-  handleSelectionChange(newSelection: Set<number>): void {
+  handleSelectionChange(newSelection: Set<any>): void {
     this.selectedIds.set(newSelection);
     // Note: We cannot reliably update the anchor here without knowing which item was last toggled.
     // The anchor is primarily managed by direct click and keyboard navigation.
@@ -925,7 +981,7 @@ export class SmartTableComponent {
   private toggleSelectionByIndex(index: number): void {
     if (index < 0 || index >= this.data().length) return;
 
-    const rowId = this.data()[index].organization_id;
+    const rowId = this.data()[index][this.primaryKey()];
     const newSelection = new Set(this.selectedIds());
     if (newSelection.has(rowId)) {
       newSelection.delete(rowId);
@@ -976,9 +1032,9 @@ export class SmartTableComponent {
     });
   }
 
-  handleRowAction(event: { action: string; row: Contact }): void {
+  handleRowAction(event: { action: string; row: any }): void {
     const { action, row } = event;
-    const phone = row.communication_detail?.replace(/\D/g, '');
+    const phone = row['communication_detail']?.replace(/\D/g, '') || row['mobile_number']?.replace(/\D/g, '');
 
     switch (action) {
       case 'call':
@@ -988,13 +1044,14 @@ export class SmartTableComponent {
         if (phone) window.open(`https://wa.me/${phone}`, '_blank');
         break;
       case 'email':
-        if (row.email_id) window.location.href = `mailto:${row.email_id}`;
+        if (row['email_id']) window.location.href = `mailto:${row['email_id']}`;
         break;
       case 'sms':
         if (phone) window.location.href = `sms:${phone}`;
         break;
       default:
-        console.log('Unhandled row action:', action, 'on row:', row);
+        // console.log('Unhandled row action:', action, 'on row:', row);
+        this.rowAction.emit({ action, row });
         break;
     }
   }
@@ -1024,7 +1081,8 @@ export class SmartTableComponent {
         break;
       // Handle export actions, etc.
       default:
-        console.log('Toolbar action:', key);
+        // console.log('Toolbar action:', key);
+        this.toolbarAction.emit(key);
     }
   }
 
@@ -1036,7 +1094,8 @@ export class SmartTableComponent {
 
   handleConfigSave(newConfig: TableConfig): void {
     this.configService.updateFullConfig(newConfig);
-    this.showConfigSidebar.set(false);
+    // Do not close sidebar on auto-save
+    // this.showConfigSidebar.set(false);
   }
 
   handleConfigReset(): void {
@@ -1062,11 +1121,14 @@ export class SmartTableComponent {
   handleStartSync(): void {
     this.configService.updateDataStrategy('SYNC');
     this.initialFetchDone.set(false);
-    this.syncService.startFullSync();
+    this.showSyncOptionsModal.set(false); // Close the modal
+    // this.syncService.startFullSync();
+    this.syncTriggered.emit();
   }
 
   handleManualSync(): void {
-    this.syncService.startFullSync();
+    // this.syncService.startFullSync(); // Disabled legacy service
+    this.syncTriggered.emit();
   }
 
   toggleInfiniteScrollBehavior(): void {
@@ -1162,7 +1224,8 @@ export class SmartTableComponent {
       currentData,
       currentIndex,
       this.selectedIds(),
-      this.selectionAnchorIndex()
+      this.selectionAnchorIndex(),
+      this.primaryKey()
     );
 
     const update = this.keyboardManager.handleKeydown(event);
@@ -1174,12 +1237,12 @@ export class SmartTableComponent {
 
       const activeItem = this.data()[update.newActiveIndex];
       if (activeItem) {
-        this.scrollActiveItemIntoView(activeItem.organization_id);
+        this.scrollActiveItemIntoView(activeItem[this.primaryKey()]);
       }
     }
   }
 
-  private scrollActiveItemIntoView(itemId: number): void {
+  private scrollActiveItemIntoView(itemId: any): void {
     const viewMode = this.viewMode();
     let elementId: string;
     switch (viewMode) {

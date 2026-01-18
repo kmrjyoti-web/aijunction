@@ -82,7 +82,7 @@
           <div>
             <textarea #htmlInput rows="8"
               class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 font-mono"
-              placeholder="e.g., <div><h2>{{ organization_name }}</h2></div>" [value]="htmlPrompt()"
+              [placeholder]="'e.g., <div><h2>{{ organization_name }}</h2></div>'" [value]="htmlPrompt()"
               (input)="htmlPrompt.set(htmlInput.value)"></textarea>
             <p class="mt-2 text-xs text-gray-500">Provide a simple HTML structure. The AI will add styling and map the
               data fields.</p>

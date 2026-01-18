@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, input, output, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Column, ActiveFilter } from '../../../models/table-config.model';
 import { Contact } from '../../../data-access/online-data.service';
@@ -21,13 +21,13 @@ export class ExcelFilterComponent {
   data = input.required<Contact[]>();
   activeFilter = input<ActiveFilter | null>();
 
-  apply = output<{ filter?: ActiveFilter | null, sort?: { column: string, direction: 'asc' | 'desc'} }>();
+  apply = output<{ filter?: ActiveFilter | null, sort?: { column: string, direction: 'asc' | 'desc' } }>();
   close = output<void>();
 
   // Text filter state
   searchTerm = signal('');
   selectedValues = signal<Set<string>>(new Set());
-  
+
   // Calendar filter state
   currentMonth = signal(new Date());
   rangeStart = signal<Date | null>(null);
@@ -48,7 +48,7 @@ export class ExcelFilterComponent {
     }
     return this.uniqueValues().filter(val => val.toLowerCase().includes(term));
   });
-  
+
   isAllSelected = computed(() => {
     const filtered = this.filteredValues();
     if (filtered.length === 0) return false;
@@ -67,7 +67,7 @@ export class ExcelFilterComponent {
     const totalDays = lastDayOfMonth.getDate();
 
     const grid: CalendarDay[] = [];
-    
+
     // Previous month's padding days
     for (let i = 0; i < firstDayOfWeek; i++) {
       const prevDate = new Date(firstDayOfMonth);
@@ -88,7 +88,7 @@ export class ExcelFilterComponent {
       nextDate.setDate(nextDate.getDate() + i);
       grid.push({ date: nextDate, isCurrentMonth: false });
     }
-    
+
     return grid;
   });
 
@@ -96,7 +96,7 @@ export class ExcelFilterComponent {
     effect(() => {
       const col = this.column();
       const active = this.activeFilter();
-      
+
       if (col.columnType === 'DATE') {
         if (active && (active.operator === '=' || active.operator === 'between')) {
           this.rangeStart.set(active.value1 ? new Date(active.value1 + 'T00:00:00') : null);
@@ -132,7 +132,7 @@ export class ExcelFilterComponent {
       return newSelected;
     });
   }
-  
+
   toggleValue(value: string): void {
     this.selectedValues.update(currentSelected => {
       const newSelected = new Set(currentSelected);
@@ -157,7 +157,7 @@ export class ExcelFilterComponent {
         this.rangeEnd.set(temp);
         end = temp;
       }
-      
+
       if (start && end) { // Range selected
         const newFilter: ActiveFilter = {
           code: this.column().code, name: this.column().name, type: 'date',
@@ -202,11 +202,11 @@ export class ExcelFilterComponent {
   }
 
   handleSort(direction: 'asc' | 'desc'): void {
-    this.apply.emit({ sort: { column: this.column().code, direction }});
+    this.apply.emit({ sort: { column: this.column().code, direction } });
   }
 
   // --- Calendar Specific Methods ---
-  
+
   selectDate(date: Date): void {
     const start = this.rangeStart();
     const end = this.rangeEnd();
@@ -244,7 +244,7 @@ export class ExcelFilterComponent {
   isRangeStart(date: Date): boolean {
     return this.rangeStart()?.getTime() === date.getTime();
   }
-  
+
   isRangeEnd(date: Date): boolean {
     return this.rangeEnd()?.getTime() === date.getTime();
   }
@@ -252,13 +252,17 @@ export class ExcelFilterComponent {
   isToday(date: Date): boolean {
     const today = new Date();
     return date.getDate() === today.getDate() &&
-           date.getMonth() === today.getMonth() &&
-           date.getFullYear() === today.getFullYear();
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
   }
 
   private resetDateSelection(): void {
     this.rangeStart.set(null);
     this.rangeEnd.set(null);
     this.currentMonth.set(new Date());
+  }
+  @HostListener('keydown.escape')
+  onEscape(): void {
+    this.close.emit();
   }
 }

@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Column, MaskConfig } from '../../../../models/table-config.model';
-// fix: Corrected import path for Contact model.
-import { Contact } from '../../../../data-access/online-data.service';
 import { getValidationState, ValidationState } from '../../../../utils/validation.util';
 import { maskString as maskUtil } from '../../../../utils/masking.util';
 import { DynamicItemComponent } from '../../../shared/dynamic-item/dynamic-item.component';
@@ -17,31 +15,32 @@ import { Density } from '../../../../models/density.model';
 })
 export class ListViewComponent {
   columns = input.required<Column[]>();
-  data = input.required<Contact[]>();
+  data = input.required<any[]>();
+  primaryKey = input('organization_id');
   density = input<Density>('cozy');
   densityClass = input('');
-  selectedIds = input(new Set<number>());
+  selectedIds = input(new Set<any>());
   enableMultiSelect = input(false);
   customTemplate = input<string | null>(null);
   keyboardActiveRowIndex = input<number | null>(null);
 
-  selectionChange = output<Set<number>>();
-  rowClicked = output<Contact>();
+  selectionChange = output<Set<any>>();
+  rowClicked = output<any>();
 
   headerColumn = computed(() => this.columns().find(c => c.cardHeader));
   rowColumns = computed(() => this.columns().filter(c => c.listRow));
   imageColumn = computed(() => this.columns().find(c => c.columnType === 'IMAGE'));
 
-  onItemClick(item: Contact): void {
-      this.rowClicked.emit(item);
-      if (this.enableMultiSelect()) {
-        this.toggleSelection(item.organization_id);
-      }
+  onItemClick(item: any): void {
+    this.rowClicked.emit(item);
+    if (this.enableMultiSelect()) {
+      this.toggleSelection(item.organization_id);
+    }
   }
 
-  private toggleSelection(rowId: number): void {
+  private toggleSelection(rowId: any): void {
     if (!this.enableMultiSelect()) return;
-    
+
     const newSelection = new Set(this.selectedIds());
     if (newSelection.has(rowId)) {
       newSelection.delete(rowId);
@@ -51,8 +50,8 @@ export class ListViewComponent {
     this.selectionChange.emit(newSelection);
   }
 
-  getFieldValidationState(item: Contact, column: Column): ValidationState {
-    return getValidationState(item[column.code as keyof Contact], column, column.code);
+  getFieldValidationState(item: any, column: Column): ValidationState {
+    return getValidationState(item[column.code], column, column.code);
   }
 
   maskString(value: string, config: MaskConfig): string {

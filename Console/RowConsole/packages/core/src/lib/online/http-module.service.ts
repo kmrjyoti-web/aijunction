@@ -148,4 +148,35 @@ export class HttpModuleService {
     ): Observable<T> {
         return this.request<T>(moduleKey, 'DELETE', apiUrl, { body: data });
     }
+    getRaw<T>(
+        moduleKey: HttpModuleKey,
+        query: Record<string, any>,
+        apiUrl: string,
+    ): Observable<T> {
+        const baseUrl = this.resolveBaseUrl(moduleKey);
+        const url = `${baseUrl}${apiUrl}`;
+        const httpOptions = this.buildOptions(query);
+
+        return this.http
+            .request<T>('GET', url, httpOptions)
+            .pipe(
+                catchError(err => this.apiHelper.handleError(err)),
+            );
+    }
+
+    createRaw<T>(
+        moduleKey: HttpModuleKey,
+        data: any,
+        apiUrl: string,
+    ): Observable<T> {
+        const baseUrl = this.resolveBaseUrl(moduleKey);
+        const url = `${baseUrl}${apiUrl}`;
+        const httpOptions = this.buildOptions(undefined, data);
+
+        return this.http
+            .request<T>('POST', url, httpOptions)
+            .pipe(
+                catchError(err => this.apiHelper.handleError(err)),
+            );
+    }
 }

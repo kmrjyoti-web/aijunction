@@ -35,19 +35,25 @@ export class AppDb extends Dexie {
     _recycleBin!: Table<any, number>;
     RowContact!: Table<any, string>; // Using any for now to avoid circular dependency with UI-Kit
     SyncLog!: Table<any, number>;    // Using any for now
+    SyncMeta!: Table<any, string>;
 
     constructor() {
-        super('AIJunctionDB_Refactored'); // New DB name to avoid conflict or reuse? User might want reuse. 
+        const dbName = 'AIJunctionDB_Refactored';
+        super(dbName);
+        console.log('[AppDb] Initialized with name:', dbName);
+        // New DB name to avoid conflict or reuse? User might want reuse.
         // "AIJunctionDB" was used before. Let's stick to it if we want to keep data, or migrated.
         // I will use 'AIJunctionDB' to persist data.
 
-        // Schema V1
-        this.version(1).stores({
+        // Schema V3 (Added SyncMeta)
+        this.version(3).stores({
             TableMaster: 'Table_Code, Table_Name, Sync_Frequency',
             ApiConfiguration: 'API_CODE, Api_End_point',
             _recycleBin: '++id, originalTable, deletedAt',
             RowContact: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus', // PK & Indexable fields
-            SyncLog: '++id, entityType, status, timestamp' // PK & Indexable fields
+
+            SyncLog: '++id, entityType, status, timestamp', // PK & Indexable fields
+            SyncMeta: 'id, updated_at'
         });
     }
 
@@ -57,24 +63,28 @@ export class AppDb extends Dexie {
         }
 
         const masterTables = await this.table('TableMaster').toArray();
-        if (masterTables.length === 0) return;
+        // If TableMaster is empty, we still apply v101 to ensure consistency
 
         const newStores: { [key: string]: string } = {
             TableMaster: 'Table_Code, Table_Name, Sync_Frequency',
             ApiConfiguration: 'API_CODE, Api_End_point',
             _recycleBin: '++id, originalTable, deletedAt',
             RowContact: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus',
-            SyncLog: '++id, entityType, status, timestamp'
+
+            SyncLog: '++id, entityType, status, timestamp',
+            SyncMeta: 'id, updated_at'
         };
 
-        masterTables.forEach((t: TableMaster) => {
-            if (t.Table_Schema) {
-                newStores[t.Table_Name] = t.Table_Schema;
-            }
-        });
+        if (masterTables.length > 0) {
+            masterTables.forEach((t: TableMaster) => {
+                if (t.Table_Schema) {
+                    newStores[t.Table_Name] = t.Table_Schema;
+                }
+            });
+        }
 
         this.close();
-        this.version(100).stores(newStores);
+        this.version(101).stores(newStores);
         await this.open();
     }
 }

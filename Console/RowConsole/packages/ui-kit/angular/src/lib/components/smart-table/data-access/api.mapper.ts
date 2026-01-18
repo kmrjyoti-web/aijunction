@@ -57,8 +57,8 @@ export function mapToApiRequest(
   const sort_column: SortColumn[] = [];
   if (sortColumn) {
     sort_column.push({
-      coloum_id: sortColumn,
-      short_type: sortDirection
+      column_name: sortColumn,
+      sortOrder: sortDirection
     });
   }
 

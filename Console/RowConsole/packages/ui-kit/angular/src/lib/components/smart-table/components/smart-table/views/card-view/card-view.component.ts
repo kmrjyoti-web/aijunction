@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Column, MaskConfig, RowMenuItem, CardViewConfig, RowActionItem } from '../../../../models/table-config.model';
-import { Contact } from '../../../../data-access/online-data.service';
 import { getValidationState, ValidationState } from '../../../../utils/validation.util';
 import { maskString as maskUtil } from '../../../../utils/masking.util';
 import { RowMenuComponent } from '../../row-menu/row-menu.component';
@@ -18,10 +17,11 @@ import { Density } from '../../../../models/density.model';
 })
 export class CardViewComponent {
   columns = input.required<Column[]>();
-  data = input.required<Contact[]>();
+  data = input.required<any[]>();
+  primaryKey = input('organization_id');
   density = input<Density>('cozy');
   densityClass = input('');
-  selectedIds = input(new Set<number>());
+  selectedIds = input(new Set<any>());
   enableMultiSelect = input(false);
   rowMenuConfig = input<RowMenuItem[]>();
   rowActions = input<RowActionItem[] | undefined>();
@@ -29,11 +29,11 @@ export class CardViewComponent {
   customTemplate = input<string | null>(null);
   keyboardActiveRowIndex = input<number | null>(null);
 
-  selectionChange = output<Set<number>>();
-  rowAction = output<{ action: string; row: Contact }>();
-  rowClicked = output<Contact>();
+  selectionChange = output<Set<any>>();
+  rowAction = output<{ action: string; row: any }>();
+  rowClicked = output<any>();
 
-  openMenuRowId = signal<number | null>(null);
+  openMenuRowId = signal<any | null>(null);
   contextMenuPosition = signal<{ x: number, y: number } | null>(null);
 
   cardHeaderColumn = computed(() => this.columns().find(c => c.cardHeader));
@@ -56,24 +56,24 @@ export class CardViewComponent {
     }
   });
 
-  onCardClick(item: Contact): void {
+  onCardClick(item: any): void {
     this.rowClicked.emit(item);
   }
 
-  onCardContextMenu(event: MouseEvent, item: Contact): void {
+  onCardContextMenu(event: MouseEvent, item: any): void {
     event.preventDefault();
     this.openMenuRowId.set(item.organization_id);
     this.contextMenuPosition.set({ x: event.clientX, y: event.clientY });
   }
 
-  handleCardBodyClick(item: Contact): void {
+  handleCardBodyClick(item: any): void {
     this.rowClicked.emit(item);
     if (this.enableMultiSelect()) {
       this.toggleSelection(item.organization_id);
     }
   }
 
-  private toggleSelection(rowId: number): void {
+  private toggleSelection(rowId: any): void {
     if (!this.enableMultiSelect()) return;
 
     const newSelection = new Set(this.selectedIds());
@@ -85,8 +85,8 @@ export class CardViewComponent {
     this.selectionChange.emit(newSelection);
   }
 
-  getFieldValidationState(item: Contact, column: Column): ValidationState {
-    return getValidationState(item[column.code as keyof Contact], column, column.code);
+  getFieldValidationState(item: any, column: Column): ValidationState {
+    return getValidationState(item[column.code], column, column.code);
   }
 
   maskString(value: string, config: MaskConfig): string {
@@ -102,7 +102,7 @@ export class CardViewComponent {
     return phone.replace(/\D/g, '');
   }
 
-  toggleRowMenu(event: MouseEvent, rowId: number): void {
+  toggleRowMenu(event: MouseEvent, rowId: any): void {
     event.stopPropagation();
 
     // If this menu is already open, just close it.
@@ -138,7 +138,7 @@ export class CardViewComponent {
     this.contextMenuPosition.set(null);
   }
 
-  handleRowMenuAction(event: { action: string; row: Contact }): void {
+  handleRowMenuAction(event: { action: string; row: any }): void {
     this.rowAction.emit(event);
     this.closeRowMenu();
   }

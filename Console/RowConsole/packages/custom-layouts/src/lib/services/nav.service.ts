@@ -57,6 +57,23 @@ export class NavService {
             path: '/management/cache'
         },
         {
+            headTitle1: 'Applications',
+        },
+        {
+            title: 'CRM',
+            icon: 'users',
+            type: 'sub',
+            active: false,
+            children: [
+                {
+                    title: 'Row Contacts',
+                    type: 'link',
+                    active: false,
+                    path: '/row-contact'
+                }
+            ]
+        },
+        {
             title: 'Settings',
             icon: 'settings',
             type: 'link',

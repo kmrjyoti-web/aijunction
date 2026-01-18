@@ -49,9 +49,11 @@ export class ConfigFormComponent implements OnDestroy {
       enableFreeze: [false],
       toolbarButtonMode: ['iconAndText'],
       headerBackgroundColor: ['#ffffff'],
-      footerBackgroundColor: ['#ffffff'],
+      footerBackgroundColor: ['transparent'],
+      borderColor: ['#e5e7eb'],
       enableTransparency: [false],
-      backgroundImageUrl: ['']
+      backgroundImageUrl: [''],
+      autoSizeOffset: [0]
     });
 
     effect(() => {
@@ -79,9 +81,11 @@ export class ConfigFormComponent implements OnDestroy {
           enableFreeze: currentConfig.config.enableFreeze ?? false,
           toolbarButtonMode: currentConfig.config.toolbarButtonMode ?? 'iconAndText',
           headerBackgroundColor: currentConfig.config.styleConfig?.headerBackgroundColor ?? 'var(--marg-header-bg)',
-          footerBackgroundColor: currentConfig.config.styleConfig?.footerBackgroundColor ?? 'var(--marg-header-bg)',
+          footerBackgroundColor: currentConfig.config.styleConfig?.footerBackgroundColor ?? 'transparent',
+          borderColor: currentConfig.config.styleConfig?.borderColor ?? 'var(--marg-border-color)',
           enableTransparency: currentConfig.config.styleConfig?.enableTransparency ?? false,
-          backgroundImageUrl: currentConfig.config.styleConfig?.backgroundImageUrl ?? ''
+          backgroundImageUrl: currentConfig.config.styleConfig?.backgroundImageUrl ?? '',
+          autoSizeOffset: currentConfig.config.sizerConfig?.autoSizeOffset ?? 0
         }, { emitEvent: false }); // Prevent feedback loop with valueChanges
       }
     });
@@ -150,6 +154,7 @@ export class ConfigFormComponent implements OnDestroy {
           updatedConfig.config.styleConfig.enableTransparency = formValue.enableTransparency;
           updatedConfig.config.styleConfig.headerBackgroundColor = formValue.headerBackgroundColor;
           updatedConfig.config.styleConfig.footerBackgroundColor = formValue.footerBackgroundColor;
+          updatedConfig.config.styleConfig.borderColor = formValue.borderColor;
           updatedConfig.config.styleConfig.backgroundImageUrl = formValue.backgroundImageUrl;
         }
 
@@ -159,6 +164,18 @@ export class ConfigFormComponent implements OnDestroy {
         updatedConfig.config.enableChipFilters = formValue.enableChipFilters;
         updatedConfig.config.enableFreeze = formValue.enableFreeze;
         updatedConfig.config.toolbarButtonMode = formValue.toolbarButtonMode;
+
+        if (!updatedConfig.config.sizerConfig) {
+          // Fallback if missing, though it should exist given defaults
+          updatedConfig.config.sizerConfig = {
+            enabled: true,
+            defaultDensity: 'compact',
+            densities: [], // densities usually static or from separate config, handled via defaults
+            autoSizeOffset: formValue.autoSizeOffset
+          } as any;
+        } else {
+          updatedConfig.config.sizerConfig.autoSizeOffset = Number(formValue.autoSizeOffset);
+        }
 
         this.configChange.emit(updatedConfig);
       }

@@ -9,7 +9,6 @@ export interface TableConfig {
   rowMenu: RowMenuItem[];
   rowActions?: RowActionItem[];
   headerMenu?: RowMenuItem[];
-  drawerConfig: DrawerConfig;
   advancedFilters?: AdvancedFilterConfig;
 }
 
@@ -70,6 +69,8 @@ export interface EmptyStateConfig {
 export interface Config {
   id: string;
   title: string;
+  // Unique field to identify rows. Defaults to 'organization_id' if not set.
+  primaryKey?: string;
   dataStrategy: DataStrategy;
   pagingMode: 'paginator' | 'infinite';
   infiniteScrollBehavior?: 'append' | 'replace';
@@ -97,11 +98,13 @@ export interface Config {
   emptyStateConfig?: EmptyStateConfig;
   footerConfig?: FooterConfig;
   styleConfig?: StyleConfig;
+  autoSync?: boolean;
 }
 
 export interface StyleConfig {
   headerBackgroundColor?: string;
   footerBackgroundColor?: string;
+  borderColor?: string;
   enableTransparency: boolean;
   backgroundImageUrl?: string; // Optional URL for background image
 }
@@ -117,6 +120,7 @@ export interface SizerConfig {
   defaultDensity: Density;
   densities: DensitySetting[];
   additionalReservedSpace?: number;
+  autoSizeOffset?: number;
 }
 
 export interface CardViewConfig {
@@ -155,27 +159,27 @@ export interface RequiredValidation extends ValidationStyle {
 }
 
 export interface MobileValidation extends ValidationStyle {
-    required?: boolean;
-    allowedPrefixes?: string[];
-    notAllowedPrefixes?: string[];
-    minDigits?: number;
-    maxDigits?: number;
-    blacklist?: string[];
+  required?: boolean;
+  allowedPrefixes?: string[];
+  notAllowedPrefixes?: string[];
+  minDigits?: number;
+  maxDigits?: number;
+  blacklist?: string[];
 }
 
 export interface EmailValidation extends ValidationStyle {
-    required?: boolean;
-    allowedDomains?: string[];
-    notAllowedDomains?: string[];
-    blacklist?: string[];
-    highlightColor?: string;
+  required?: boolean;
+  allowedDomains?: string[];
+  notAllowedDomains?: string[];
+  blacklist?: string[];
+  highlightColor?: string;
 }
 
 export interface GenericValidation extends ValidationStyle {
-    minLength?: number;
-    maxLength?: number;
-    onlyNumbers?: boolean;
-    pattern?: string;
+  minLength?: number;
+  maxLength?: number;
+  onlyNumbers?: boolean;
+  pattern?: string;
 }
 
 export interface FieldValidation {
@@ -241,26 +245,7 @@ export interface RowActionItem {
 }
 
 
-export interface DrawerConfig {
-  width: string;
-  position: string;
-  buttons: DrawerButton[];
-  headerActions: DrawerHeaderAction[];
-}
 
-export interface DrawerButton {
-  label: string;
-  icon: string;
-  class: string;
-  action: string;
-  type: string;
-}
-
-export interface DrawerHeaderAction {
-  icon: string;
-  tooltip: string;
-  action: string;
-}
 
 // --- Advanced Filter Models ---
 

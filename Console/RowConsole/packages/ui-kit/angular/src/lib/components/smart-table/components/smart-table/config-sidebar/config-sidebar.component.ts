@@ -77,6 +77,7 @@ export class ConfigSidebarComponent {
     const configToSave = this.currentConfig();
     if (configToSave) {
       this.save.emit(configToSave);
+      this.close.emit(); // Close sidebar on manual save
     }
   }
 

@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx build shell",
+    "startTime": "2026-01-17T04:57:01.172Z",
+    "endTime": "2026-01-17T04:57:01.276Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "shell:build:production",
+      "target": "build",
+      "projectName": "shell",
+      "hash": "11523976301117355861",
+      "startTime": "2026-01-17T04:57:01.237Z",
+      "endTime": "2026-01-17T04:57:01.272Z",
+      "params": "",
+      "cacheStatus": "local-cache-hit",
+      "status": 0
+    }
+  ]
+}

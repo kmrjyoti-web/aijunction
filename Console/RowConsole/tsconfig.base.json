@@ -35,6 +35,12 @@
       ],
       "@ai-junction/core": [
         "packages/core/src/index.ts"
+      ],
+      "@ai-junction/features/*": [
+        "packages/features/*"
+      ],
+      "@ai-junction/features": [
+        "packages/features/index.ts"
       ]
     }
   },

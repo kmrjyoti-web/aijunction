@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Column, MaskConfig, RowMenuItem, ActiveFilter, FooterConfig, FooterColumn, RowActionItem } from '../../../../models/table-config.model';
-import { Contact } from '../../../../data-access/online-data.service';
+import { Column, MaskConfig, RowMenuItem, ActiveFilter, FooterConfig, FooterColumn, RowActionItem, StyleConfig } from '../../../../models/table-config.model';
 import { maskString as maskUtil } from '../../../../utils/masking.util';
 import { getValidationState, ValidationState } from '../../../../utils/validation.util';
 import { RowMenuComponent } from '../../row-menu/row-menu.component';
@@ -19,15 +18,16 @@ import { ExcelFilterComponent } from '../../../shared/excel-filter/excel-filter.
 })
 export class TableViewComponent {
   columns = input.required<Column[]>();
-  data = input.required<Contact[]>();
+  data = input.required<any[]>();
   sortColumn = input.required<string | null>();
   sortDirection = input.required<'asc' | 'desc'>();
+  primaryKey = input('organization_id');
   density = input<Density>('cozy');
   densityClass = input('');
   rowMenuConfig = input.required<RowMenuItem[]>();
   rowActions = input<RowActionItem[] | undefined>();
   headerMenuConfig = input<RowMenuItem[] | undefined>();
-  selectedIds = input(new Set<number>());
+  selectedIds = input(new Set<any>());
   enableMultiSelect = input(false);
   customTemplate = input<string | null>(null);
   loading = input<boolean>(false);
@@ -39,26 +39,28 @@ export class TableViewComponent {
   showGridlines = input<boolean>(false);
   rowHover = input<boolean>(true);
   footerConfig = input<FooterConfig | undefined>();
+  styleConfig = input<StyleConfig | undefined>();
 
   sortChange = output<{ column: string; direction: 'asc' | 'desc' }>();
-  rowAction = output<{ action: string; row: Contact }>();
-  headerAction = output<{ action: string; selectedIds: number[] }>();
-  selectionChange = output<Set<number>>();
+  rowAction = output<{ action: string; row: any }>();
+  headerAction = output<{ action: string; selectedIds: any[] }>();
+  selectionChange = output<Set<any>>();
   columnReorder = output<Column[]>();
-  rowClicked = output<Contact>();
+  rowClicked = output<any>();
   filterChange = output<{ code: string, filter: ActiveFilter | null }>();
 
   private draggedColumnIndex = signal<number | null>(null);
   private dragOverIndex = signal<number | null>(null);
   private unmaskedCells = signal<Set<string>>(new Set());
-  openMenuRowId = signal<number | null>(null);
+  openMenuRowId = signal<any | null>(null);
   isHeaderMenuOpen = signal(false);
   contextMenuPosition = signal<{ x: number, y: number } | null>(null);
 
   openFilterMenuForColumn = signal<Column | null>(null);
 
   isAllSelectedOnPage = computed(() => {
-    const pageIds = this.data().map(item => item.organization_id);
+    const pk = this.primaryKey();
+    const pageIds = this.data().map(item => item[pk]);
     if (pageIds.length === 0) return false;
     return pageIds.every(id => this.selectedIds().has(id));
   });
@@ -168,7 +170,7 @@ export class TableViewComponent {
     this.sortChange.emit({ column: columnCode, direction });
   }
 
-  onRowClick(row: Contact): void {
+  onRowClick(row: any): void {
     this.rowClicked.emit(row);
   }
 
@@ -185,7 +187,7 @@ export class TableViewComponent {
   }
 
   // --- Selection Logic ---
-  toggleRowSelection(rowId: number): void {
+  toggleRowSelection(rowId: any): void {
     const newSelection = new Set(this.selectedIds());
     if (newSelection.has(rowId)) {
       newSelection.delete(rowId);
@@ -198,7 +200,8 @@ export class TableViewComponent {
   toggleSelectAll(): void {
     const allSelected = this.isAllSelectedOnPage();
     const newSelection = new Set(this.selectedIds());
-    const pageIds = this.data().map(item => item.organization_id);
+    const pk = this.primaryKey();
+    const pageIds = this.data().map(item => item[pk]);
 
     if (allSelected) {
       pageIds.forEach(id => newSelection.delete(id));
@@ -209,17 +212,22 @@ export class TableViewComponent {
   }
 
   // --- Menu Logic ---
-  onRowContextMenu(event: MouseEvent, row: Contact): void {
+  onRowContextMenu(event: MouseEvent, row: any): void {
     // Select the row if not already selected. Right-clicking a new row selects it exclusively.
-    if (!this.selectedIds().has(row.organization_id)) {
-      this.selectionChange.emit(new Set([row.organization_id]));
+    // Use generic access for organization_id or prefer primaryKey
+    // IMPORTANT: TableViewComponent needs primaryKey to access ID generally.
+    // Assuming 'organization_id' is NOT generic. We need to use primaryKey input here.
+    // However, in this file, we can use item[this.primaryKey()]
+    const pk = this.primaryKey();
+    if (!this.selectedIds().has(row[pk])) {
+      this.selectionChange.emit(new Set([row[pk]]));
     }
     event.preventDefault();
-    this.openMenuRowId.set(row.organization_id);
+    this.openMenuRowId.set(row[pk]);
     this.contextMenuPosition.set({ x: event.clientX, y: event.clientY });
   }
 
-  toggleRowMenu(event: MouseEvent, rowId: number): void {
+  toggleRowMenu(event: MouseEvent, rowId: any): void {
     event.stopPropagation();
     this.contextMenuPosition.set(null);
     this.openMenuRowId.update(currentId => currentId === rowId ? null : rowId);
@@ -239,7 +247,7 @@ export class TableViewComponent {
     this.contextMenuPosition.set(null);
   }
 
-  handleRowMenuAction(event: { action: string; row: Contact }): void {
+  handleRowMenuAction(event: { action: string; row: any }): void {
     this.rowAction.emit(event);
     this.closeRowMenu();
   }
@@ -304,12 +312,12 @@ export class TableViewComponent {
   }
 
   // --- Masking Logic ---
-  isUnmasked(rowId: number, columnCode: string): boolean {
+  isUnmasked(rowId: any, columnCode: string): boolean {
     const key = `${rowId}-${columnCode}`;
     return this.unmaskedCells().has(key);
   }
 
-  toggleMask(rowId: number, columnCode: string): void {
+  toggleMask(rowId: any, columnCode: string): void {
     const key = `${rowId}-${columnCode}`;
     this.unmaskedCells.update(currentSet => {
       const newSet = new Set(currentSet);
@@ -331,13 +339,13 @@ export class TableViewComponent {
   }
 
   // --- Validation Logic ---
-  getCellValidation(row: Contact, column: Column): ValidationState {
-    const mainValidation = getValidationState(row[column.code as keyof Contact], column, column.code);
+  getCellValidation(row: any, column: Column): ValidationState {
+    const mainValidation = getValidationState(row[column.code], column, column.code);
     if (!mainValidation.isValid) return mainValidation;
 
     if (column.validations) {
       for (const validationRule of column.validations) {
-        const validationResult = getValidationState(row[validationRule.code as keyof Contact], column, validationRule.code);
+        const validationResult = getValidationState(row[validationRule.code], column, validationRule.code);
         if (!validationResult.isValid) return validationResult;
       }
     }

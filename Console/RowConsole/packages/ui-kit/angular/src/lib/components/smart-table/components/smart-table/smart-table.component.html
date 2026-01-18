@@ -7,8 +7,8 @@
 
   <!-- Header Section -->
   <header class="flex-shrink-0 border-b border-gray-200 shadow-sm relative z-40 transition-colors duration-300"
-    [style.background-color]="cfg.config.styleConfig?.headerBackgroundColor"
-    [class.bg-white]="!cfg.config.styleConfig?.headerBackgroundColor && !cfg.config.styleConfig?.enableTransparency">
+    [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
+    [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency">
     <!-- Main Toolbar Row -->
     <div class="flex flex-nowrap items-center justify-between gap-4 p-2">
 
@@ -334,7 +334,7 @@
 
   <!-- Main Content Area -->
   <main #scrollContainer class="flex-grow overflow-auto p-2 outline-none" (scroll)="onContentScroll($event)"
-    (keydown)="handleContentKeydown($event)" tabindex="0">
+    (keydown)="handleContentKeydown($event)" (click)="scrollContainer().focus()" tabindex="0">
     @if (loading() && data().length === 0) {
     @switch (viewMode()) {
     @case ('table') { <app-table-skeleton-loader [columns]="visibleTableColumns()" [rows]="pageSize()" /> }
@@ -354,25 +354,26 @@
     } @else {
     @switch (viewMode()) {
     @case ('table') { <app-table-view [columns]="visibleTableColumns()" [data]="data()" [sortColumn]="sortColumn()"
-      [sortDirection]="sortDirection()" [density]="currentDensity()" [densityClass]="currentDensitySetting().cssClass"
-      [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions" [headerMenuConfig]="cfg.headerMenu"
-      [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [selectedIds]="selectedIds()"
-      [activeFilters]="advancedFilters()" [customTemplate]="activeCustomTemplate()" [loading]="loading()"
-      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" [pageSize]="pageSize()"
+      [sortDirection]="sortDirection()" [primaryKey]="primaryKey()" [density]="currentDensity()"
+      [densityClass]="currentDensitySetting().cssClass" [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions"
+      [headerMenuConfig]="cfg.headerMenu" [enableMultiSelect]="cfg.config.enableMultiSelect ?? false"
+      [selectedIds]="selectedIds()" [activeFilters]="advancedFilters()" [customTemplate]="activeCustomTemplate()"
+      [loading]="loading()" [keyboardActiveRowIndex]="keyboardActiveRowIndex()" [pageSize]="pageSize()"
       [isInfiniteScroll]="isInfiniteScroll()" [stripedRows]="cfg.config.stripedRows ?? true"
       [showGridlines]="cfg.config.showGridlines ?? false" [rowHover]="cfg.config.rowHover ?? true"
-      [footerConfig]="cfg.config.footerConfig" (sortChange)="handleSort($event)" (rowAction)="handleRowAction($event)"
-      (rowClicked)="handleRowClick($event)" (headerAction)="handleHeaderAction($event)"
-      (columnReorder)="handleVisibleColumnReorder($event)" (filterChange)="handleFilterChange($event)"
-      (selectionChange)="handleSelectionChange($event)" /> }
-    @case ('card') { <app-card-view [columns]="allTableColumns()" [data]="data()" [density]="currentDensity()"
-      [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()" [rowMenuConfig]="cfg.rowMenu"
-      [rowActions]="cfg.rowActions" [enableMultiSelect]="cfg.config.enableMultiSelect ?? false"
-      [cardViewConfig]="cfg.config.cardViewConfig" [customTemplate]="activeCustomTemplate()"
-      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" (selectionChange)="handleSelectionChange($event)"
-      (rowAction)="handleRowAction($event)" (rowClicked)="handleRowClick($event)" /> }
-    @case ('list') { <app-list-view [columns]="allTableColumns()" [data]="data()" [density]="currentDensity()"
-      [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()"
+      [footerConfig]="cfg.config.footerConfig" [styleConfig]="cfg.config.styleConfig" (sortChange)="handleSort($event)"
+      (rowAction)="handleRowAction($event)" (rowClicked)="handleRowClick($event)"
+      (headerAction)="handleHeaderAction($event)" (columnReorder)="handleVisibleColumnReorder($event)"
+      (filterChange)="handleFilterChange($event)" (selectionChange)="handleSelectionChange($event)" /> }
+    @case ('card') { <app-card-view [columns]="allTableColumns()" [data]="data()" [primaryKey]="primaryKey()"
+      [density]="currentDensity()" [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()"
+      [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions"
+      [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [cardViewConfig]="cfg.config.cardViewConfig"
+      [customTemplate]="activeCustomTemplate()" [keyboardActiveRowIndex]="keyboardActiveRowIndex()"
+      (selectionChange)="handleSelectionChange($event)" (rowAction)="handleRowAction($event)"
+      (rowClicked)="handleRowClick($event)" /> }
+    @case ('list') { <app-list-view [columns]="allTableColumns()" [data]="data()" [primaryKey]="primaryKey()"
+      [density]="currentDensity()" [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()"
       [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [customTemplate]="activeCustomTemplate()"
       [keyboardActiveRowIndex]="keyboardActiveRowIndex()" (selectionChange)="handleSelectionChange($event)"
       (rowClicked)="handleRowClick($event)" /> }
@@ -399,8 +400,8 @@
   @if (!isInfiniteScroll() && (cfg.config.paginatorPosition === 'bottom' || cfg.config.paginatorPosition === 'both' ||
   !cfg.config.paginatorPosition)) {
   <footer class="flex-shrink-0 border-t border-gray-300 transition-colors duration-300"
-    [style.background-color]="cfg.config.styleConfig?.footerBackgroundColor"
-    [class.bg-white]="!cfg.config.styleConfig?.footerBackgroundColor && !cfg.config.styleConfig?.enableTransparency">
+    [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
+    [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency">
     <app-paginator [currentPage]="currentPage()" [pageSize]="pageSize()" [totalRecords]="totalRecords()"
       [autoSizingEnabled]="autoSizingEnabled()" [infiniteScroll]="isInfiniteScroll()"
       [infiniteScrollBehavior]="cfg.config.infiniteScrollBehavior ?? 'append'" [currentRecordCount]="data().length"

@@ -5,7 +5,12 @@ import { PersistenceService } from './persistence.service';
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
   private persistenceService = inject(PersistenceService);
-  private readonly STORAGE_KEY = 'smartTableConfig';
+  // Remove static key
+  // private readonly STORAGE_KEY = 'smartTableConfig'; 
+
+  private getStorageKey(id: string): string {
+    return `smart-table-config-${id}`;
+  }
 
   private readonly initialTableConfig: TableConfig = {
     "feature": "row_contact",
@@ -20,6 +25,7 @@ export class ConfigService {
     "config": {
       "id": "row-contact-table",
       "title": "Contact Master",
+      "primaryKey": "rowContactUniqueId",
       "dataStrategy": "SYNC",
       "pagingMode": "paginator",
       "infiniteScrollBehavior": "append",
@@ -27,7 +33,7 @@ export class ConfigService {
       "stripedRows": true,
       "showGridlines": false,
       "rowHover": true,
-      "globalFilterFields": ["organization_name", "contact_person", "communication_detail", "email_id", "created_time"],
+      "globalFilterFields": ["organizationName", "contactPerson", "communicationDetail", "emailId", "createDate"],
       "enableColumnChooser": true,
       "exportConfig": {
         "enabled": true,
@@ -62,11 +68,12 @@ export class ConfigService {
           { "name": "compact", "rowHeight": 36, "cssClass": "text-xs" },
           { "name": "ultra-compact", "rowHeight": 28, "cssClass": "text-xs" }
         ],
-        "additionalReservedSpace": 0
+        "additionalReservedSpace": 0,
+        "autoSizeOffset": 0
       },
       "encryptionConfig": {
         "enabled": true,
-        "encryptedFields": ["communication_detail", "email_id"],
+        "encryptedFields": ["communicationDetail", "emailId"],
         "secretKey": "my-super-secret-key-for-demo"
       },
       "cardViewConfig": {
@@ -96,21 +103,17 @@ export class ConfigService {
         "enabled": true,
         "columns": [
           {
-            "code": "contact_person",
+            "code": "contactPerson",
             "aggregation": "count",
             "display": "Total Contacts: {value}"
-          },
-          {
-            "code": "annual_revenue",
-            "aggregation": "sum",
-            "display": "Total Revenue: {value}"
           }
         ]
       },
       "styleConfig": {
         "enableTransparency": false,
         "headerBackgroundColor": "var(--marg-header-bg)",
-        "footerBackgroundColor": "var(--marg-header-bg)",
+        "footerBackgroundColor": "transparent",
+        "borderColor": "var(--marg-border-color)",
         "backgroundImageUrl": ""
       }
     },
@@ -118,24 +121,10 @@ export class ConfigService {
       "enabled": true,
       "groups": [
         {
-          "name": "System Defined Filters",
-          "collapsible": true,
-          "filters": [
-            { "code": "annual_revenue", "name": "Annual Revenue", "type": "numeric", "operators": ["=", "!=", ">", "<", ">=", "<=", "between", "not between"], "defaultOperator": ">=" }
-          ]
-        },
-        {
           "name": "Date Filters",
           "collapsible": true,
           "filters": [
-            { "code": "created_time", "name": "Created Date", "type": "date", "dateOperators": ["in the last 30 days", "this month", "this year", "today"] }
-          ]
-        },
-        {
-          "name": "Lead Filters",
-          "collapsible": false,
-          "filters": [
-            { "code": "lead_source", "name": "Lead Source", "type": "select", "options": ["Web", "Organic", "Referral"] }
+            { "code": "createDate", "name": "Created Date", "type": "date", "dateOperators": ["in the last 30 days", "this month", "this year", "today"] }
           ]
         }
       ]
@@ -157,7 +146,7 @@ export class ConfigService {
       {
         "index": 1,
         "name": "Contact Person",
-        "code": "contact_person",
+        "code": "contactPerson",
         "display": "table_cell",
         "width": "250px",
         "sortable": true,
@@ -165,17 +154,17 @@ export class ConfigService {
         "frozen": true,
         "cardHeader": true,
         "listRow": true,
-        "filterOnCodes": ["contact_person", "organization_name"],
+        "filterOnCodes": ["contactPerson", "organizationName"],
         "cellTemplate": [
-          { "code": "avatar_url", "columnType": "IMAGE", "imageConfig": { "shape": "circle" } },
-          { "code": "contact_person", "tag": "p", "bold": true },
-          { "code": "organization_name", "tag": "small" }
+          { "code": "avatarUrl", "columnType": "IMAGE", "imageConfig": { "shape": "circle" } },
+          { "code": "contactPerson", "tag": "p", "bold": true },
+          { "code": "organizationName", "tag": "small" }
         ]
       },
       {
         "index": 2,
         "name": "Company",
-        "code": "organization_name",
+        "code": "organizationName",
         "display": "table_cell",
         "sortable": true,
         "filterable": true,
@@ -184,7 +173,7 @@ export class ConfigService {
       {
         "index": 3,
         "name": "Communication",
-        "code": "communication_detail",
+        "code": "communicationDetail",
         "display": "table_cell",
         "width": "150px",
         "sortable": true,
@@ -201,7 +190,7 @@ export class ConfigService {
       {
         "index": 4,
         "name": "Email",
-        "code": "email_id",
+        "code": "emailId",
         "display": "table_cell",
         "width": "250px",
         "sortable": true,
@@ -210,37 +199,14 @@ export class ConfigService {
         "listRow": true
       },
       {
-        "index": 5,
-        "name": "Annual Revenue",
-        "code": "annual_revenue",
-        "display": "table_cell",
-        "align": "right",
-        "sortable": true,
-        "filterable": true,
-        "width": "150px",
-        "cardRow": true,
-        "columnType": "numeric"
-      },
-      {
         "index": 6,
         "name": "Created",
-        "code": "created_time",
+        "code": "createDate",
         "display": "table_cell",
         "columnType": "DATE",
         "width": "180px",
         "sortable": true,
         "filterable": true
-      },
-      {
-        "index": 7,
-        "name": "Lead Source",
-        "code": "lead_source",
-        "display": "table_cell",
-        "sortable": true,
-        "filterable": true,
-        "width": "150px",
-        "cardRow": true,
-        "listRow": true
       },
       {
         "index": 8,
@@ -284,13 +250,7 @@ export class ConfigService {
           { "label": "Delete Selected", "icon": "pi pi-trash", "action": "delete_selected" }
         ]
       }
-    ],
-    "drawerConfig": {
-      "width": "400px",
-      "position": "right",
-      "buttons": [],
-      "headerActions": []
-    }
+    ]
   };
 
   private configSignal = signal<TableConfig>(this.loadConfig());
@@ -298,24 +258,79 @@ export class ConfigService {
 
   constructor() {
     effect(() => {
-      this.persistenceService.saveState(this.STORAGE_KEY, this.configSignal());
+      const currentConfig = this.configSignal();
+      if (currentConfig?.config?.id) {
+        const key = this.getStorageKey(currentConfig.config.id);
+        this.persistenceService.saveState(key, currentConfig);
+      }
     });
   }
 
+  public initConfig(defaultConfig: TableConfig): void {
+    const loaded = this.loadFromStorageOrDefault(defaultConfig);
+    this.configSignal.set(loaded);
+  }
+
   private loadConfig(): TableConfig {
-    const saved = this.persistenceService.loadState<TableConfig>(this.STORAGE_KEY);
+    return this.loadFromStorageOrDefault(this.initialTableConfig);
+  }
+
+  private loadFromStorageOrDefault(defaultConfig: TableConfig): TableConfig {
+    const key = this.getStorageKey(defaultConfig.config.id);
+    const saved = this.persistenceService.loadState<TableConfig>(key);
+
     if (!saved) {
-      return this.initialTableConfig;
+      return defaultConfig;
     }
+
+    // Migration logic applied to the saved config using defaultConfig as reference
 
     // Migration: Ensure styleConfig exists
     if (!saved.config.styleConfig) {
-      saved.config.styleConfig = { ...this.initialTableConfig.config.styleConfig! };
+      saved.config.styleConfig = {
+        enableTransparency: false,
+        headerBackgroundColor: 'var(--marg-header-bg)',
+        footerBackgroundColor: 'var(--marg-header-bg)',
+        backgroundImageUrl: ''
+      };
     }
 
-    // Ensure footerConfig exists (from previous steps)
+    // Ensure footerConfig exists
     if (!saved.config.footerConfig) {
-      saved.config.footerConfig = { ...this.initialTableConfig.config.footerConfig! };
+      // Use defaultConfig's footerConfig if available, otherwise minimal default
+      saved.config.footerConfig = defaultConfig.config.footerConfig
+        ? { ...defaultConfig.config.footerConfig }
+        : { enabled: true, columns: [] };
+    }
+
+    // Remove deprecated drawerConfig if it exists in saved state
+    if ((saved as any).drawerConfig) {
+      delete (saved as any).drawerConfig;
+    }
+
+    // Migration: Ensure sizerConfig exists and has autoSizeOffset if missing
+    if (!saved.config.sizerConfig) {
+      saved.config.sizerConfig = { ...defaultConfig.config.sizerConfig };
+    } else {
+      // partial merge for new properties like autoSizeOffset
+      if (saved.config.sizerConfig.autoSizeOffset === undefined) {
+        // Default to saved value, or defaultConfig value, or 0
+        saved.config.sizerConfig.autoSizeOffset = defaultConfig.config.sizerConfig.autoSizeOffset ?? 0;
+      }
+    }
+
+    // Migration: Ensure primaryKey exists
+    if (!saved.config.primaryKey) {
+      saved.config.primaryKey = defaultConfig.config.primaryKey;
+    }
+
+    // Migration: Fix old snake_case columns to camelCase
+    const hasOldColumns = saved.columns.some(c => c.code === 'contact_person' || c.code === 'organization_name');
+    if (hasOldColumns) {
+      console.log('[ConfigService] Migrating old snake_case columns to camelCase defaults.');
+      saved.columns = defaultConfig.columns;
+      saved.config.globalFilterFields = defaultConfig.config.globalFilterFields;
+      saved.config.footerConfig = defaultConfig.config.footerConfig;
     }
 
     return saved;

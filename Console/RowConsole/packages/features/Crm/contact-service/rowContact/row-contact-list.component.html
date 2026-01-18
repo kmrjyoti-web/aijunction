@@ -1,0 +1,17 @@
+<div class="h-full w-full relative">
+    <app-smart-table (toolbarAction)="onToolbarAction($event)" (rowAction)="onRowAction($event)"
+        (syncTriggered)="handleSync()">
+    </app-smart-table>
+
+    <!-- Smart Drawer -->
+    <app-smart-drawer [isOpen]="drawerHelper.isOpen()" [title]="drawerHelper.currentState().title || ''"
+        (close)="drawerHelper.close()">
+
+        <!-- Dynamic Content based on view -->
+        @if (drawerHelper.currentState().view === 'create' || drawerHelper.currentState().view === 'details' ||
+        drawerHelper.currentState().view === 'edit') {
+        <app-verify-contact [data]="drawerHelper.currentState().data"></app-verify-contact>
+        }
+
+    </app-smart-drawer>
+</div>

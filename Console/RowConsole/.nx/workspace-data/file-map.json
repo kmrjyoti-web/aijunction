@@ -19,6 +19,12 @@
     ],
     "@ai-junction/core": [
       "packages/core/src/index.ts"
+    ],
+    "@ai-junction/features/*": [
+      "packages/features/*"
+    ],
+    "@ai-junction/features": [
+      "packages/features/index.ts"
     ]
   },
   "nxJsonPlugins": [
@@ -32,279 +38,1355 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.html",
-        "hash": "17814863953723594019"
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/index.html",
+        "hash": "10567097083294789663"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.ts",
-        "hash": "2921152224858636184"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.html",
-        "hash": "5027758215480839344"
+        "file": ".nx/workspace-data/nx_files.nxt",
+        "hash": "5743431780803665621"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/helpers/global-icon.helper.ts",
-        "hash": "5383489276498872414"
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.ts",
-        "hash": "5955705265815747161"
+        "file": "dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.html",
-        "hash": "17101008954144946186"
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/styles-5INURTSO.css",
+        "hash": "3244421341483603138"
       },
       {
-        "file": "dist/apps/shell-admin/index.html",
-        "hash": "4295642922288702419"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/runtime.cd2dcbd72a8e3b5e.js",
+        "hash": "9047872811803471827"
       },
       {
-        "file": "dist/apps/shell/3rdpartylicenses.txt",
-        "hash": "6131908408422259293"
+        "file": "packages/ui-kit/assets/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.ts",
-        "hash": "1677169054766237475"
+        "file": "jest.config.ts",
+        "hash": "6870352021923392442"
       },
       {
-        "file": "packages/platform-angular/src/layout/layout.service.ts",
-        "hash": "9650231485457307535"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.ts",
-        "hash": "3024402910517502634"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/index.html",
+        "hash": "16600160970348523869"
       },
       {
-        "file": ".nx/workspace-data/eslint-2654242865465226088.hash",
-        "hash": "14089324183460990103"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
       },
       {
-        "file": ".nx/workspace-data/source-maps.json",
-        "hash": "17912595509951387985"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.ts",
-        "hash": "10998787848226030594"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.html",
+        "hash": "1209307010912208989"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/density.service.ts",
-        "hash": "7798303221687932786"
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.ts",
-        "hash": "11897200643033735509"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chatbot.service.ts",
+        "hash": "15139607590153262314"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.html",
-        "hash": "2610718774693829855"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.css",
-        "hash": "17050781972319424747"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
       },
       {
-        "file": "packages/platform-angular/src/layout/layout.types.ts",
-        "hash": "455439413108934483"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/index.ts",
-        "hash": "1515985054567833283"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/masking.util.ts",
-        "hash": "7682585038864513699"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/d3-bar-chart.directive.ts",
-        "hash": "9350760369657011781"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync-log.service.ts",
-        "hash": "17052663658805537920"
-      },
-      {
-        "file": ".nx/workspace-data/file-map.json",
-        "hash": "11408705126755207814"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/helpers/icon.helper.ts",
-        "hash": "17329788796504585987"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.ts",
-        "hash": "11299249436294586965"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/export.service.ts",
-        "hash": "16558842458692232753"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/density.model.ts",
-        "hash": "13695051222071131292"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.html",
-        "hash": "5509531937571452328"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/calendar-view-config.service.ts",
-        "hash": "11169069248762876727"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/sync-indicator/sync-indicator.component.ts",
-        "hash": "305005069907411909"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-layout.service.ts",
-        "hash": "7441791601422015794"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.html",
-        "hash": "13944759715971286388"
-      },
-      {
-        "file": "dist/apps/shell/runtime.9d821669438802d3.js",
-        "hash": "18327012209788283292"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-skeleton-loader.component.ts",
-        "hash": "2238369308582065043"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-naming.service.ts",
         "hash": "14213675270583132972"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-calendar-view.model.ts",
-        "hash": "5219974179881375294"
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
       },
       {
-        "file": "tsconfig.base.json",
-        "hash": "10600408962671723222"
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/styles-5INURTSO.css",
+        "hash": "3244421341483603138"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-dashboard.service.ts",
-        "hash": "14395782628183282284"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.ts",
-        "hash": "3861073303853069057"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/chip.model.ts",
-        "hash": "13743396857274237143"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data-manager.service.ts",
-        "hash": "7290585015855110607"
-      },
-      {
-        "file": "dist/apps/shell/823.15689d6db6e6ff34.js",
-        "hash": "17362707951322921569"
-      },
-      {
-        "file": "dist/apps/shell-admin/runtime.264c93021a6946f1.js",
-        "hash": "6089493962459085131"
-      },
-      {
-        "file": "dist/apps/shell/417.23c942a6cd16a27e.js",
-        "hash": "6846184663032504316"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.html",
-        "hash": "2474946990900399189"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.ts",
-        "hash": "2145628092085789919"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/custom-layout.service.ts",
-        "hash": "1024851014916520490"
-      },
-      {
-        "file": "packages/platform-angular/src/theming/theme.types.ts",
-        "hash": "6241578021139991261"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.ts",
-        "hash": "17587373539097957090"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/connection-status.service.ts",
-        "hash": "8399452342767483671"
-      },
-      {
-        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db-wal",
-        "hash": "11097420279468065981"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/chip-filter.service.ts",
-        "hash": "10179485262677297808"
-      },
-      {
-        "file": "dist/apps/shell-admin/94.917bd6371144353b.js",
-        "hash": "15498305376612431932"
-      },
-      {
-        "file": "dist/apps/shell/455.4a36275dae002d84.js",
-        "hash": "10905025230326288128"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-skeleton-loader.component.ts",
-        "hash": "14784045739881883851"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.html",
-        "hash": "12524532066811709374"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-skeleton-loader.component.ts",
-        "hash": "6149982741745285767"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.html",
-        "hash": "2120105108730077836"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.html",
-        "hash": "16122768359670942133"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.ts",
-        "hash": "16049660432705616010"
-      },
-      {
-        "file": "dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
-        "hash": "4365534675956496783"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/table-config.model.ts",
-        "hash": "15730828245383682021"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.html",
-        "hash": "3837851447139890596"
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
       },
       {
         "file": "dist/apps/shell/855.1435abf0f154aeee.js",
         "hash": "11937694940130747706"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.html",
-        "hash": "13565695845837888330"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-skeleton-loader.component.ts",
+        "hash": "14784045739881883851"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/click-outside.directive.ts",
+        "hash": "1932893406289840029"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.ts",
+        "hash": "16982936754546058237"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/632.e386bd9cca616e34.js",
+        "hash": "15498830607631107881"
+      },
+      {
+        "file": "dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/index.html",
+        "hash": "14730180424312931613"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.ts",
+        "hash": "5955705265815747161"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/632.672df952df43a94e.js",
+        "hash": "3746160943044146262"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.css",
+        "hash": "8333462465883880269"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": "packages/platform-angular/src/layout/layout.types.ts",
+        "hash": "455439413108934483"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/index.html",
+        "hash": "17659549984296054420"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/toolbar-button/toolbar-button.component.ts",
+        "hash": "5796974658078665665"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.html",
+        "hash": "2120105108730077836"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": "packages/features/Crm/contact-service/rowContact/row-contact-table.config.ts",
+        "hash": "12158415818745142027"
+      },
+      {
+        "file": "dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": "dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.html",
+        "hash": "13944759715971286388"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "12926286793420397906"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
       },
       {
         "file": "package-lock.json",
         "hash": "14173913268288369876"
       },
       {
-        "file": "dist/apps/shell/main.0c44c94e4c8ebd69.js",
-        "hash": "1808415770189906393"
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data.service.ts",
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/main.1b396707cd56be1f.js",
+        "hash": "3296121788307881329"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync.service.ts",
+        "hash": "13912597831510326455"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/15209751682203454929",
+        "hash": "14670338537343143296"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/keyboard-navigation.util.ts",
+        "hash": "11282099500740417790"
+      },
+      {
+        "file": "dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/runtime.36a0b32995c07bb0.js",
+        "hash": "14004019430424707859"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.ts",
+        "hash": "4864981594262962158"
+      },
+      {
+        "file": "dist/apps/shell-admin/169.1881c211a7446786.js",
+        "hash": "98076277333128798"
+      },
+      {
+        "file": "dist/apps/shell/main.cb4a7b8e7ee38837.js",
+        "hash": "13713810066142033070"
+      },
+      {
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/chunk-T6YVCZVX.js",
+        "hash": "7411966819590555160"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/index.html",
+        "hash": "15551049507586203646"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.ts",
+        "hash": "11897200643033735509"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": "dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": "dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/connection-status.service.ts",
+        "hash": "8399452342767483671"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.ts",
+        "hash": "12533958766014264811"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.ts",
+        "hash": "1677169054766237475"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-calendar-view.model.ts",
+        "hash": "5219974179881375294"
+      },
+      {
+        "file": ".nx/workspace-data/eslint-2654242865465226088.hash",
+        "hash": "16450715926728542891"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/runtime.3a17af85b24def2f.js",
+        "hash": "14168672442746106270"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.ts",
+        "hash": "14472867709237717931"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11877000066988538990",
+        "hash": "11099486548574756276"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/custom-layout.service.ts",
+        "hash": "1024851014916520490"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/common.bd3318167d14d428.js",
+        "hash": "5408164558282305923"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": "dist/apps/shell/runtime.3a17af85b24def2f.js",
+        "hash": "14168672442746106270"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.html",
+        "hash": "17101008954144946186"
+      },
+      {
+        "file": "dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.ts",
+        "hash": "9065357986426747377"
+      },
+      {
+        "file": "nx.json",
+        "hash": "8568041673754767757"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": "dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/page-size.util.ts",
+        "hash": "821265886088423827"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.html",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/favicon.ico",
+        "hash": "9303420814833116677"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.html",
+        "hash": "10423530478251793767"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": "dist/apps/crm/3rdpartylicenses.txt",
+        "hash": "14784952830370600369"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/dynamic-item/dynamic-item.component.ts",
+        "hash": "1381927282582209607"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/main.451237fc52fe9407.js",
+        "hash": "8391982798618289077"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.html",
+        "hash": "15264773918826604170"
+      },
+      {
+        "file": "packages/features/Crm/contact-service/rowContact/components/verify-contact/verify-contact.component.ts",
+        "hash": "1734556156114923"
+      },
+      {
+        "file": "dist/apps/crm/browser/chunk-T6YVCZVX.js",
+        "hash": "7411966819590555160"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11928486859962370058",
+        "hash": "3776989998007931272"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.ts",
+        "hash": "6321128322791526015"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": "dist/apps/shell-admin/polyfills.5c5d5bfa495f9272.js",
+        "hash": "6725751608402901613"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/prerendered-routes.json",
+        "hash": "15049165521752226651"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/3rdpartylicenses.txt",
+        "hash": "4828723999967846549"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/prerendered-routes.json",
+        "hash": "15049165521752226651"
+      },
+      {
+        "file": ".nx/cache/run.json",
+        "hash": "5538728045781570437"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.ts",
+        "hash": "10270897448735721151"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": "new.sh",
+        "hash": "9013716282642754527"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-skeleton-loader.component.ts",
+        "hash": "6149982741745285767"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/custom-layout.model.ts",
+        "hash": "842872963307829671"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": "dist/apps/shell/254.f11bc0953f45ccd1.js",
+        "hash": "9016653654722692917"
+      },
+      {
+        "file": "dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.ts",
+        "hash": "1739489235950921741"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.html",
+        "hash": "5398438847564387546"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/632.4f5610d857d74950.js",
+        "hash": "4887452271415721088"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.ts",
+        "hash": "10394861400144115126"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/main.784e98aa6a0906ce.js",
+        "hash": "8272175218708775659"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.html",
+        "hash": "17814863953723594019"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/helpers/icon.helper.ts",
+        "hash": "17329788796504585987"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.html",
+        "hash": "16122768359670942133"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/runtime.0c74ecbcae13c575.js",
+        "hash": "5660018440092757390"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": "dist/apps/crm/browser/main-2CR5DKYH.js",
+        "hash": "10033510800229898654"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.html",
+        "hash": "2610718774693829855"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.html",
+        "hash": "3516100617875883612"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/3rdpartylicenses.txt",
+        "hash": "14784952830370600369"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11523976301117355861",
+        "hash": "3210570424947281105"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/favicon.ico",
+        "hash": "9303420814833116677"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/632.4f5610d857d74950.js",
+        "hash": "4887452271415721088"
+      },
+      {
+        "file": "tailwind.config.js",
+        "hash": "15941124140466914686"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": "dist/apps/shell-admin/94.917bd6371144353b.js",
+        "hash": "15498305376612431932"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/chunk-Z4PBVZYC.js",
+        "hash": "12050871657995409430"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/calendar-view-config.service.ts",
+        "hash": "11169069248762876727"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/chunk-XKL7ICM4.js",
+        "hash": "6062113569441099627"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.html",
+        "hash": "4739589555434552106"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/chunk-GCS26OLG.js",
+        "hash": "7425788463004761829"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": "dist/apps/shell/855.821d62a47c639bf0.js",
+        "hash": "4134043635421759109"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/254.f11bc0953f45ccd1.js",
+        "hash": "9016653654722692917"
+      },
+      {
+        "file": "dist/apps/crm/prerendered-routes.json",
+        "hash": "15049165521752226651"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": "dist/apps/crm/browser/chunk-Z4PBVZYC.js",
+        "hash": "12050871657995409430"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/6900373709242937094",
+        "hash": "3379275708032835890"
+      },
+      {
+        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db",
+        "hash": "6240709564311096908"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.ts",
+        "hash": "269759788489113887"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/632.4f5610d857d74950.js",
+        "hash": "4887452271415721088"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.ts",
+        "hash": "7811135446489433939"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/3rdpartylicenses.txt",
+        "hash": "4828723999967846549"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-layout.service.ts",
+        "hash": "7441791601422015794"
+      },
+      {
+        "file": "dist/apps/shell/130.093e00f699dc0b2b.js",
+        "hash": "7365435663417219729"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": "dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.css",
+        "hash": "17050781972319424747"
+      },
+      {
+        "file": "packages/platform-angular/src/theming/theme.service.ts",
+        "hash": "4864889965166830181"
+      },
+      {
+        "file": ".nx/workspace-data/source-maps.json",
+        "hash": "17229330932280860519"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/list-view/list-view.component.html",
+        "hash": "607425433507542219"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/main.85e5c64f1a07236f.js",
+        "hash": "3640648031640507943"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/density.model.ts",
+        "hash": "13695051222071131292"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": "dist/apps/shell-admin/runtime.264c93021a6946f1.js",
+        "hash": "6089493962459085131"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.html",
+        "hash": "8231491419316294093"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/5533104135145331047",
+        "hash": "335008061567528006"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "8540893096445550444"
+      },
+      {
+        "file": ".nx/workspace-data/file-map.json",
+        "hash": "4679399248180066015"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chip-generator.service.ts",
+        "hash": "2077282083316997209"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": "dist/apps/crm/browser/styles-5INURTSO.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11885585482373130278",
+        "hash": "16569259363422058629"
+      },
+      {
+        "file": "packages/features/Crm/contact-service/rowContact/row-contact-list.component.html",
+        "hash": "997384154242859268"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": "dist/apps/crm/browser/favicon.ico",
+        "hash": "9303420814833116677"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/styles-5INURTSO.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/styles-5INURTSO.css",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/9982983864081835272",
+        "hash": "815019036647291655"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/8713451997629659205",
+        "hash": "9602397200473842016"
+      },
+      {
+        "file": "dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/api.mapper.ts",
+        "hash": "10562390608222510729"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/index.html",
+        "hash": "4479753064845371368"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.ts",
+        "hash": "3421494233637893713"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/assets/app-master-data/table/row_contact/row_contact.row_contact_default.bundle.json",
+        "hash": "4365534675956496783"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/main-REHHVJSO.js",
+        "hash": "15710374439305362668"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/favicon.ico",
+        "hash": "9303420814833116677"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.ts",
+        "hash": "3024402910517502634"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data-manager.service.ts",
+        "hash": "11780929170429647485"
+      },
+      {
+        "file": "dist/apps/shell/417.23c942a6cd16a27e.js",
+        "hash": "6846184663032504316"
+      },
+      {
+        "file": ".nx/workspace-data/project-graph.json",
+        "hash": "1027523624543026588"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/online-data.service.ts",
+        "hash": "14259065091535013080"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": "dist/apps/crm/browser/index.html",
+        "hash": "9590897849779097848"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/1783515598830720514",
+        "hash": "1823013278929847127"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/styles.css",
+        "hash": "1457465478912623794"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/d3-bar-chart.directive.ts",
+        "hash": "9350760369657011781"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/main-2CR5DKYH.js",
+        "hash": "10033510800229898654"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/index.html",
+        "hash": "5744330420172339429"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/validation.util.ts",
+        "hash": "9405077998790906382"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.ts",
+        "hash": "5212311006631796886"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.ts",
+        "hash": "11765421983888833968"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.html",
+        "hash": "17463125601356534794"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.html",
+        "hash": "2871121259369980832"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/tailwind.config.js",
         "hash": "3244421341483603138"
       },
       {
@@ -312,751 +1394,1147 @@
         "hash": "1331016845043007911"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.html",
-        "hash": "2544195235702374528"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/data-provider.interface.ts",
+        "hash": "6221687014458392268"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/column-chooser/column-chooser.component.html",
-        "hash": "15264773918826604170"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/generic-validation.util.ts",
-        "hash": "6365094035478649501"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
       },
       {
-        "file": "dist/apps/shell-admin/3rdpartylicenses.txt",
-        "hash": "17899895658948168659"
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-query.model.ts",
-        "hash": "6530156717159687146"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.html",
-        "hash": "3516100617875883612"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/auto-height.util.ts",
-        "hash": "4499427164982331018"
+        "file": "dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/empty-view/empty-view.component.ts",
-        "hash": "10394861400144115126"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.ts",
+        "hash": "2921152224858636184"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.ts",
-        "hash": "2011385875138062099"
+        "file": "dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
       },
       {
-        "file": "dist/apps/shell-admin/264.f2883a1452c33399.js",
-        "hash": "16197986700494767367"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/styles.css",
-        "hash": "1457465478912623794"
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
       },
       {
-        "file": "dist/apps/shell/504.6584b965713991d8.js",
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/855.f8463ddd764aa1cd.js",
+        "hash": "13265582327050913281"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/chunk-CLYCGD6Y.js",
+        "hash": "8023316644626628320"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.html",
+        "hash": "12524532066811709374"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/504.6584b965713991d8.js",
         "hash": "1705039142349187024"
-      },
-      {
-        "file": ".nx/workspace-data/nx_files.nxt",
-        "hash": "5743431780803665621"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/theme.service.ts",
-        "hash": "16039422449850167075"
-      },
-      {
-        "file": "dist/apps/shell/index.html",
-        "hash": "12557436121294579218"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.html",
-        "hash": "8846574596650777099"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-client.service.ts",
-        "hash": "12118504474208675760"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.html",
-        "hash": "9863134624298651835"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/saved-queries.service.ts",
-        "hash": "9719390605803251294"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/custom-layout.model.ts",
-        "hash": "842872963307829671"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.html",
-        "hash": "10423530478251793767"
-      },
-      {
-        "file": "tailwind.config.js",
-        "hash": "15941124140466914686"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chatbot.service.ts",
-        "hash": "15139607590153262314"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/bi-view/bi-view.component.ts",
-        "hash": "269759788489113887"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/saved-queries-menu/saved-queries-menu.component.ts",
-        "hash": "1739489235950921741"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ai-chatbot/ai-chatbot.component.ts",
-        "hash": "3421494233637893713"
-      },
-      {
-        "file": "packages/ui-kit/assets/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
-        "hash": "9402064429934460589"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/email-validation.util.ts",
         "hash": "13822258082784060147"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/api.mapper.ts",
-        "hash": "10562390608222510729"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/database.service.ts",
+        "hash": "3346397993985352752"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.ts",
-        "hash": "17920605333732284791"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
       },
       {
-        "file": ".nx/workspace-data/project-graph.json",
-        "hash": "1879764955924860242"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/json-editor.directive.ts",
-        "hash": "11337302932305121602"
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/632.672df952df43a94e.js",
+        "hash": "3746160943044146262"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.html",
-        "hash": "6219168069137951403"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.ts",
-        "hash": "10099116880963684883"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": "packages/platform-angular/src/theming/theme.types.ts",
+        "hash": "6241578021139991261"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/chunk-WVNWO2OG.js",
+        "hash": "5557899202810363203"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.html",
+        "hash": "2474946990900399189"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/main.7bbae6aafb38e133.js",
+        "hash": "11181890776077870590"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-dashboard.service.ts",
+        "hash": "14395782628183282284"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": "dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/2089538715272715608",
+        "hash": "8618165287237132351"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/chip-filter.service.ts",
+        "hash": "10179485262677297808"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/add-chip-modal/add-chip-modal.component.ts",
+        "hash": "16049660432705616010"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/main.451237fc52fe9407.js",
+        "hash": "8391982798618289077"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/config.service.ts",
+        "hash": "14609495844983382096"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/prerendered-routes.json",
+        "hash": "15049165521752226651"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/browser/index.html",
+        "hash": "1497018872754507475"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/14374846169071345627",
+        "hash": "11886180175408678295"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/density-chooser/density-chooser.component.ts",
+        "hash": "17587373539097957090"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.ts",
+        "hash": "14038973271867704875"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/17237502357480601048",
+        "hash": "13345211748952763169"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/runtime.76c7e12c54d14d6e.js",
+        "hash": "4214507627304466344"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/632.243992e9269b02a8.js",
+        "hash": "3501440825996845585"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": "dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/main.451237fc52fe9407.js",
+        "hash": "8391982798618289077"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/855.821d62a47c639bf0.js",
+        "hash": "4134043635421759109"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db-wal",
+        "hash": "11240233744392813286"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": "dist/apps/shell/main.7bbae6aafb38e133.js",
+        "hash": "11181890776077870590"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": "packages/features/index.ts",
+        "hash": "16239713219730913962"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.html",
+        "hash": "3837851447139890596"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/header-menu/header-menu.component.html",
         "hash": "8459261081450856080"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.ts",
-        "hash": "7362251547930831786"
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.ts",
-        "hash": "17197249191409389753"
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
       },
       {
-        "file": "dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
-        "hash": "9402064429934460589"
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/runtime.f3be4a3f4d8f5c49.js",
+        "hash": "2171190732586643694"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.html",
-        "hash": "2871121259369980832"
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
       },
       {
-        "file": "packages/platform-angular/src/theming/theme.service.ts",
-        "hash": "4864889965166830181"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/saved-query.model.ts",
+        "hash": "6530156717159687146"
       },
       {
-        "file": "packages/ui-kit/assets/table/row_contact/row_contact.row_contact_default.bundle.json",
-        "hash": "4365534675956496783"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/runtime.33bb8093daac11d1.js",
+        "hash": "8219323220287404203"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync.service.ts",
-        "hash": "1979388629767239497"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/index.html",
+        "hash": "15033524232448042755"
       },
       {
-        "file": "nx.json",
-        "hash": "8568041673754767757"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
       },
       {
-        "file": "dist/apps/shell-admin/styles.479d8838618f72e7.css",
-        "hash": "16738408235941761237"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/sync-options-modal/sync-options-modal.component.ts",
-        "hash": "14472867709237717931"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/excel-filter/excel-filter.component.ts",
-        "hash": "17121512190306163977"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/ai-actions.service.ts",
         "hash": "3244421341483603138"
       },
       {
-        "file": "jest.config.ts",
-        "hash": "6870352021923392442"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
       },
       {
-        "file": "new.sh",
-        "hash": "9013716282642754527"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
       },
       {
-        "file": "tsconfig.json",
-        "hash": "13336014555689740568"
+        "file": "dist/apps/shell-admin/3rdpartylicenses.txt",
+        "hash": "17899895658948168659"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/database.service.ts",
-        "hash": "3346397993985352752"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/masking.util.ts",
+        "hash": "7682585038864513699"
       },
       {
-        "file": "dist/apps/shell/659.66158dcc5f8cd33c.js",
-        "hash": "15408308243459097724"
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/favicon.ico",
+        "hash": "9303420814833116677"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/encryption.service.ts",
-        "hash": "15459215446178186620"
+        "file": "packages/ui-kit/angular/src/index.ts",
+        "hash": "17656626350609074408"
       },
       {
-        "file": "dist/apps/shell/styles.03d7690116eeee31.css",
-        "hash": "16912760348294057503"
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/page-size.util.ts",
-        "hash": "821265886088423827"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-chip-generator.service.ts",
-        "hash": "2077282083316997209"
-      },
-      {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-view.component.html",
-        "hash": "16746464852993660381"
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/chip-filter-bar/chip-filter-bar.component.html",
         "hash": "3343571740149176278"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/tailwind.config.js",
-        "hash": "3244421341483603138"
+        "file": "dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
       },
       {
-        "file": "dist/apps/shell-admin/polyfills.5c5d5bfa495f9272.js",
-        "hash": "6725751608402901613"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/json-editor.directive.ts",
+        "hash": "9159051054960987591"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/paginator/paginator.component.html",
-        "hash": "7636558982808595721"
+        "file": "dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/calendar-config-modal/calendar-config-modal.component.ts",
-        "hash": "12533958766014264811"
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/prerendered-routes.json",
+        "hash": "15049165521752226651"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.html",
-        "hash": "3244421341483603138"
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/offline-data.service.ts",
-        "hash": "5934592703886489848"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.html",
-        "hash": "1209307010912208989"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.css",
-        "hash": "8333462465883880269"
+        "file": "dist/apps/shell/index.html",
+        "hash": "17659549984296054420"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-sidebar.component.ts",
-        "hash": "16701452715581478550"
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.css",
-        "hash": "3244421341483603138"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/online-data.service.ts",
-        "hash": "6391264893774188894"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
       },
       {
-        "file": "package.json",
-        "hash": "10866976932571981789"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/keyboard-navigation.util.ts",
-        "hash": "15667610208707705501"
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
       },
       {
-        "file": "dist/apps/shell/130.093e00f699dc0b2b.js",
-        "hash": "7365435663417219729"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
       },
       {
-        "file": "dist/apps/shell-admin/main.129d7b316ff48da4.js",
-        "hash": "3506859679794175639"
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/directives/click-outside.directive.ts",
-        "hash": "1932893406289840029"
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/persistence.service.ts",
-        "hash": "16405227610566885350"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/row-menu/row-menu.component.ts",
-        "hash": "4864981594262962158"
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/toolbar-button/toolbar-button.component.ts",
-        "hash": "5796974658078665665"
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
       },
       {
-        "file": "eslint.config.mjs",
-        "hash": "12926286793420397906"
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/save-query-modal/save-query-modal.component.ts",
-        "hash": "10270897448735721151"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
       },
       {
-        "file": "dist/apps/shell/831.892ca664b50d53a5.js",
-        "hash": "11139313285839138581"
+        "file": ".nx/cache/13064697613128267417/dist/apps/crm/browser/index.html",
+        "hash": "9590897849779097848"
       },
       {
-        "file": "dist/apps/shell/polyfills.60c7391a41017486.js",
-        "hash": "8241224696577022298"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
       },
       {
-        "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db",
-        "hash": "6240709564311096908"
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/common.127b49f1b7e5e966.js",
+        "hash": "4837913711725846661"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.html",
-        "hash": "16083882376077173156"
+        "file": "packages/platform-angular/src/layout/layout.service.ts",
+        "hash": "9650231485457307535"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/shared/dynamic-item/dynamic-item.component.ts",
-        "hash": "1381927282582209607"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/config.service.ts",
-        "hash": "3201732145553893948"
+        "file": ".nx/cache/terminalOutputs/9034876212613666677",
+        "hash": "6833330880095251879"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/chunk-CYKOKRWZ.js",
+        "hash": "7612240346571871240"
       },
       {
         "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-summary.service.ts",
         "hash": "17418840666984339722"
       },
       {
-        "file": "dist/apps/shell-admin/169.1881c211a7446786.js",
-        "hash": "98076277333128798"
+        "file": ".nx/cache/terminalOutputs/13684638338267987998",
+        "hash": "8414736432085878569"
       },
       {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.ts",
+        "hash": "2011385875138062099"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/theme-settings/theme-settings.component.ts",
-        "hash": "9065357986426747377"
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/card-view/card-skeleton-loader.component.ts",
+        "hash": "2238369308582065043"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.ts",
-        "hash": "16982936754546058237"
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/17348126162474118699",
+        "hash": "4604892150825528074"
+      },
+      {
+        "file": "dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/generic-validation.util.ts",
+        "hash": "6365094035478649501"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/app.component.ts",
+        "hash": "11299249436294586965"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/sync/sync-log.service.ts",
+        "hash": "17052663658805537920"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/theme.service.ts",
+        "hash": "16039422449850167075"
+      },
+      {
+        "file": "dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/823.15689d6db6e6ff34.js",
+        "hash": "17362707951322921569"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": "dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/index.html",
+        "hash": "6888194893597613186"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": "dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/smart-drawer-helper.service.ts",
+        "hash": "3018170993252680433"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/15937532711042356181",
+        "hash": "4188706006439426061"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/fa-regular-400.586044012116c300.woff2",
+        "hash": "13197136206014520405"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.ts",
+        "hash": "2790825947598644219"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/runtime.8932fd2c5a76c1d6.js",
+        "hash": "17876688311880451359"
+      },
+      {
+        "file": "dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/547.ad1743f95e199884.js",
+        "hash": "8045265074804138305"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/auto-height.util.ts",
+        "hash": "4499427164982331018"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "13336014555689740568"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/index.html",
+        "hash": "2262881984927523741"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/table-config.model.ts",
+        "hash": "4703485161726237381"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/18412226637694419064",
+        "hash": "8140925171444051378"
       },
       {
         "file": ".nx/workspace-data/9D9B8265-E320-5FCB-82D0-B14AA5309519.db-shm",
         "hash": "1701451326890522501"
       },
       {
-        "file": "packages/ui-kit/angular/src/lib/components/smart-table/utils/validation.util.ts",
-        "hash": "9405077998790906382"
+        "file": "dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/ui-gallery.component.ts",
+        "hash": "17197249191409389753"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": "packages/features/Crm/contact-service/rowContact/row-contact-list.component.ts",
+        "hash": "4713143082622206608"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-outlined.f86cb7b0aa53f0fe.woff2",
+        "hash": "10522114143729845977"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-round.92dc7ca2f4c591e7.woff",
+        "hash": "1052434605028448067"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/990.9c28f27a824fc7d6.js",
+        "hash": "1941521006572228217"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/runtime.76c7e12c54d14d6e.js",
+        "hash": "4214507627304466344"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/helpers/global-icon.helper.ts",
+        "hash": "5383489276498872414"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/table-view/table-view.component.html",
+        "hash": "16883283889416031397"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/main-S6R76S5N.js",
+        "hash": "15103793655130071776"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons.59322316b3fd6063.woff2",
+        "hash": "7763650806422700836"
+      },
+      {
+        "file": "dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": "packages/ui-kit/assets/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "dist/apps/shell-admin/main.129d7b316ff48da4.js",
+        "hash": "3506859679794175639"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/ai-utility/ai-client.service.ts",
+        "hash": "6611860286025012218"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/filter-sidebar/filter-sidebar.component.html",
+        "hash": "16083882376077173156"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/5353320792885218410",
+        "hash": "14919021684114480010"
+      },
+      {
+        "file": "dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/fa-solid-900.be3dfdfdf593abab.woff2",
+        "hash": "954906254565317180"
+      },
+      {
+        "file": "dist/apps/shell-admin/index.html",
+        "hash": "4295642922288702419"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/material-icons-round.b10ec9db5b7fbc74.woff2",
+        "hash": "9148247937496812267"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-sharp.3885863ee4746422.woff2",
+        "hash": "5808153178236815648"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/11474713438811715304",
+        "hash": "12481611309820285794"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/ui-gallery/create-layout-modal/create-layout-modal.component.html",
+        "hash": "9378304480912353787"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/fa-v4compatibility.8995e4d2c3a1aa41.woff2",
+        "hash": "9496941953158514151"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/offline-data.service.ts",
+        "hash": "11021123404273687733"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/footer/footer.component.html",
+        "hash": "2544195235702374528"
+      },
+      {
+        "file": "package.json",
+        "hash": "10866976932571981789"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/common.bd3318167d14d428.js",
+        "hash": "5408164558282305923"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/855.42874e95e7c976fe.js",
+        "hash": "15505134894185418891"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/primeicons.8ca441e178bfb872.eot",
+        "hash": "7087890182859274956"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/polyfills.60c7391a41017486.js",
+        "hash": "8241224696577022298"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/3rdpartylicenses.txt",
+        "hash": "16112666392429872310"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/659.66158dcc5f8cd33c.js",
+        "hash": "15408308243459097724"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/saved-queries.service.ts",
+        "hash": "9719390605803251294"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/13064697613128267417",
+        "hash": "4401359542697553142"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-outlined.78a93b2079680a08.woff",
+        "hash": "17469320954994514281"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/views/calendar-view/calendar-view.component.html",
+        "hash": "6219168069137951403"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/index.html",
+        "hash": "16095722771104708620"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/styles.8a59bb2656039547.css",
+        "hash": "12145002876624187515"
+      },
+      {
+        "file": "dist/apps/shell/primeicons.7f7722745590608a.woff",
+        "hash": "169501150675308310"
+      },
+      {
+        "file": "dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": "dist/apps/shell-admin/styles.479d8838618f72e7.css",
+        "hash": "16738408235941761237"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/persistence.service.ts",
+        "hash": "16405227610566885350"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/main.44d740ef3d95e139.js",
+        "hash": "1581700376487508916"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/models/chip.model.ts",
+        "hash": "13743396857274237143"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/831.892ca664b50d53a5.js",
+        "hash": "11139313285839138581"
+      },
+      {
+        "file": ".nx/cache/11474713438811715304/dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/config-sidebar/config-form/config-form.component.ts",
+        "hash": "12703652308566992201"
+      },
+      {
+        "file": ".nx/cache/11928486859962370058/dist/apps/shell/material-icons.4ad034d2c499d9b6.woff",
+        "hash": "2322698252204036843"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/material-icons-two-tone.588d63134de807a7.woff",
+        "hash": "8300475034430784379"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/50.5f1fba42b20326e7.js",
+        "hash": "5177190576618044133"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/assets/app-master-data/table/backoffice-row-contact/backoffice-row-contact.row_contact_default.bundle.json",
+        "hash": "9402064429934460589"
+      },
+      {
+        "file": "dist/apps/shell-admin/264.f2883a1452c33399.js",
+        "hash": "16197986700494767367"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/density.service.ts",
+        "hash": "7798303221687932786"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/services/export.service.ts",
+        "hash": "16558842458692232753"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/695.9a1b84f1e7839d37.js",
+        "hash": "9978940745938949141"
+      },
+      {
+        "file": "dist/apps/shell/primeicons.e1a53edb6ea00325.woff2",
+        "hash": "17650717316100210874"
+      },
+      {
+        "file": ".nx/cache/18098111013575632565/dist/apps/crm/browser/main-5CPNAVOT.js",
+        "hash": "4708522658927470513"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/11523976301117355861/dist/apps/shell/main.cb4a7b8e7ee38837.js",
+        "hash": "13713810066142033070"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-table/smart-table.component.ts",
+        "hash": "8379952299751883456"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/201.1bf126c6b8a7ba17.js",
+        "hash": "5509725838324631047"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/material-icons-sharp.a71cb2bf66c604de.woff",
+        "hash": "10031978980211020935"
+      },
+      {
+        "file": ".nx/cache/11885585482373130278/dist/apps/shell/632.672df952df43a94e.js",
+        "hash": "3746160943044146262"
+      },
+      {
+        "file": ".nx/cache/9034876212613666677/dist/apps/crm/3rdpartylicenses.txt",
+        "hash": "14784952830370600369"
+      },
+      {
+        "file": "dist/apps/shell/455.4a36275dae002d84.js",
+        "hash": "10905025230326288128"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/fa-brands-400.27ef4111ee775ef5.woff2",
+        "hash": "2023363295694882143"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/offline/encryption.service.ts",
+        "hash": "15459215446178186620"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/components/smart-drawer/smart-drawer.component.ts",
+        "hash": "15497468793925018494"
+      },
+      {
+        "file": ".nx/cache/15209751682203454929/dist/apps/shell/primeicons.310a7310efb91ab1.ttf",
+        "hash": "2986676651534754828"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/2983949118657574921",
+        "hash": "12430781147737514277"
+      },
+      {
+        "file": ".nx/cache/9982983864081835272/dist/apps/shell/primeicons.19e14e488f5edc90.svg",
+        "hash": "2310881215014626795"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/smart-table/data-access/data.service.ts",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/ui-kit/angular/src/lib/components/sync-indicator/sync-indicator.component.ts",
+        "hash": "305005069907411909"
+      },
+      {
+        "file": ".nx/cache/17348126162474118699/dist/apps/crm/browser/chunk-7NWUPHBU.js",
+        "hash": "7612240346571871240"
+      },
+      {
+        "file": ".nx/cache/18412226637694419064/dist/apps/shell/504.6584b965713991d8.js",
+        "hash": "1705039142349187024"
+      },
+      {
+        "file": ".nx/cache/15937532711042356181/dist/apps/shell/material-icons-two-tone.675bd578bd14533e.woff2",
+        "hash": "11050492160209728750"
+      },
+      {
+        "file": ".nx/cache/terminalOutputs/18098111013575632565",
+        "hash": "10232115097316017568"
+      },
+      {
+        "file": ".nx/cache/17237502357480601048/dist/apps/shell/978.a3a6f75954cb2c1f.js",
+        "hash": "12794170788706744332"
       }
     ],
     "projectFileMap": {
-      "core": [
-        {
-          "file": "packages/core/README.md",
-          "hash": "9810432091555253122"
-        },
-        {
-          "file": "packages/core/eslint.config.mjs",
-          "hash": "5385050500626891584",
-          "deps": [
-            "npm:@nx/eslint-plugin"
-          ]
-        },
-        {
-          "file": "packages/core/jest.config.cts",
-          "hash": "13641579194166581081"
-        },
-        {
-          "file": "packages/core/project.json",
-          "hash": "14136024270046192527"
-        },
-        {
-          "file": "packages/core/src/index.ts",
-          "hash": "10315130147653140634"
-        },
-        {
-          "file": "packages/core/src/lib/caching/local-storage.service.ts",
-          "hash": "9227561928681389234",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common",
-            "npm:crypto-js"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/dexie/app-db.ts",
-          "hash": "13632808219505686733",
-          "deps": [
-            "npm:dexie",
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/dexie/db-migrations.ts",
-          "hash": "999224948930385731"
-        },
-        {
-          "file": "packages/core/src/lib/db/encryption/crypto.service.ts",
-          "hash": "6761901553368130695",
-          "deps": [
-            "npm:@angular/core",
-            "npm:crypto-js"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/encryption/field-encryption.util.ts",
-          "hash": "1585621634787260157"
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/api-endpoint.repo.ts",
-          "hash": "17210980777071536553",
-          "deps": [
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/dynamic-row.repo.ts",
-          "hash": "18137485578370155660",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/repositories/table-master.repo.ts",
-          "hash": "5254355591900680600",
-          "deps": [
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/db/schema/schema-validator.service.ts",
-          "hash": "12994469057962695692",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/data-access/row-contact-offline.repository.ts",
-          "hash": "16845403180007712072",
-          "deps": [
-            "npm:@angular/core",
-            "npm:dexie"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.dto.ts",
-          "hash": "9810679178399408235"
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.entity.ts",
-          "hash": "5762083437671870785"
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.mapper.ts",
-          "hash": "13611383944203355646"
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.model.ts",
-          "hash": "5474571656547307289"
-        },
-        {
-          "file": "packages/core/src/lib/offline/row-contact/services/row-contact-data.service.ts",
-          "hash": "1218267023154363994",
-          "deps": [
-            "npm:rxjs",
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/online/api-http-helper.service.ts",
-          "hash": "4090615703382720607",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/online/http-module.service.ts",
-          "hash": "12204160814985980322",
-          "deps": [
-            "npm:@angular/common",
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/online/models/api-config.token.ts",
-          "hash": "5471691897019127197",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/online/models/api.model.ts",
-          "hash": "14077123864914763470"
-        },
-        {
-          "file": "packages/core/src/lib/sync/handlers/row-contact-sync.service.ts",
-          "hash": "8426037596676923052",
-          "deps": [
-            "npm:@angular/core",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/sync/logging/sync-log.entity.ts",
-          "hash": "5874434045798216408"
-        },
-        {
-          "file": "packages/core/src/lib/sync/logging/sync-log.repository.ts",
-          "hash": "5221548127417544080",
-          "deps": [
-            "npm:dexie",
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/sync/management/sync-manager.service.ts",
-          "hash": "11080380936670810956",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common",
-            "npm:rxjs"
-          ]
-        },
-        {
-          "file": "packages/core/src/lib/sync/models/sync-handler.interface.ts",
-          "hash": "4912486032398332947"
-        },
-        {
-          "file": "packages/core/src/lib/sync/models/sync-status.enum.ts",
-          "hash": "17863981369291688061"
-        },
-        {
-          "file": "packages/core/src/test-setup.ts",
-          "hash": "15311061684404854706",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "packages/core/tsconfig.json",
-          "hash": "5322752655305925185"
-        },
-        {
-          "file": "packages/core/tsconfig.lib.json",
-          "hash": "10623358221419076094"
-        },
-        {
-          "file": "packages/core/tsconfig.spec.json",
-          "hash": "17594897064854416467"
-        }
-      ],
-      "contracts": [
-        {
-          "file": "packages/contracts/README.md",
-          "hash": "1675072428336869475"
-        },
-        {
-          "file": "packages/contracts/eslint.config.mjs",
-          "hash": "4493137641332673223",
-          "deps": [
-            [
-              "npm:jsonc-eslint-parser",
-              "dynamic"
-            ]
-          ]
-        },
-        {
-          "file": "packages/contracts/jest.config.cts",
-          "hash": "11660543322096674508"
-        },
-        {
-          "file": "packages/contracts/package.json",
-          "hash": "17201860731215208798",
-          "deps": [
-            "npm:tslib"
-          ]
-        },
-        {
-          "file": "packages/contracts/project.json",
-          "hash": "16769285638304340714"
-        },
-        {
-          "file": "packages/contracts/src/index.ts",
-          "hash": "6487015511169846770"
-        },
-        {
-          "file": "packages/contracts/src/lib/contracts.spec.ts",
-          "hash": "12274991089430456301"
-        },
-        {
-          "file": "packages/contracts/src/lib/contracts.ts",
-          "hash": "12083078625047109554"
-        },
-        {
-          "file": "packages/contracts/tsconfig.json",
-          "hash": "12975668481162286788"
-        },
-        {
-          "file": "packages/contracts/tsconfig.lib.json",
-          "hash": "3269066908872457000"
-        },
-        {
-          "file": "packages/contracts/tsconfig.spec.json",
-          "hash": "4809000387131895544"
-        }
-      ],
-      "crm": [
-        {
-          "file": "apps/crm/eslint.config.mjs",
-          "hash": "15052851186193004871",
-          "deps": [
-            "npm:@nx/eslint-plugin"
-          ]
-        },
-        {
-          "file": "apps/crm/jest.config.cts",
-          "hash": "8708918332031062154"
-        },
-        {
-          "file": "apps/crm/project.json",
-          "hash": "14547038267655067241"
-        },
-        {
-          "file": "apps/crm/public/favicon.ico",
-          "hash": "9303420814833116677"
-        },
-        {
-          "file": "apps/crm/src/app/app.config.ts",
-          "hash": "4436923392211261843",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.html",
-          "hash": "4502330629693433266"
-        },
-        {
-          "file": "apps/crm/src/app/app.routes.ts",
-          "hash": "6185150965714414910",
-          "deps": [
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/crm/src/app/app.spec.ts",
-          "hash": "7929493829094894225",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/app.ts",
-          "hash": "12344290283069299174",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/router"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/customer-details/customer-details.component.html",
-          "hash": "17428751941442521546"
-        },
-        {
-          "file": "apps/crm/src/app/customer-details/customer-details.component.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "apps/crm/src/app/customer-details/customer-details.component.ts",
-          "hash": "4195081991037427500",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "apps/crm/src/app/nx-welcome.ts",
-          "hash": "2569891918329222800",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "apps/crm/src/index.html",
-          "hash": "3431698068758704741"
-        },
-        {
-          "file": "apps/crm/src/main.ts",
-          "hash": "3314327030169821486",
-          "deps": [
-            "npm:@angular/platform-browser"
-          ]
-        },
-        {
-          "file": "apps/crm/src/styles.scss",
-          "hash": "5195668842064076916"
-        },
-        {
-          "file": "apps/crm/src/test-setup.ts",
-          "hash": "13317557134094625390",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "apps/crm/tsconfig.app.json",
-          "hash": "11156570204639688975"
-        },
-        {
-          "file": "apps/crm/tsconfig.json",
-          "hash": "9495375784689799492"
-        },
-        {
-          "file": "apps/crm/tsconfig.spec.json",
-          "hash": "1029128818174064697"
-        }
-      ],
       "invoicing": [
         {
           "file": "apps/invoicing/eslint.config.mjs",
@@ -1158,6 +2636,177 @@
           "hash": "1029128818174064697"
         }
       ],
+      "crm": [
+        {
+          "file": "apps/crm/eslint.config.mjs",
+          "hash": "15052851186193004871",
+          "deps": [
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "apps/crm/jest.config.cts",
+          "hash": "8708918332031062154"
+        },
+        {
+          "file": "apps/crm/project.json",
+          "hash": "14827454982079920764"
+        },
+        {
+          "file": "apps/crm/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/crm/src/app/app.config.ts",
+          "hash": "4436923392211261843",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.html",
+          "hash": "13739984621345811775"
+        },
+        {
+          "file": "apps/crm/src/app/app.routes.ts",
+          "hash": "17329848246194168537",
+          "deps": [
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/crm/src/app/app.spec.ts",
+          "hash": "7929493829094894225",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/app.ts",
+          "hash": "12344290283069299174",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/router"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.html",
+          "hash": "17428751941442521546"
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/crm/src/app/customer-details/customer-details.component.ts",
+          "hash": "4195081991037427500",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "apps/crm/src/app/nx-welcome.ts",
+          "hash": "2569891918329222800",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "apps/crm/src/index.html",
+          "hash": "3431698068758704741"
+        },
+        {
+          "file": "apps/crm/src/main.ts",
+          "hash": "3314327030169821486",
+          "deps": [
+            "npm:@angular/platform-browser"
+          ]
+        },
+        {
+          "file": "apps/crm/src/styles.scss",
+          "hash": "5195668842064076916"
+        },
+        {
+          "file": "apps/crm/src/test-setup.ts",
+          "hash": "13317557134094625390",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "apps/crm/tsconfig.app.json",
+          "hash": "11156570204639688975"
+        },
+        {
+          "file": "apps/crm/tsconfig.json",
+          "hash": "2219689640496062791"
+        },
+        {
+          "file": "apps/crm/tsconfig.spec.json",
+          "hash": "1029128818174064697"
+        }
+      ],
+      "contracts": [
+        {
+          "file": "packages/contracts/README.md",
+          "hash": "1675072428336869475"
+        },
+        {
+          "file": "packages/contracts/eslint.config.mjs",
+          "hash": "4493137641332673223",
+          "deps": [
+            [
+              "npm:jsonc-eslint-parser",
+              "dynamic"
+            ]
+          ]
+        },
+        {
+          "file": "packages/contracts/jest.config.cts",
+          "hash": "11660543322096674508"
+        },
+        {
+          "file": "packages/contracts/package.json",
+          "hash": "17201860731215208798",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "packages/contracts/project.json",
+          "hash": "16769285638304340714"
+        },
+        {
+          "file": "packages/contracts/src/index.ts",
+          "hash": "6487015511169846770"
+        },
+        {
+          "file": "packages/contracts/src/lib/contracts.spec.ts",
+          "hash": "12274991089430456301"
+        },
+        {
+          "file": "packages/contracts/src/lib/contracts.ts",
+          "hash": "12083078625047109554"
+        },
+        {
+          "file": "packages/contracts/tsconfig.json",
+          "hash": "12975668481162286788"
+        },
+        {
+          "file": "packages/contracts/tsconfig.lib.json",
+          "hash": "3269066908872457000"
+        },
+        {
+          "file": "packages/contracts/tsconfig.spec.json",
+          "hash": "4809000387131895544"
+        }
+      ],
       "custom-layouts": [
         {
           "file": "packages/custom-layouts/README.md",
@@ -1219,7 +2868,7 @@
         },
         {
           "file": "packages/custom-layouts/src/lib/services/nav.service.ts",
-          "hash": "1301895845398066377",
+          "hash": "6215821440120137072",
           "deps": [
             "npm:@angular/core"
           ]
@@ -1431,10 +3080,11 @@
         },
         {
           "file": "packages/custom-layouts/src/lib/templates/marg/components/menu/menu.component.ts",
-          "hash": "7432377082081190548",
+          "hash": "4998815614464958588",
           "deps": [
             "npm:@angular/core",
             "npm:@angular/common",
+            "npm:@angular/router",
             "npm:feather-icons"
           ]
         },
@@ -1477,7 +3127,7 @@
         },
         {
           "file": "packages/custom-layouts/src/lib/templates/marg/services/marg-layout.service.ts",
-          "hash": "13751058456431895057",
+          "hash": "13308988664991599493",
           "deps": [
             "npm:@angular/core"
           ]
@@ -1731,7 +3381,7 @@
         },
         {
           "file": "apps/shell/src/app/app.routes.ts",
-          "hash": "395299363565718309",
+          "hash": "6332745695287025801",
           "deps": [
             "npm:@angular/router"
           ]
@@ -1983,10 +3633,11 @@
         },
         {
           "file": "apps/shell/src/app/features/smart-table-page/smart-table-page.component.ts",
-          "hash": "2982358908880541108",
+          "hash": "6095631209175997047",
           "deps": [
             "npm:@angular/core",
-            "npm:@angular/common"
+            "npm:@angular/common",
+            "core"
           ]
         },
         {
@@ -2662,6 +4313,227 @@
         {
           "file": "apps/shell/tsconfig.spec.json",
           "hash": "8657069660228457346"
+        }
+      ],
+      "core": [
+        {
+          "file": "packages/core/README.md",
+          "hash": "9810432091555253122"
+        },
+        {
+          "file": "packages/core/eslint.config.mjs",
+          "hash": "5385050500626891584",
+          "deps": [
+            "npm:@nx/eslint-plugin"
+          ]
+        },
+        {
+          "file": "packages/core/jest.config.cts",
+          "hash": "13641579194166581081"
+        },
+        {
+          "file": "packages/core/project.json",
+          "hash": "14136024270046192527"
+        },
+        {
+          "file": "packages/core/src/index.ts",
+          "hash": "10315130147653140634"
+        },
+        {
+          "file": "packages/core/src/lib/caching/local-storage.service.ts",
+          "hash": "9227561928681389234",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:crypto-js"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/dexie/app-db.ts",
+          "hash": "3611559971360704619",
+          "deps": [
+            "npm:dexie",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/dexie/db-migrations.ts",
+          "hash": "999224948930385731"
+        },
+        {
+          "file": "packages/core/src/lib/db/encryption/crypto.service.ts",
+          "hash": "6761901553368130695",
+          "deps": [
+            "npm:@angular/core",
+            "npm:crypto-js"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/encryption/field-encryption.util.ts",
+          "hash": "1585621634787260157"
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/api-endpoint.repo.ts",
+          "hash": "17210980777071536553",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/dynamic-row.repo.ts",
+          "hash": "18137485578370155660",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/repositories/table-master.repo.ts",
+          "hash": "5254355591900680600",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/db/schema/schema-validator.service.ts",
+          "hash": "12994469057962695692",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/data-access/row-contact-offline.repository.ts",
+          "hash": "2343491725331507033",
+          "deps": [
+            "npm:@angular/core",
+            "npm:dexie"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/data/mock-row-contacts.ts",
+          "hash": "2232726658181399886"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.dto.ts",
+          "hash": "9810679178399408235"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.entity.ts",
+          "hash": "5762083437671870785"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.mapper.ts",
+          "hash": "2482685813220648907"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/models/row-contact.model.ts",
+          "hash": "5474571656547307289"
+        },
+        {
+          "file": "packages/core/src/lib/offline/row-contact/services/row-contact-data.service.ts",
+          "hash": "1377438076753603995",
+          "deps": [
+            "npm:rxjs",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/api-http-helper.service.ts",
+          "hash": "4090615703382720607",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/http-module.service.ts",
+          "hash": "7831346920184411473",
+          "deps": [
+            "npm:@angular/common",
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/models/api-config.token.ts",
+          "hash": "5471691897019127197",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/online/models/api.model.ts",
+          "hash": "14077123864914763470"
+        },
+        {
+          "file": "packages/core/src/lib/online/row-contact/data-access/row-contact-online.repository.ts",
+          "hash": "5197155859092104675",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/handlers/row-contact-sync.service.ts",
+          "hash": "17469115321144758804",
+          "deps": [
+            "npm:@angular/core",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/logging/sync-log.entity.ts",
+          "hash": "5874434045798216408"
+        },
+        {
+          "file": "packages/core/src/lib/sync/logging/sync-log.repository.ts",
+          "hash": "5221548127417544080",
+          "deps": [
+            "npm:dexie",
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/management/sync-manager.service.ts",
+          "hash": "7566692278839499207",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common",
+            "npm:rxjs"
+          ]
+        },
+        {
+          "file": "packages/core/src/lib/sync/models/sync-handler.interface.ts",
+          "hash": "6641529548874582861"
+        },
+        {
+          "file": "packages/core/src/lib/sync/models/sync-status.enum.ts",
+          "hash": "17863981369291688061"
+        },
+        {
+          "file": "packages/core/src/lib/sync/utils/sync-calculation.util.ts",
+          "hash": "5195723667558796013"
+        },
+        {
+          "file": "packages/core/src/test-setup.ts",
+          "hash": "15311061684404854706",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "packages/core/tsconfig.json",
+          "hash": "5322752655305925185"
+        },
+        {
+          "file": "packages/core/tsconfig.lib.json",
+          "hash": "10623358221419076094"
+        },
+        {
+          "file": "packages/core/tsconfig.spec.json",
+          "hash": "17594897064854416467"
         }
       ]
     }

@@ -41,8 +41,9 @@ export class SyncService {
    * the background sync loops.
    */
   startFullSync(): void {
-    console.log('[SyncService] Starting full sync...');
-    this.primeDataFromServer();
+    console.warn('[SyncService] startFullSync is DEPRECATED and DISABLED. Use SyncManagerService (Core) instead.');
+    // console.log('[SyncService] Starting full sync...');
+    // this.primeDataFromServer();
 
     // In a full implementation, you would start periodic sync processes here:
     // setInterval(() => this.pushLocalChanges(), 30000); // Push changes every 30s

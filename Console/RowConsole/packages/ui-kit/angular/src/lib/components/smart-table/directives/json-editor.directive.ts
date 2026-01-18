@@ -1,5 +1,5 @@
 import { Directive, ElementRef, inject, input, output, effect, AfterViewInit, OnDestroy } from '@angular/core';
-import * as CodeMirror from 'codemirror';
+import CodeMirror from 'codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/matchbrackets';
@@ -40,7 +40,7 @@ export class JsonEditorDirective implements AfterViewInit, OnDestroy {
 
     this.editor = CodeMirror(this.el.nativeElement, config);
 
-    this.editor.on('change', (instance: CodeMirror.Editor) => {
+    this.editor?.on('change', (instance: CodeMirror.Editor) => {
       const currentValue = instance.getValue();
       this.isInternalChange = true;
       this.valueChange.emit(currentValue);

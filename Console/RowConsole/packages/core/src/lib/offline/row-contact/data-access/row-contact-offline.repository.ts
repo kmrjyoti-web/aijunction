@@ -33,4 +33,15 @@ export class RowContactOfflineRepository {
     async count(): Promise<number> {
         return this.db.RowContact.count();
     }
+
+    async bulkUpsert(entities: RowContactEntity[]): Promise<void> {
+        console.log(`[RowContactOfflineRepository] bulkUpsert called with ${entities.length} items.`);
+        try {
+            await this.db.RowContact.bulkPut(entities);
+            console.log('[RowContactOfflineRepository] bulkPut success.');
+        } catch (error) {
+            console.error('[RowContactOfflineRepository] bulkPut FAILED:', error);
+            throw error;
+        }
+    }
 }

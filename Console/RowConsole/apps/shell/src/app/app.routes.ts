@@ -32,6 +32,10 @@ export const appRoutes: Routes = [
         loadComponent: () => import('./features/smart-table-page/smart-table-page.component').then(m => m.SmartTablePageComponent)
       },
       {
+        path: 'row-contact',
+        loadComponent: () => import('@ai-junction/features').then(m => m.RowContactListComponent)
+      },
+      {
         path: '',
         redirectTo: 'dashboard/default',
         pathMatch: 'full'

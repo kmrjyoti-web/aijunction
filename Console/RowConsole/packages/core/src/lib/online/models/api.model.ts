@@ -9,8 +9,8 @@ export interface SearchFilter {
 }
 
 export interface SortColumn {
-  coloum_id: string;
-  short_type: 'asc' | 'desc';
+  column_name: string;
+  sortOrder: 'asc' | 'desc';
 }
 
 export interface ApiRequest {

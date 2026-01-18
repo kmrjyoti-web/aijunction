@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import * as feather from 'feather-icons';
 
 interface MenuItem {
@@ -8,12 +9,13 @@ interface MenuItem {
     active?: boolean;
     hasSub?: boolean;
     subItems?: MenuItem[];
+    link?: string;
 }
 
 @Component({
     selector: 'app-marg-menu',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterModule],
     template: `
     <nav class="marg-horizontal-menu">
         <ul class="menu-list">
@@ -29,7 +31,7 @@ interface MenuItem {
 
                 <!-- Submenu -->
                 <ul class="submenu" *ngIf="item.hasSub">
-                    <li *ngFor="let sub of item.subItems" class="submenu-item">
+                    <li *ngFor="let sub of item.subItems" class="submenu-item" [routerLink]="sub.link">
                         <i [attr.data-feather]="sub.icon"></i>
                         <span>{{ sub.label }}</span>
                     </li>
@@ -151,6 +153,12 @@ export class MargMenuComponent implements AfterViewInit {
             subItems: [
                 { label: 'Purchase Bill', icon: 'circle' },
                 { label: 'Purchase Return', icon: 'circle' }
+            ]
+        },
+        {
+            label: 'CRM', icon: 'users', hasSub: true,
+            subItems: [
+                { label: 'Row Contacts', icon: 'circle', link: '/row-contact' }
             ]
         },
         { label: 'Report', icon: 'file-text' },

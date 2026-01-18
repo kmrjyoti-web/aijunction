@@ -147,6 +147,17 @@
       </div>
 
       <div>
+        <label for="borderColor" class="block text-sm font-medium text-gray-700 mb-1">Border
+          Color</label>
+        <div class="flex gap-2">
+          <input type="color" id="borderColor" formControlName="borderColor"
+            class="h-8 w-8 rounded-md border-gray-300 cursor-pointer">
+          <input type="text" formControlName="borderColor"
+            class="flex-1 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+        </div>
+      </div>
+
+      <div>
         <label for="backgroundImageUrl" class="block text-sm font-medium text-gray-700 mb-1">Background Image
           URL</label>
         <input type="text" id="backgroundImageUrl" formControlName="backgroundImageUrl"
@@ -172,6 +183,20 @@
       <div class="flex justify-between text-xs text-gray-400 mt-1 font-medium px-1">
         <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
       </div>
+    </div>
+  </section>
+
+  <!-- Sizing & Layout -->
+  <section class="space-y-4">
+    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Sizing & Layout
+    </h3>
+    <div>
+      <label for="autoSizeOffset" class="block text-sm font-bold text-gray-800 mb-1">
+        Auto-Size Height Offset (px)
+        <span class="text-xs text-gray-500 font-normal ml-1">(Subtracted from window height)</span>
+      </label>
+      <input type="number" id="autoSizeOffset" formControlName="autoSizeOffset"
+        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 placeholder-gray-400">
     </div>
   </section>
 

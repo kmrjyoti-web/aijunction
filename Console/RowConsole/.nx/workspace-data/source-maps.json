@@ -64,7 +64,7 @@
       "apps/crm/project.json",
       "nx/core/project-json"
     ],
-    "targets.build.options.main": [
+    "targets.build.options.browser": [
       "apps/crm/project.json",
       "nx/core/project-json"
     ],

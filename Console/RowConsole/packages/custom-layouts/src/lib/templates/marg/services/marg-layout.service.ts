@@ -46,7 +46,12 @@ export class MargLayoutService {
         { label: 'Stock Management', icon: 'pie-chart', hasSub: true, subItems: [{ label: 'Current Stock', icon: 'circle' }] },
         { label: 'Banking', icon: 'dollar-sign', hasSub: true, subItems: [{ label: 'Bank Reconciliation', icon: 'circle' }] },
         { label: 'Report', icon: 'file-text' },
-        { label: 'CRM', icon: 'users', hasSub: true, subItems: [{ label: 'Customer List', icon: 'circle' }] },
+        {
+            label: 'CRM', icon: 'users', hasSub: true, subItems: [
+                { label: 'Customer List', icon: 'circle', link: '/customer-details' },
+                { label: 'Row Contacts', icon: 'circle', link: '/row-contact' }
+            ]
+        },
         { label: 'Other Products', icon: 'package' },
         { label: 'Utilities & Tools', icon: 'tool' },
         { label: 'Online Store', icon: 'home' },

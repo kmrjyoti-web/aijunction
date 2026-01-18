@@ -178,11 +178,11 @@ export class OnlineDataService {
     if (request.sort_column.length > 0) {
       const sort = request.sort_column[0];
       filteredData.sort((a, b) => {
-        const valA = a[sort.coloum_id];
-        const valB = b[sort.coloum_id];
+        const valA = a[sort.column_name];
+        const valB = b[sort.column_name];
 
-        if (valA < valB) return sort.short_type === 'asc' ? -1 : 1;
-        if (valA > valB) return sort.short_type === 'asc' ? 1 : -1;
+        if (valA < valB) return sort.sortOrder === 'asc' ? -1 : 1;
+        if (valA > valB) return sort.sortOrder === 'asc' ? 1 : -1;
         return 0;
       });
     }
