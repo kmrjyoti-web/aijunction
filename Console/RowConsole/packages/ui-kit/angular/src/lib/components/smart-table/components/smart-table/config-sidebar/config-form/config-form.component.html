@@ -1,225 +1,191 @@
 @if(form) {
-<form [formGroup]="form" class="space-y-8 px-1">
+<div class="px-1 pb-4">
+  <div class="flex items-center p-1 bg-gray-100 rounded-lg mb-6">
+    <button (click)="activeTab.set('general')"
+      class="flex-1 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200"
+      [class.bg-white]="activeTab() === 'general'" [class.shadow-sm]="activeTab() === 'general'"
+      [class.text-indigo-600]="activeTab() === 'general'" [class.text-gray-500]="activeTab() !== 'general'">
+      General
+    </button>
+    <button (click)="activeTab.set('columns')"
+      class="flex-1 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200"
+      [class.bg-white]="activeTab() === 'columns'" [class.shadow-sm]="activeTab() === 'columns'"
+      [class.text-indigo-600]="activeTab() === 'columns'" [class.text-gray-500]="activeTab() !== 'columns'">
+      Columns
+    </button>
+    <button (click)="activeTab.set('style')"
+      class="flex-1 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200"
+      [class.bg-white]="activeTab() === 'style'" [class.shadow-sm]="activeTab() === 'style'"
+      [class.text-indigo-600]="activeTab() === 'style'" [class.text-gray-500]="activeTab() !== 'style'">
+      Style
+    </button>
+  </div>
 
-  <!-- General Section -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">General</h3>
-    <div>
-      <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Table Title</label>
-      <input type="text" id="title" formControlName="title"
-        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 placeholder-gray-400">
-    </div>
-  </section>
+  <form [formGroup]="form" class="space-y-6 pb-20">
 
-  <!-- Data & Paging -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Data & Paging
-    </h3>
-
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label for="dataStrategy" class="block text-sm font-medium text-gray-700 mb-1">Data Strategy</label>
-        <select id="dataStrategy" formControlName="dataStrategy"
-          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white">
-          @for(strategy of dataStrategies; track strategy) {
-          <option [value]="strategy">{{ strategy }}</option>
-          }
-        </select>
-      </div>
-      <div>
-        <label for="pagingMode" class="block text-sm font-medium text-gray-700 mb-1">Paging Mode</label>
-        <select id="pagingMode" formControlName="pagingMode"
-          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 bg-white">
-          @for(mode of pagingModes; track mode) {
-          <option [value]="mode">{{ mode | titlecase }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    @if(form.get('pagingMode')?.value === 'infinite') {
-    <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
-      <label for="infiniteScrollBehavior" class="block text-sm font-medium text-gray-700 mb-1">Infinite Scroll
-        Behavior</label>
-      <select id="infiniteScrollBehavior" formControlName="infiniteScrollBehavior"
-        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-        @for(behavior of infiniteScrollBehaviors; track behavior) {
-        <option [value]="behavior">{{ behavior | titlecase }}</option>
-        }
-      </select>
-    </div>
-    }
-  </section>
-
-  <!-- Appearance -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Appearance</h3>
-
-    <div class="grid grid-cols-2 gap-4 mb-2">
-      <div>
-        <label for="paginatorPosition" class="block text-sm font-medium text-gray-700 mb-1">Paginator</label>
-        <select id="paginatorPosition" formControlName="paginatorPosition"
-          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-          @for(pos of paginatorPositions; track pos) {
-          <option [value]="pos" class="capitalize">{{ pos }}</option>
-          }
-        </select>
-      </div>
-      <div>
-        <label for="toolbarButtonMode" class="block text-sm font-medium text-gray-700 mb-1">Toolbar Buttons</label>
-        <select id="toolbarButtonMode" formControlName="toolbarButtonMode"
-          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-          @for(mode of toolbarButtonModes; track mode) {
-          <option [value]="mode">{{ mode === 'iconAndText' ? 'Icon & Text' : 'Icon Only' }}</option>
-          }
-        </select>
-      </div>
-    </div>
-
-    <!-- Appearance Toggles -->
-    <div class="space-y-3">
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-gray-700">Striped Rows</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" formControlName="stripedRows" class="sr-only peer">
-          <div
-            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-          </div>
-        </label>
-      </div>
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-gray-700">Grid Lines</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" formControlName="showGridlines" class="sr-only peer">
-          <div
-            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-          </div>
-        </label>
-      </div>
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-gray-700">Row Hover Effect</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" formControlName="rowHover" class="sr-only peer">
-          <div
-            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-          </div>
-        </label>
-      </div>
-    </div>
-  </section>
-
-  <!-- Table Styling -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Table Styling
-    </h3>
-
-    <div class="space-y-4">
-      <div class="flex items-center justify-between">
-        <span class="text-sm text-gray-700">Enable Transparency</span>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" formControlName="enableTransparency" class="sr-only peer">
-          <div
-            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-          </div>
-        </label>
+    <!-- 1. Table Settings (General Tab) -->
+    @if(activeTab() === 'general') {
+    <section class="space-y-6">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-table text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Table Settings</h3>
       </div>
 
-      <div>
-        <label for="headerBackgroundColor" class="block text-sm font-medium text-gray-700 mb-1">Header
-          Background</label>
-        <div class="flex gap-2">
-          <input type="color" id="headerBackgroundColor" formControlName="headerBackgroundColor"
-            class="h-8 w-8 rounded-md border-gray-300 cursor-pointer">
-          <input type="text" formControlName="headerBackgroundColor"
-            class="flex-1 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+      <!-- Title & Basic -->
+      <div class="space-y-6">
+        <div class="relative">
+          <i class="pi pi-pencil absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <input type="text" id="title" formControlName="title" placeholder=" "
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+          <label for="title"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Table Title
+          </label>
         </div>
-      </div>
 
-      <div>
-        <label for="footerBackgroundColor" class="block text-sm font-medium text-gray-700 mb-1">Footer
-          Background</label>
-        <div class="flex gap-2">
-          <input type="color" id="footerBackgroundColor" formControlName="footerBackgroundColor"
-            class="h-8 w-8 rounded-md border-gray-300 cursor-pointer">
-          <input type="text" formControlName="footerBackgroundColor"
-            class="flex-1 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-        </div>
-      </div>
-
-      <div>
-        <label for="borderColor" class="block text-sm font-medium text-gray-700 mb-1">Border
-          Color</label>
-        <div class="flex gap-2">
-          <input type="color" id="borderColor" formControlName="borderColor"
-            class="h-8 w-8 rounded-md border-gray-300 cursor-pointer">
-          <input type="text" formControlName="borderColor"
-            class="flex-1 text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-        </div>
-      </div>
-
-      <div>
-        <label for="backgroundImageUrl" class="block text-sm font-medium text-gray-700 mb-1">Background Image
-          URL</label>
-        <input type="text" id="backgroundImageUrl" formControlName="backgroundImageUrl"
-          placeholder="https://example.com/image.jpg"
-          class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-      </div>
-    </div>
-  </section>
-
-  <!-- Card View -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Card View</h3>
-    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
-      <div class="flex justify-between items-center mb-2">
-        <label for="cardsPerRow" class="block text-sm font-medium text-gray-700">Cards Per Row (Desktop)</label>
-        <span
-          class="inline-flex items-center justify-center px-2 py-1 rounded-md bg-white border border-gray-200 text-xs font-bold text-indigo-600 shadow-sm min-w-[2rem]">
-          {{ form.get('cardsPerRow')?.value }}
-        </span>
-      </div>
-      <input type="range" id="cardsPerRow" formControlName="cardsPerRow" min="1" max="6"
-        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
-      <div class="flex justify-between text-xs text-gray-400 mt-1 font-medium px-1">
-        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sizing & Layout -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Sizing & Layout
-    </h3>
-    <div>
-      <label for="autoSizeOffset" class="block text-sm font-bold text-gray-800 mb-1">
-        Auto-Size Height Offset (px)
-        <span class="text-xs text-gray-500 font-normal ml-1">(Subtracted from window height)</span>
-      </label>
-      <input type="number" id="autoSizeOffset" formControlName="autoSizeOffset"
-        class="block w-full text-sm rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 placeholder-gray-400">
-    </div>
-  </section>
-
-  <!-- Feature Toggles Grid -->
-  <section class="space-y-4">
-    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-100 pb-2">Features</h3>
-
-    <div class="grid grid-cols-2 gap-x-8 gap-y-4">
-      <!-- Left Column -->
-      <div class="space-y-4">
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Column Chooser</span>
+        <!-- Footer Toggle -->
+        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-100">
+          <div class="flex items-center gap-2">
+            <i class="pi pi-server text-gray-400"></i>
+            <span class="text-sm font-medium text-gray-700">Enable Footer</span>
+          </div>
           <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableColumnChooser" class="sr-only peer">
+            <input type="checkbox" formControlName="enableFooter" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Data Strategy & Paging -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="relative">
+          <i class="pi pi-database absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <select id="dataStrategy" formControlName="dataStrategy"
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 appearance-none">
+            @for(strategy of dataStrategies; track strategy) {
+            <option [value]="strategy">{{ strategy }}</option>
+            }
+          </select>
+          <label for="dataStrategy"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Data Strategy
+          </label>
+          <i
+            class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+        </div>
+
+        <div class="relative">
+          <i class="pi pi-list absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <select id="pagingMode" formControlName="pagingMode"
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 appearance-none">
+            @for(mode of pagingModes; track mode) {
+            <option [value]="mode">{{ mode | titlecase }}</option>
+            }
+          </select>
+          <label for="pagingMode"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Paging Mode
+          </label>
+          <i
+            class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+        </div>
+      </div>
+
+      @if(form.get('pagingMode')?.value === 'infinite') {
+      <div class="relative mt-4">
+        <i class="pi pi-sync absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+        <select id="infiniteScrollBehavior" formControlName="infiniteScrollBehavior"
+          class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 appearance-none">
+          @for(behavior of infiniteScrollBehaviors; track behavior) {
+          <option [value]="behavior">{{ behavior | titlecase }}</option>
+          }
+        </select>
+        <label for="infiniteScrollBehavior"
+          class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+          Infinite Scroll Behavior
+        </label>
+        <i
+          class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+      </div>
+      } @else {
+      <!-- Paginator Position -->
+      <div class="relative mt-4">
+        <i class="pi pi-sort-alt absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+        <select id="paginatorPosition" formControlName="paginatorPosition"
+          class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 appearance-none capitalize">
+          @for(pos of paginatorPositions; track pos) {
+          <option [value]="pos">{{ pos }}</option>
+          }
+        </select>
+        <label for="paginatorPosition"
+          class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+          Paginator Position
+        </label>
+        <i
+          class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+      </div>
+      }
+
+      <!-- Sizing -->
+      <div class="grid grid-cols-2 gap-6">
+        <div class="relative">
+          <i class="pi pi-th-large absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <input type="number" id="cardsPerRow" formControlName="cardsPerRow" min="1" max="6" placeholder=" "
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+          <label for="cardsPerRow"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Cards (Desktop)
+          </label>
+        </div>
+        <div class="relative">
+          <i class="pi pi-arrows-v absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <input type="number" id="autoSizeOffset" formControlName="autoSizeOffset" placeholder=" "
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+          <label for="autoSizeOffset"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Height Offset (px)
+          </label>
+        </div>
+      </div>
+    </section>
+
+
+    }
+
+    <!-- 2. Row & Column Settings (Style Tab) -->
+    @if(activeTab() === 'style') {
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-list text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Row & Column Settings</h3>
+      </div>
+
+      <!-- Toggles Grid -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Striped Rows</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="stripedRows" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
           </label>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Export Button</span>
+          <span class="text-sm text-gray-700">Grid Lines</span>
           <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableExport" class="sr-only peer">
+            <input type="checkbox" formControlName="showGridlines" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Row Hover Effect</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="rowHover" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -235,18 +201,9 @@
           </label>
         </div>
         <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Toolbar Config</span>
+          <span class="text-sm text-gray-700">Column Freezing</span>
           <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableConfigButton" class="sr-only peer">
-            <div
-              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-            </div>
-          </label>
-        </div>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Table Footer</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableFooter" class="sr-only peer">
+            <input type="checkbox" formControlName="enableFreeze" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -254,8 +211,46 @@
         </div>
       </div>
 
-      <!-- Right Column -->
-      <div class="space-y-4">
+      <!-- Placeholder for Future Column Manager -->
+      <div class="mt-4 p-4 border-2 border-dashed border-gray-200 rounded-lg text-center">
+        <p class="text-xs text-gray-400">Column Visibility & Logic Settings</p>
+        <button type="button" class="mt-2 text-xs text-indigo-600 font-medium hover:text-indigo-800">
+          Manage Columns (Coming Soon)
+        </button>
+      </div>
+    </section>
+
+
+    }
+
+    <!-- 3. Menu & Actions (General Tab) -->
+    @if(activeTab() === 'general') {
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-cog text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Menu & Actions</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="relative">
+          <i class="pi pi-box absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <select id="toolbarButtonMode" formControlName="toolbarButtonMode"
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0 appearance-none">
+            @for(mode of toolbarButtonModes; track mode) {
+            <option [value]="mode">{{ mode === 'iconAndText' ? 'Icon & Text' : 'Icon Only' }}</option>
+            }
+          </select>
+          <label for="toolbarButtonMode"
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Toolbar Button Style
+          </label>
+          <i
+            class="pi pi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Feature Toggles -->
         <div class="flex items-center justify-between">
           <span class="text-sm text-gray-700">Row Menu (3-dot)</span>
           <label class="relative inline-flex items-center cursor-pointer">
@@ -269,6 +264,33 @@
           <span class="text-sm text-gray-700">Header Actions</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" formControlName="enableHeaderActions" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Column Chooser</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableColumnChooser" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Config Button</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableConfigButton" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Export</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableExport" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -292,18 +314,286 @@
             </div>
           </label>
         </div>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Column Freezing</span>
+      </div>
+    </section>
+
+
+    }
+
+    <!-- 4. Theming (Style Tab) -->
+    @if(activeTab() === 'style') {
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-palette text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Theming</h3>
+      </div>
+
+      <div class="space-y-6">
+        <div class="flex items-center justify-between bg-gray-50 p-3 rounded-lg border border-gray-100">
+          <div class="flex items-center gap-2">
+            <i class="pi pi-eye-slash text-gray-400"></i>
+            <span class="text-sm font-medium text-gray-700">Enable Transparency</span>
+          </div>
           <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableFreeze" class="sr-only peer">
+            <input type="checkbox" formControlName="enableTransparency" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
           </label>
         </div>
-      </div>
-    </div>
-  </section>
 
-</form>
+        <!-- Opacity Slider (Only if Transparency Enabled) -->
+        @if(form.get('enableTransparency')?.value) {
+        <div class="bg-indigo-50 p-3 rounded-lg border border-indigo-100 space-y-2">
+          <label for="transparencyOpacity" class="flex justify-between items-center text-xs font-bold text-indigo-700">
+            <span>Opacity Level</span>
+            <span>{{ form.get('transparencyOpacity')?.value }}%</span>
+          </label>
+          <div class="relative flex items-center gap-3">
+            <i class="pi pi-sun text-indigo-400 text-xs"></i>
+            <input type="range" id="transparencyOpacity" formControlName="transparencyOpacity" min="0" max="100"
+              class="w-full h-2 bg-indigo-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+            <i class="pi pi-circle-fill text-indigo-600 text-xs shadow-sm"></i>
+          </div>
+        </div>
+        }
+
+        <div class="space-y-6">
+          <!-- Header Background -->
+          <div class="relative">
+            <i class="pi pi-palette absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+            <input type="text" formControlName="headerBackgroundColor" placeholder=" "
+              class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 pr-12 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+            <label
+              class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+              Header Background
+            </label>
+            <div
+              class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-8 rounded border border-gray-200 overflow-hidden shadow-sm">
+              <input type="color" formControlName="headerBackgroundColor"
+                class="h-10 w-10 -m-1 cursor-pointer p-0 border-0" />
+            </div>
+          </div>
+
+          <!-- Footer Background -->
+          <div class="relative">
+            <i class="pi pi-palette absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+            <input type="text" formControlName="footerBackgroundColor" placeholder=" "
+              class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 pr-12 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+            <label
+              class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+              Footer Background
+            </label>
+            <div
+              class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-8 rounded border border-gray-200 overflow-hidden shadow-sm">
+              <input type="color" formControlName="footerBackgroundColor"
+                class="h-10 w-10 -m-1 cursor-pointer p-0 border-0" />
+            </div>
+          </div>
+
+          <!-- Border Color -->
+          <div class="relative">
+            <i class="pi pi-stop absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+            <input type="text" formControlName="borderColor" placeholder=" "
+              class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 pr-12 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+            <label
+              class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+              Border Color
+            </label>
+            <div
+              class="absolute right-2 top-1/2 -translate-y-1/2 h-6 w-8 rounded border border-gray-200 overflow-hidden shadow-sm">
+              <input type="color" formControlName="borderColor" class="h-10 w-10 -m-1 cursor-pointer p-0 border-0" />
+            </div>
+          </div>
+
+          <!-- Background Image -->
+          <div class="relative">
+            <i class="pi pi-image absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+            <input type="text" formControlName="backgroundImageUrl" placeholder=" "
+              class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+            <label
+              class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+              Background Image URL
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    }
+
+    <!-- 5. Global Config (Placeholder) (General Tab) -->
+    @if(activeTab() === 'general') {
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-globe text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Global Configuration</h3>
+      </div>
+      <div class="p-4 bg-gray-50 rounded text-center">
+        <p class="text-sm text-gray-500">Global Defaults are currently active.</p>
+        <p class="text-xs text-gray-400 mt-1">Changes made here override the global settings for this specific page.</p>
+        <!-- Future: Add Global Config Manager button here -->
+      </div>
+    </section>
+    }
+
+    <!-- 6. Column Manager (Columns Tab) -->
+    @if(activeTab() === 'columns') {
+    <div class="space-y-4" formArrayName="columns" cdkDropList (cdkDropListDropped)="drop($event)">
+      @for(col of columnsArray.controls; track col.get('code')?.value) {
+      <div [formGroupName]="$index" cdkDrag
+        class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col gap-3 bg-white">
+
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <i class="pi pi-bars text-gray-300 cursor-move" cdkDragHandle></i>
+            <span class="text-xs font-mono text-gray-400 bg-gray-50 px-1 py-0.5 rounded">{{ col.get('code')?.value
+              }}</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="visible" class="sr-only peer">
+            <div
+              class="w-8 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+
+        <!-- Middle Row: Header & Width -->
+        <div class="grid grid-cols-3 gap-2">
+          <div class="col-span-2 relative">
+            <input type="text" formControlName="header" placeholder="Header Label"
+              class="w-full text-xs border-gray-300 rounded focus:border-indigo-500 focus:ring-0 px-2 py-1.5" />
+          </div>
+          <div class="relative">
+            <input type="text" formControlName="width" placeholder="Width"
+              class="w-full text-xs border-gray-300 rounded focus:border-indigo-500 focus:ring-0 px-2 py-1.5" />
+          </div>
+        </div>
+
+        <!-- Bottom Row: Type -->
+        <!-- Bottom Row: Type & Masking -->
+        <div class="space-y-2">
+          <div class="relative">
+            <select formControlName="columnType"
+              class="w-full text-xs border-gray-300 rounded focus:border-indigo-500 focus:ring-0 px-2 py-1.5 appearance-none bg-white">
+              <option value="TEXT">Text</option>
+              <option value="numeric">Numeric</option>
+              <option value="DATE">Date</option>
+              <option value="EMAIL">Email</option>
+              <option value="MOBILE">Mobile</option>
+              <option value="IMAGE">Image</option>
+              <option value="ACTION">Action</option>
+              <option value="CHECKBOX">Checkbox</option>
+            </select>
+            <i
+              class="pi pi-chevron-down absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 text-[10px] pointer-events-none"></i>
+          </div>
+
+          <!-- Masking Toggle -->
+          <div class="flex items-center gap-2">
+            <input type="checkbox" formControlName="maskEnabled" [id]="'mask-' + $index"
+              class="h-3 w-3 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+            <label [for]="'mask-' + $index" class="text-xs text-gray-600 cursor-pointer">Enable Masking</label>
+          </div>
+
+          <!-- Masking Details (Conditional) -->
+          @if (col.get('maskEnabled')?.value) {
+          <div class="p-2 bg-gray-50 rounded border border-gray-200 space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-0.5">Mask Char</label>
+                <input type="text" formControlName="maskChar" class="w-full text-xs border-gray-300 rounded px-1 py-1"
+                  maxlength="1" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-0.5">Toggle Button</label>
+                <div class="flex items-center gap-1 mt-1">
+                  <input type="checkbox" formControlName="unmaskEnabled" class="h-3 w-3 rounded border-gray-300">
+                  <span class="text-[10px] text-gray-500">Show Icon</span>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-0.5">Visible Start</label>
+                <input type="number" formControlName="visibleStart"
+                  class="w-full text-xs border-gray-300 rounded px-1 py-1" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-gray-500 mb-0.5">Visible End</label>
+                <input type="number" formControlName="visibleEnd"
+                  class="w-full text-xs border-gray-300 rounded px-1 py-1" />
+              </div>
+            </div>
+          </div>
+          }
+
+        </div>
+
+        <!-- Validation Settings -->
+        <div class="space-y-2 pt-2 border-t border-gray-100">
+          <div class="flex items-center gap-2">
+            <input type="checkbox" formControlName="validationRequired" [id]="'req-' + $index"
+              class="h-3 w-3 rounded border-gray-300 text-red-600 focus:ring-red-500">
+            <label [for]="'req-' + $index" class="text-xs text-gray-600 cursor-pointer font-medium">Required
+              Field</label>
+          </div>
+
+          <!-- Required Details -->
+          @if (col.get('validationRequired')?.value) {
+          <div class="p-2 bg-red-50 rounded border border-red-100 space-y-2">
+            <div class="grid grid-cols-2 gap-2">
+              <label class="block text-[10px] text-gray-500 mb-0.5">Error Color</label>
+              <div class="flex gap-1">
+                <input type="text" formControlName="requiredErrorColor" placeholder="Class or Hex"
+                  class="w-full text-xs border-gray-300 rounded px-1 py-1" />
+                <input type="color" formControlName="requiredErrorColor"
+                  class="h-6 w-6 p-0 border-0 rounded overflow-hidden cursor-pointer" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] text-gray-500 mb-0.5">Empty Bg</label>
+              <div class="flex gap-1">
+                <input type="text" formControlName="emptyBackgroundColor" placeholder="Class or Hex"
+                  class="w-full text-xs border-gray-300 rounded px-1 py-1" />
+                <input type="color" formControlName="emptyBackgroundColor"
+                  class="h-6 w-6 p-0 border-0 rounded overflow-hidden cursor-pointer" />
+              </div>
+            </div>
+          </div>
+
+          }
+
+          <!-- Min/Max Length -->
+          <div class="grid grid-cols-3 gap-2 mt-2">
+            <div class="col-span-1">
+              <label class="block text-[10px] text-gray-400 mb-0.5">Min Len</label>
+              <input type="number" formControlName="validationMinLength"
+                class="w-full text-xs border-gray-300 rounded px-1 py-1" placeholder="Min" />
+            </div>
+            <div class="col-span-1">
+              <label class="block text-[10px] text-gray-400 mb-0.5">Max Len</label>
+              <input type="number" formControlName="validationMaxLength"
+                class="w-full text-xs border-gray-300 rounded px-1 py-1" placeholder="Max" />
+            </div>
+            <div class="col-span-1">
+              <label class="block text-[10px] text-gray-400 mb-0.5">Len Err</label>
+              <div class="flex gap-1">
+                <input type="text" formControlName="lengthErrorColor" placeholder="Class/Hex"
+                  class="w-full text-xs border-gray-300 rounded px-1 py-1" />
+                <input type="color" formControlName="lengthErrorColor"
+                  class="h-6 w-6 p-0 border-0 rounded overflow-hidden cursor-pointer" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      }
+    </div>
+    }
+
+  </form>
+</div>
 }

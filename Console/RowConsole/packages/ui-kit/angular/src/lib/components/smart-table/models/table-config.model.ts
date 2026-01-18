@@ -106,6 +106,7 @@ export interface StyleConfig {
   footerBackgroundColor?: string;
   borderColor?: string;
   enableTransparency: boolean;
+  transparencyOpacity?: number; // 0-100
   backgroundImageUrl?: string; // Optional URL for background image
 }
 
@@ -145,6 +146,15 @@ export interface MaskConfig {
   visibleStart?: number;
   visibleEnd?: number;
   maskChar?: string;
+}
+
+export interface ValidationConfig {
+  required?: boolean;
+  requiredErrorColor?: string; // e.g., 'bg-red-50' or hex
+  emptyBackgroundColor?: string; // e.g., 'bg-yellow-50'
+  minLength?: number;
+  maxLength?: number;
+  lengthErrorColor?: string;
 }
 
 // New Validation Interfaces
@@ -199,6 +209,8 @@ export interface Column {
   name: string;
   code: string;
   display: string;
+  header?: string; // Customizable header label
+  visible?: boolean; // Visibility toggle
   columnType?: 'CHECKBOX' | 'ACTION' | 'MOBILE' | 'EMAIL' | 'TEXT' | 'IMAGE' | 'DATE' | 'numeric';
   imageConfig?: ImageConfig;
   width?: string;
@@ -213,6 +225,7 @@ export interface Column {
   cardRow?: boolean;
   listRow?: boolean;
   mask?: MaskConfig;
+  validation?: ValidationConfig; // New property for validation
   isRequired?: RequiredValidation;
   requiredMinLength?: number;
   mobileValidation?: MobileValidation;

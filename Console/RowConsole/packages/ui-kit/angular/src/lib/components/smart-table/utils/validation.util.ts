@@ -4,8 +4,8 @@ import { checkEmail } from './email-validation.util';
 import { checkGeneric } from './generic-validation.util';
 
 export interface ValidationState {
-  isValid: boolean;
-  style: ValidationStyle | null;
+    isValid: boolean;
+    style: ValidationStyle | null;
 }
 
 /**
@@ -42,13 +42,53 @@ function checkRequired(value: any, config: RequiredValidation): ValidationState 
 export function getValidationState(value: any, column: Column, fieldCode: string): ValidationState {
     // Find validation rules specific to this field (from the 'validations' array)
     const fieldValidationConfig = column.validations?.find(v => v.code === fieldCode);
-    
+
     // Find validation rules at the top level of the column config
     const columnLevelIsRequired = (column.code === fieldCode) ? column.isRequired : undefined;
     const columnLevelEmailValidation = (column.code === fieldCode) ? column.emailValidation : undefined;
     const columnLevelGenericValidation = (column.code === fieldCode) ? column.genericValidation : undefined;
-    
-    // --- Check for Required Validation ---
+
+    // --- Check for NEW ValidationConfig (User Configurable) ---
+    if (column.validation && column.code === fieldCode) {
+        const valConfig = column.validation;
+        const valValue = value === null || value === undefined ? '' : String(value);
+
+        // Required Validaiton
+        if (valConfig.required && valValue.trim() === '') {
+            return {
+                isValid: false,
+                style: {
+                    bgcolor: valConfig.emptyBackgroundColor, // e.g., 'bg-red-50'
+                    textcolor: valConfig.requiredErrorColor, // e.g., 'text-red-600'
+                    tooltip: 'This field is required'
+                }
+            };
+        }
+
+        // Length Validation
+        if (valValue.trim() !== '') {
+            if (valConfig.minLength !== undefined && valConfig.minLength !== null && valValue.length < valConfig.minLength) {
+                return {
+                    isValid: false,
+                    style: {
+                        textcolor: valConfig.lengthErrorColor,
+                        tooltip: `Minimum length is ${valConfig.minLength}`
+                    }
+                };
+            }
+            if (valConfig.maxLength !== undefined && valConfig.maxLength !== null && valValue.length > valConfig.maxLength) {
+                return {
+                    isValid: false,
+                    style: {
+                        textcolor: valConfig.lengthErrorColor,
+                        tooltip: `Maximum length is ${valConfig.maxLength}`
+                    }
+                };
+            }
+        }
+    }
+
+    // --- Check for Required Validation (Legacy/Code-based) ---
     const isRequiredConfig = fieldValidationConfig?.isRequired || columnLevelIsRequired;
     if (isRequiredConfig) {
         const result = checkRequired(value, isRequiredConfig);
@@ -68,8 +108,6 @@ export function getValidationState(value: any, column: Column, fieldCode: string
         const result = checkGeneric(value, genericValidationConfig);
         if (result) return result;
     }
-
-    // TODO: Add other validation checks like mobile here.
 
     return { isValid: true, style: null };
 }

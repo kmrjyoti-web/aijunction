@@ -352,4 +352,24 @@ export class TableViewComponent {
 
     return { isValid: true, style: null };
   }
+
+  isHexColor(value: string | undefined | null): boolean {
+    if (!value) return false;
+    return value.startsWith('#') || value.startsWith('rgb');
+  }
+
+  getCellClass(row: any, column: Column): string {
+    const parts = [this.densityClass()];
+    const val = this.getCellValidation(row, column);
+
+    if (!val.isValid && val.style) {
+      if (!this.isHexColor(val.style.bgcolor)) {
+        parts.push(val.style.bgcolor || '');
+      }
+      if (!this.isHexColor(val.style.textcolor)) {
+        parts.push(val.style.textcolor || '');
+      }
+    }
+    return parts.filter(p => p && p.trim().length > 0).join(' ');
+  }
 }

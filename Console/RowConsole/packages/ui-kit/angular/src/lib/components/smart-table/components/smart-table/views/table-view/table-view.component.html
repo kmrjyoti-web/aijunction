@@ -1,6 +1,7 @@
 <div class="h-full overflow-auto border-x border-b border-gray-300">
-  <table class="min-w-full border-collapse bg-white">
-    <thead class="sticky top-0 z-20 bg-gray-100">
+  <table class="min-w-full border-collapse" [class.bg-white]="!styleConfig()?.enableTransparency">
+    <thead class="sticky top-0 z-20" [class.bg-gray-100]="!styleConfig()?.enableTransparency"
+      [style.background-color]="styleConfig()?.enableTransparency ? 'rgba(255, 255, 255, ' + ((styleConfig()?.transparencyOpacity ?? 90) / 100) + ')' : null">
       <tr>
       <tr>
         @for(col of columns(); track col.code; let i = $index; let isLast = $last) {
@@ -44,7 +45,7 @@
             </div>
             } @else {
             <div class="flex items-center">
-              <span>{{ col.name }}</span>
+              <span>{{ col.header || col.name }}</span>
               @if (sortColumn() === col.code) {
               <i class="pi ml-2 text-xs" [class.pi-sort-amount-up-alt]="sortDirection() === 'asc'"
                 [class.pi-sort-amount-down]="sortDirection() === 'desc'"></i>
@@ -76,23 +77,28 @@
         class="transition-colors duration-150 cursor-pointer relative group border-b"
         [class.border-gray-200]="!styleConfig()?.borderColor" [style.border-color]="styleConfig()?.borderColor"
         (click)="onRowClick(row)" (contextmenu)="onRowContextMenu($event, row)"
-        [class.odd:bg-gray-50]="stripedRows() && !isRowActive" [class.hover:bg-gray-100]="rowHover() && !isRowActive"
+        [class.odd:bg-gray-50]="stripedRows() && !isRowActive && !styleConfig()?.enableTransparency"
+        [class.hover:bg-gray-100]="rowHover() && !isRowActive && !styleConfig()?.enableTransparency"
+        [class.hover:bg-white/10]="rowHover() && !isRowActive && styleConfig()?.enableTransparency"
         [class.z-10]="isRowActive" [class.border-y-2]="isRowActive" [class.border-y-indigo-400]="isRowActive"
         [class.-my-px]="isRowActive">
         @for(col of columns(); track col.code; let colIndex = $index; let isLast = $last) {
         <td class="whitespace-nowrap p-1.5 border-l transition-all duration-150"
           [class.border-gray-200]="!styleConfig()?.borderColor" [style.border-color]="styleConfig()?.borderColor"
-          [class]="densityClass()" [class.font-bold]="isRowActive"
+          [class.font-bold]="isRowActive"
           [class.!text-sm]="isRowActive && (density() === 'compact' || density() === 'ultra-compact')"
           [class.!text-base]="isRowActive && density() === 'cozy'"
           [class.!text-lg]="isRowActive && density() === 'comfortable'"
           [class.border-r]="isLast || col.frozen || showGridlines()" [class.sticky]="col.frozen"
           [class.z-10]="col.frozen" [style.left]="col.frozen ? columnOffsets()[colIndex] : null"
-          [class.bg-white]="col.frozen && !selectedIds().has(row[primaryKey()])"
-          [class.group-hover:bg-gray-100]="col.frozen && rowHover() && !selectedIds().has(row[primaryKey()])"
+          [class.bg-white]="col.frozen && !selectedIds().has(row[primaryKey()]) && getCellValidation(row, col).isValid"
+          [class.group-hover:bg-gray-100]="col.frozen && rowHover() && !selectedIds().has(row[primaryKey()]) && getCellValidation(row, col).isValid"
           [class.bg-transparent]="isRowActive" [class.text-center]="col.align === 'center'"
-          [class.text-right]="col.align === 'right'"
-          [class.text-left]="col.align !== 'center' && col.align !== 'right'">
+          [class.text-right]="col.align === 'right'" [class.text-left]="col.align !== 'center' && col.align !== 'right'"
+          [class]="getCellClass(row, col)"
+          [style.background-color]="isHexColor(getCellValidation(row, col).style?.bgcolor) ? getCellValidation(row, col).style?.bgcolor : null"
+          [style.color]="isHexColor(getCellValidation(row, col).style?.textcolor) ? getCellValidation(row, col).style?.textcolor : null"
+          [attr.title]="getCellValidation(row, col).isValid ? null : getCellValidation(row, col).style?.tooltip">
           @switch (col.columnType) {
           @case('CHECKBOX') {
           @if (enableMultiSelect()) {
@@ -129,6 +135,35 @@
           @case('DATE') {
           <span>{{ row[col.code] | date:'mediumDate' }}</span>
           }
+          @case('MOBILE') {
+          <div class="flex items-center gap-2 group/mobile">
+            <span class="truncate">{{ row[col.code] }}</span>
+            @if(row[col.code]) {
+            <div class="flex items-center gap-1 opacity-0 group-hover/mobile:opacity-100 transition-opacity">
+              <a [href]="'tel:' + row[col.code]" (click)="$event.stopPropagation()"
+                class="p-1 rounded-full text-green-600 hover:bg-green-50" title="Call">
+                <i class="pi pi-phone text-xs"></i>
+              </a>
+              <a [href]="'https://wa.me/' + row[col.code]" target="_blank" (click)="$event.stopPropagation()"
+                class="p-1 rounded-full text-green-500 hover:bg-green-50" title="WhatsApp">
+                <i class="pi pi-whatsapp text-xs"></i>
+              </a>
+            </div>
+            }
+          </div>
+          }
+          @case('EMAIL') {
+          <div class="flex items-center gap-2 group/email">
+            <span class="truncate">{{ row[col.code] }}</span>
+            @if(row[col.code]) {
+            <a [href]="'mailto:' + row[col.code]" (click)="$event.stopPropagation()"
+              class="opacity-0 group-hover/email:opacity-100 transition-opacity p-1 rounded-full text-indigo-600 hover:bg-indigo-50"
+              title="Send Email">
+              <i class="pi pi-envelope text-xs"></i>
+            </a>
+            }
+          </div>
+          }
           @default {
           @if (col.cellTemplate) {
           @if (density() === 'ultra-compact') {
@@ -162,7 +197,23 @@
           </div>
           }
           } @else {
+          @if (col.mask?.enabled) {
+          <div class="relative group/mask" [class.pr-6]="col.mask?.unmaskEnabled && row[col.code]">
+            <span>
+              {{ isUnmasked(row[primaryKey()], col.code) ? row[col.code] : maskString(row[col.code], col.mask!) }}
+            </span>
+            @if (col.mask?.unmaskEnabled && row[col.code]) {
+            <button (click)="$event.stopPropagation(); toggleMask(row[primaryKey()], col.code)"
+              class="absolute right-0 top-1/2 -translate-y-1/2 p-0.5 rounded-full hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-opacity opacity-0 group-hover/mask:opacity-100 focus:opacity-100"
+              [title]="isUnmasked(row[primaryKey()], col.code) ? 'Hide' : 'Show'">
+              <i class="pi text-xs" [class.pi-eye]="!isUnmasked(row[primaryKey()], col.code)"
+                [class.pi-eye-slash]="isUnmasked(row[primaryKey()], col.code)"></i>
+            </button>
+            }
+          </div>
+          } @else {
           <span>{{ row[col.code] }}</span>
+          }
           }
           }
           }
@@ -180,7 +231,8 @@
       }
     </tbody>
     @if(footerConfig()?.enabled && footerData(); as data) {
-    <tfoot class="sticky bottom-0 z-20 bg-gray-100">
+    <tfoot class="sticky bottom-0 z-20" [class.bg-gray-100]="!styleConfig()?.enableTransparency"
+      [style.background-color]="styleConfig()?.enableTransparency ? 'rgba(255, 255, 255, ' + ((styleConfig()?.transparencyOpacity ?? 90) / 100) + ')' : null">
       <tr>
         @for(col of columns(); track col.code; let i = $index; let isLast = $last) {
         <td [style.left]="col.frozen ? columnOffsets()[i] : null"

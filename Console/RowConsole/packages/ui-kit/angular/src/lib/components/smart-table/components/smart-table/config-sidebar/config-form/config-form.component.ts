@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, output, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, output, OnDestroy, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { DragDropModule, CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TableConfig, DataStrategy } from '../../../../models/table-config.model';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,7 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 @Component({
   selector: 'app-config-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
   templateUrl: './config-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -20,11 +21,34 @@ export class ConfigFormComponent implements OnDestroy {
   form: FormGroup;
   private destroy$ = new Subject<void>();
 
+  get columnsArray(): FormArray {
+    return this.form.get('columns') as FormArray;
+  }
+
+  drop(event: CdkDragDrop<any[]>) {
+    const previousIndex = event.previousIndex;
+    const currentIndex = event.currentIndex;
+
+    if (previousIndex === currentIndex) return;
+
+    const dir = currentIndex > previousIndex ? 1 : -1;
+    const item = this.columnsArray.at(previousIndex);
+
+    // Move in FormArray without emitting intermediate states
+    this.columnsArray.removeAt(previousIndex, { emitEvent: false });
+    this.columnsArray.insert(currentIndex, item, { emitEvent: false });
+
+    // Trigger update
+    this.form.updateValueAndValidity();
+  }
+
   readonly dataStrategies: DataStrategy[] = ['SYNC', 'ONLINE_FIRST', 'OFFLINE_FIRST', 'HYBRID'];
   readonly pagingModes = ['paginator', 'infinite'];
   readonly infiniteScrollBehaviors = ['append', 'replace'];
   readonly paginatorPositions = ['top', 'bottom', 'both'];
   readonly toolbarButtonModes = ['iconAndText', 'iconOnly'];
+
+  activeTab = signal<'general' | 'columns' | 'style'>('general');
 
   constructor() {
     this.form = this.fb.group({
@@ -52,11 +76,15 @@ export class ConfigFormComponent implements OnDestroy {
       footerBackgroundColor: ['transparent'],
       borderColor: ['#e5e7eb'],
       enableTransparency: [false],
+      transparencyOpacity: [90], // Default 90%
       backgroundImageUrl: [''],
-      autoSizeOffset: [0]
+      autoSizeOffset: [0],
+      columns: this.fb.array([])
     });
 
+    // Add effect for initial load
     effect(() => {
+      // ... logic handled inside effect below ...
       const currentConfig = this.config();
       if (currentConfig) {
         this.form.patchValue({
@@ -84,9 +112,68 @@ export class ConfigFormComponent implements OnDestroy {
           footerBackgroundColor: currentConfig.config.styleConfig?.footerBackgroundColor ?? 'transparent',
           borderColor: currentConfig.config.styleConfig?.borderColor ?? 'var(--marg-border-color)',
           enableTransparency: currentConfig.config.styleConfig?.enableTransparency ?? false,
+          transparencyOpacity: currentConfig.config.styleConfig?.transparencyOpacity ?? 90,
           backgroundImageUrl: currentConfig.config.styleConfig?.backgroundImageUrl ?? '',
           autoSizeOffset: currentConfig.config.sizerConfig?.autoSizeOffset ?? 0
         }, { emitEvent: false }); // Prevent feedback loop with valueChanges
+
+        // Patch Columns FormArray (Sync in-place to preserve focus)
+        const columnsArray = this.form.get('columns') as FormArray;
+        const newCols = currentConfig.columns || [];
+
+        // 1. Remove excess controls
+        while (columnsArray.length > newCols.length) {
+          columnsArray.removeAt(columnsArray.length - 1, { emitEvent: false });
+        }
+
+        // 2. Add missing controls
+        while (columnsArray.length < newCols.length) {
+          columnsArray.push(this.fb.group({
+            code: [''],
+            header: [''],
+            visible: [true],
+            width: [''],
+            columnType: [''],
+            // Masking
+            maskEnabled: [false],
+            maskChar: ['*'],
+            visibleStart: [0],
+            visibleEnd: [4],
+            unmaskEnabled: [false],
+            // Validation
+            validationRequired: [false],
+            requiredErrorColor: ['bg-red-50 text-red-600'],
+            emptyBackgroundColor: ['bg-yellow-50'],
+            validationMinLength: [null],
+            validationMaxLength: [null],
+            lengthErrorColor: ['bg-orange-50 text-orange-600']
+          }), { emitEvent: false });
+        }
+
+        // 3. Update values
+        newCols.forEach((col, index) => {
+          const control = columnsArray.at(index);
+          control.patchValue({
+            code: col.code,
+            header: col.header,
+            visible: col.visible ?? true,
+            width: col.width ?? '',
+            columnType: col.columnType,
+            // Masking
+            maskEnabled: col.mask?.enabled ?? false,
+            maskChar: col.mask?.maskChar ?? '*',
+            visibleStart: col.mask?.visibleStart ?? 0,
+            visibleEnd: col.mask?.visibleEnd ?? 4,
+            unmaskEnabled: col.mask?.unmaskEnabled ?? false,
+            // Validation
+            validationRequired: col.validation?.required ?? false,
+            requiredErrorColor: col.validation?.requiredErrorColor ?? 'bg-red-50 text-red-600',
+            emptyBackgroundColor: col.validation?.emptyBackgroundColor ?? 'bg-yellow-50',
+            validationMinLength: col.validation?.minLength ?? null,
+            validationMaxLength: col.validation?.maxLength ?? null,
+            lengthErrorColor: col.validation?.lengthErrorColor ?? 'bg-orange-50 text-orange-600'
+          }, { emitEvent: false });
+        });
       }
     });
 
@@ -146,12 +233,14 @@ export class ConfigFormComponent implements OnDestroy {
         if (!updatedConfig.config.styleConfig) {
           updatedConfig.config.styleConfig = {
             enableTransparency: formValue.enableTransparency,
+            transparencyOpacity: formValue.transparencyOpacity,
             headerBackgroundColor: formValue.headerBackgroundColor,
             footerBackgroundColor: formValue.footerBackgroundColor,
             backgroundImageUrl: formValue.backgroundImageUrl
           };
         } else {
           updatedConfig.config.styleConfig.enableTransparency = formValue.enableTransparency;
+          updatedConfig.config.styleConfig.transparencyOpacity = formValue.transparencyOpacity;
           updatedConfig.config.styleConfig.headerBackgroundColor = formValue.headerBackgroundColor;
           updatedConfig.config.styleConfig.footerBackgroundColor = formValue.footerBackgroundColor;
           updatedConfig.config.styleConfig.borderColor = formValue.borderColor;
@@ -175,6 +264,43 @@ export class ConfigFormComponent implements OnDestroy {
           } as any;
         } else {
           updatedConfig.config.sizerConfig.autoSizeOffset = Number(formValue.autoSizeOffset);
+        }
+
+        // Map Columns back
+        if (formValue.columns && Array.isArray(formValue.columns)) {
+          const newColumns: any[] = [];
+          formValue.columns.forEach((colForm: any, index: number) => {
+            const originalCol = updatedConfig.columns.find(c => c.code === colForm.code);
+            if (originalCol) {
+              newColumns.push({
+                ...originalCol, // Preserve other properties like sortable, filterable
+                index: index,
+                header: colForm.header,
+                visible: colForm.visible,
+                width: colForm.width,
+                columnType: colForm.columnType,
+                mask: {
+                  enabled: colForm.maskEnabled,
+                  maskChar: colForm.maskChar,
+                  visibleStart: Number(colForm.visibleStart),
+                  visibleEnd: Number(colForm.visibleEnd),
+                  unmaskEnabled: colForm.unmaskEnabled
+                },
+                validation: {
+                  required: colForm.validationRequired,
+                  requiredErrorColor: colForm.requiredErrorColor,
+                  emptyBackgroundColor: colForm.emptyBackgroundColor,
+                  minLength: colForm.validationMinLength ? Number(colForm.validationMinLength) : undefined,
+                  maxLength: colForm.validationMaxLength ? Number(colForm.validationMaxLength) : undefined,
+                  lengthErrorColor: colForm.lengthErrorColor
+                }
+              });
+            } else {
+              console.warn(`[ConfigForm] Column with code ${colForm.code} not found in current config.`);
+            }
+          });
+          updatedConfig.columns = newColumns;
+          console.log('[ConfigForm] Emitting updated config. Columns with mask:', newColumns.filter(c => c.mask?.enabled).map(c => c.code));
         }
 
         this.configChange.emit(updatedConfig);

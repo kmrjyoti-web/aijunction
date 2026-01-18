@@ -1,14 +1,14 @@
 @if (config(); as cfg) {
 <div class="h-full flex flex-col text-sm transition-colors duration-300"
-  [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
-  [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency"
+  [class.bg-white]="!cfg.config.styleConfig?.enableTransparency && !cfg.config.styleConfig?.backgroundImageUrl"
+  [style.background-color]="cfg.config.styleConfig?.enableTransparency ? 'rgba(255, 255, 255, ' + ((cfg.config.styleConfig?.transparencyOpacity ?? 90) / 100) + ')' : null"
   [style.background-image]="cfg.config.styleConfig?.backgroundImageUrl ? 'url(' + cfg.config.styleConfig?.backgroundImageUrl + ')' : null"
   [style.background-size]="'cover'" [style.background-position]="'center'">
 
   <!-- Header Section -->
   <header class="flex-shrink-0 border-b border-gray-200 shadow-sm relative z-40 transition-colors duration-300"
     [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
-    [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency">
+    [style.background-color]="cfg.config.styleConfig?.enableTransparency ? 'rgba(255, 255, 255, ' + ((cfg.config.styleConfig?.transparencyOpacity ?? 90) / 100) + ')' : null">
     <!-- Main Toolbar Row -->
     <div class="flex flex-nowrap items-center justify-between gap-4 p-2">
 
@@ -401,7 +401,7 @@
   !cfg.config.paginatorPosition)) {
   <footer class="flex-shrink-0 border-t border-gray-300 transition-colors duration-300"
     [class.bg-white]="!cfg.config.styleConfig?.enableTransparency"
-    [class.bg-transparent]="cfg.config.styleConfig?.enableTransparency">
+    [style.background-color]="cfg.config.styleConfig?.enableTransparency ? 'rgba(255, 255, 255, ' + ((cfg.config.styleConfig?.transparencyOpacity ?? 90) / 100) + ')' : null">
     <app-paginator [currentPage]="currentPage()" [pageSize]="pageSize()" [totalRecords]="totalRecords()"
       [autoSizingEnabled]="autoSizingEnabled()" [infiniteScroll]="isInfiniteScroll()"
       [infiniteScrollBehavior]="cfg.config.infiniteScrollBehavior ?? 'append'" [currentRecordCount]="data().length"

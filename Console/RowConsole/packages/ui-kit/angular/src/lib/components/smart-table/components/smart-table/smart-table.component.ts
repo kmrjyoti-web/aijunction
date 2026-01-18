@@ -405,12 +405,28 @@ export class SmartTableComponent {
     // This effect MUST run before the persistence effect to set up columns correctly.
     effect(() => {
       const all = [...this.config().columns].sort((a, b) => a.index - b.index);
+      // console.log('[SmartTable] All Columns:', all);
       this.allTableColumns.set(all);
 
-      const defaultVisibleCodes = all.filter(c => c.display === 'table_cell').map(c => c.code);
-      const visibleCodes = new Set(savedState?.visibleColumnCodes ?? defaultVisibleCodes);
+      const defaultVisibleCodes = new Set(all.filter(c => c.display === 'table_cell').map(c => c.code));
+      const savedVisibleCodes = savedState?.visibleColumnCodes ? new Set(savedState.visibleColumnCodes) : null;
 
-      this.visibleTableColumns.set(all.filter(c => visibleCodes.has(c.code)));
+      const visibleCols = all.filter(c => {
+        // 1. If explicit visibility is set in config (e.g. via Column Manager), use it.
+        if (c.visible !== undefined) {
+          // console.log(`[SmartTable] Column ${c.code} explicit visibility:`, c.visible);
+          return c.visible;
+        }
+        // 2. Fallback to saved state if available
+        if (savedVisibleCodes) {
+          return savedVisibleCodes.has(c.code);
+        }
+        // 3. Fallback to default logic
+        return defaultVisibleCodes.has(c.code);
+      });
+
+      console.log('[SmartTable] Config Update. Computed Visible Cols:', visibleCols.length, visibleCols.map(c => c.code));
+      this.visibleTableColumns.set(visibleCols);
     }, { allowSignalWrites: true });
 
     this.searchSubject.pipe(
