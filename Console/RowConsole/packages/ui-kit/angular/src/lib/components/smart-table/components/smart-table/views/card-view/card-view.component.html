@@ -35,22 +35,28 @@
           [class.h-9]="density() === 'compact'" [class.w-9]="density() === 'compact'">
           <span class="font-semibold text-gray-500" [class.text-base]="density() !== 'compact'"
             [class.text-sm]="density() === 'compact'">
-            @if(cardHeaderColumn(); as headerCol) {
-            {{ (item[headerCol.code]?.[0] || 'A') }}
+            @if(cardHeaderColumns(); as headers) {
+            @if(headers[0]; as h1) {
+            {{ (item[h1.code]?.[0] || 'A') | uppercase }}
+            } @else {
+            A
+            }
             }
           </span>
         </div>
         }
         }
         <div class="min-w-0">
-          @if(cardHeaderColumn(); as headerCol) {
+          @if(cardHeaderColumns(); as headers) {
+          @if(headers[0]; as h1) {
           <h3 class="font-bold text-gray-900 truncate" [class.text-base]="density() === 'comfortable'"
-            [class.text-sm]="density() === 'cozy' || density() === 'compact'">{{ item[headerCol.code] }}</h3>
+            [class.text-sm]="density() === 'cozy' || density() === 'compact'">{{ item[h1.code] }}</h3>
           }
-          @if(cardHeader1Column(); as header1Col) {
+          @for(h of headers.slice(1); track h.code) {
           <p class="text-gray-600 truncate" [class]="densityClass()">
-            {{ item[header1Col.code] || 'N/A' }}
+            {{ item[h.code] || 'N/A' }}
           </p>
+          }
           }
         </div>
       </div>
@@ -91,11 +97,34 @@
     </div>
 
     <!-- Footer -->
-    @if (rowActions() && rowActions()!.length > 0) {
+    @if ((rowActions() && rowActions()!.length > 0) || footerActionColumns().length > 0) {
     <footer class="border-t border-gray-200 bg-gray-50 flex items-center justify-start"
       [class.p-2]="density() !== 'compact'" [class.p-1.5]="density() === 'compact'">
       <!-- Row Actions -->
       <div class="flex items-center gap-1">
+        <!-- Configured Footer Actions -->
+        @for(col of footerActionColumns(); track col.code) {
+        <!-- Mobile Actions (Automatic) -->
+        @if(col.columnType === 'MOBILE' && item[col.code]) {
+        <a [href]="'tel:' + item[col.code]" (click)="$event.stopPropagation()"
+          class="p-1.5 rounded-full text-green-600 hover:bg-green-50 transition-colors" title="Call">
+          <i class="pi pi-phone text-sm"></i>
+        </a>
+        <a [href]="'https://wa.me/' + item[col.code]" target="_blank" (click)="$event.stopPropagation()"
+          class="p-1.5 rounded-full text-green-500 hover:bg-green-50 transition-colors" title="WhatsApp">
+          <i class="pi pi-whatsapp text-sm"></i>
+        </a>
+        }
+
+        <!-- Email Actions (Automatic) -->
+        @if(col.columnType === 'EMAIL' && item[col.code]) {
+        <a [href]="'mailto:' + item[col.code]" (click)="$event.stopPropagation()"
+          class="p-1.5 rounded-full text-indigo-600 hover:bg-indigo-50 transition-colors" title="Email">
+          <i class="pi pi-envelope text-sm"></i>
+        </a>
+        }
+        }
+
         @if(rowActions(); as actions) {
         @for(action of actions; track action.action) {
         <button (click)="$event.stopPropagation(); rowAction.emit({ action: action.action, row: item })"

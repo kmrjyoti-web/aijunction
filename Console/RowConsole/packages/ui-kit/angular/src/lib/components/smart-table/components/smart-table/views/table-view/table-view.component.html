@@ -136,30 +136,78 @@
           <span>{{ row[col.code] | date:'mediumDate' }}</span>
           }
           @case('MOBILE') {
-          <div class="flex items-center gap-2 group/mobile">
-            <span class="truncate">{{ row[col.code] }}</span>
+          <div class="flex items-center justify-between gap-2 group/mobile w-full">
+            <!-- Content (Masked or Unmasked) -->
+            <div class="truncate relative">
+              @if (col.mask?.enabled) {
+              <span>
+                {{ isUnmasked(row[primaryKey()], col.code) ? row[col.code] : maskString(row[col.code], col.mask!) }}
+              </span>
+              @if (col.mask?.unmaskEnabled && row[col.code]) {
+              <button (click)="$event.stopPropagation(); toggleMask(row[primaryKey()], col.code)"
+                class="ml-2 p-0.5 rounded-full hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-opacity opacity-0 group-hover/mobile:opacity-100 focus:opacity-100 inline-flex"
+                [title]="isUnmasked(row[primaryKey()], col.code) ? 'Hide' : 'Show'">
+                <i class="pi text-xs" [class.pi-eye]="!isUnmasked(row[primaryKey()], col.code)"
+                  [class.pi-eye-slash]="isUnmasked(row[primaryKey()], col.code)"></i>
+              </button>
+              }
+              } @else {
+              <span>{{ row[col.code] }}</span>
+              }
+            </div>
+
+            <!-- Actions (Right Aligned) -->
             @if(row[col.code]) {
             <div class="flex items-center gap-1 opacity-0 group-hover/mobile:opacity-100 transition-opacity">
+              @if(col.mobileConfig?.showCall) {
               <a [href]="'tel:' + row[col.code]" (click)="$event.stopPropagation()"
                 class="p-1 rounded-full text-green-600 hover:bg-green-50" title="Call">
                 <i class="pi pi-phone text-xs"></i>
               </a>
+              }
+              @if(col.mobileConfig?.showMessage) {
+              <a [href]="'sms:' + row[col.code]" (click)="$event.stopPropagation()"
+                class="p-1 rounded-full text-blue-600 hover:bg-blue-50" title="SMS">
+                <i class="pi pi-envelope text-xs"></i>
+              </a>
+              }
+              @if(col.mobileConfig?.showWhatsapp) {
               <a [href]="'https://wa.me/' + row[col.code]" target="_blank" (click)="$event.stopPropagation()"
                 class="p-1 rounded-full text-green-500 hover:bg-green-50" title="WhatsApp">
                 <i class="pi pi-whatsapp text-xs"></i>
               </a>
+              }
             </div>
             }
           </div>
           }
           @case('EMAIL') {
-          <div class="flex items-center gap-2 group/email">
-            <span class="truncate">{{ row[col.code] }}</span>
-            @if(row[col.code]) {
+          <div class="flex items-center justify-between gap-2 group/email w-full">
+            <!-- Content (Masked or Unmasked) -->
+            <div class="truncate relative">
+              @if (col.mask?.enabled) {
+              <span>
+                {{ isUnmasked(row[primaryKey()], col.code) ? row[col.code] : maskString(row[col.code], col.mask!) }}
+              </span>
+              @if (col.mask?.unmaskEnabled && row[col.code]) {
+              <button (click)="$event.stopPropagation(); toggleMask(row[primaryKey()], col.code)"
+                class="ml-2 p-0.5 rounded-full hover:bg-gray-200 text-gray-400 hover:text-gray-600 transition-opacity opacity-0 group-hover/email:opacity-100 focus:opacity-100 inline-flex"
+                [title]="isUnmasked(row[primaryKey()], col.code) ? 'Hide' : 'Show'">
+                <i class="pi text-xs" [class.pi-eye]="!isUnmasked(row[primaryKey()], col.code)"
+                  [class.pi-eye-slash]="isUnmasked(row[primaryKey()], col.code)"></i>
+              </button>
+              }
+              } @else {
+              <span>{{ row[col.code] }}</span>
+              }
+            </div>
+
+            <!-- Actions (Right Aligned) -->
+            @if(row[col.code] && col.emailConfig?.showAction) {
             <a [href]="'mailto:' + row[col.code]" (click)="$event.stopPropagation()"
               class="opacity-0 group-hover/email:opacity-100 transition-opacity p-1 rounded-full text-indigo-600 hover:bg-indigo-50"
               title="Send Email">
-              <i class="pi pi-envelope text-xs"></i>
+              <i class="pi pi-send text-xs"></i> <!-- Changed from envelope to send for better distinction -->
             </a>
             }
           </div>

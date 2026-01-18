@@ -140,6 +140,14 @@ export class ConfigFormComponent implements OnDestroy {
             visibleStart: [0],
             visibleEnd: [4],
             unmaskEnabled: [false],
+            // Mobile Config
+            mobileShowCall: [false],
+            mobileShowMessage: [false],
+            mobileShowWhatsapp: [false],
+            // Email Config
+            emailShowAction: [false],
+            // Card View Config
+            cardPosition: ['none'],
             // Validation
             validationRequired: [false],
             requiredErrorColor: ['bg-red-50 text-red-600'],
@@ -165,6 +173,18 @@ export class ConfigFormComponent implements OnDestroy {
             visibleStart: col.mask?.visibleStart ?? 0,
             visibleEnd: col.mask?.visibleEnd ?? 4,
             unmaskEnabled: col.mask?.unmaskEnabled ?? false,
+            // Mobile Config
+            mobileShowCall: col.mobileConfig?.showCall ?? false,
+            mobileShowMessage: col.mobileConfig?.showMessage ?? false,
+            mobileShowWhatsapp: col.mobileConfig?.showWhatsapp ?? false,
+            // Email Config
+            emailShowAction: col.emailConfig?.showAction ?? false,
+            // Card View Config
+            cardPosition: col.cardViewConfig?.position ?? 'none',
+            cardFooterCall: col.cardViewConfig?.footerActions?.showCall ?? false,
+            cardFooterEmail: col.cardViewConfig?.footerActions?.showEmail ?? false,
+            cardFooterWhatsapp: col.cardViewConfig?.footerActions?.showWhatsapp ?? false,
+            cardFooterDetail: col.cardViewConfig?.footerActions?.showDetail ?? false,
             // Validation
             validationRequired: col.validation?.required ?? false,
             requiredErrorColor: col.validation?.requiredErrorColor ?? 'bg-red-50 text-red-600',
@@ -285,6 +305,23 @@ export class ConfigFormComponent implements OnDestroy {
                   visibleStart: Number(colForm.visibleStart),
                   visibleEnd: Number(colForm.visibleEnd),
                   unmaskEnabled: colForm.unmaskEnabled
+                },
+                mobileConfig: {
+                  showCall: colForm.mobileShowCall,
+                  showMessage: colForm.mobileShowMessage,
+                  showWhatsapp: colForm.mobileShowWhatsapp
+                },
+                emailConfig: {
+                  showAction: colForm.emailShowAction
+                },
+                cardViewConfig: {
+                  position: colForm.cardPosition,
+                  footerActions: {
+                    showCall: colForm.cardFooterCall,
+                    showEmail: colForm.cardFooterEmail,
+                    showWhatsapp: colForm.cardFooterWhatsapp,
+                    showDetail: colForm.cardFooterDetail
+                  }
                 },
                 validation: {
                   required: colForm.validationRequired,

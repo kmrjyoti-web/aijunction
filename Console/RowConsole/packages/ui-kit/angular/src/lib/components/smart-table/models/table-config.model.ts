@@ -148,6 +148,16 @@ export interface MaskConfig {
   maskChar?: string;
 }
 
+export interface MobileConfig {
+  showCall: boolean;
+  showMessage: boolean;
+  showWhatsapp: boolean;
+}
+
+export interface EmailConfig {
+  showAction: boolean;
+}
+
 export interface ValidationConfig {
   required?: boolean;
   requiredErrorColor?: string; // e.g., 'bg-red-50' or hex
@@ -234,6 +244,19 @@ export interface Column {
   cellTemplate?: CellTemplateItem[];
   showOnColumnChooser?: boolean;
   validations?: FieldValidation[];
+  mobileConfig?: MobileConfig;
+  emailConfig?: EmailConfig;
+  cardViewConfig?: CardViewColumnConfig;
+}
+
+export interface CardViewColumnConfig {
+  position: 'header' | 'body' | 'image' | 'none';
+  footerActions?: {
+    showCall?: boolean;
+    showEmail?: boolean;
+    showWhatsapp?: boolean;
+    showDetail?: boolean;
+  };
 }
 
 export interface RowMenuItem {

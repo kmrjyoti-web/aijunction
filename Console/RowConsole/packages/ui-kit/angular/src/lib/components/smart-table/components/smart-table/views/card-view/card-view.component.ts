@@ -36,10 +36,45 @@ export class CardViewComponent {
   openMenuRowId = signal<any | null>(null);
   contextMenuPosition = signal<{ x: number, y: number } | null>(null);
 
-  cardHeaderColumn = computed(() => this.columns().find(c => c.cardHeader));
-  cardHeader1Column = computed(() => this.columns().find(c => c.cardHeader1));
-  cardRowColumns = computed(() => this.columns().filter(c => c.cardRow));
-  imageColumn = computed(() => this.columns().find(c => c.columnType === 'IMAGE'));
+  cardHeaderColumns = computed(() => {
+    // Prefer cardViewConfig if available
+    const configHeaders = this.columns().filter(c => c.cardViewConfig?.position === 'header');
+    if (configHeaders.length > 0) return configHeaders;
+
+    // Fallback to legacy
+    const legacy: Column[] = [];
+    const h1 = this.columns().find(c => c.cardHeader);
+    if (h1) legacy.push(h1);
+    const h2 = this.columns().find(c => c.cardHeader1);
+    if (h2) legacy.push(h2);
+    return legacy;
+  });
+
+  cardRowColumns = computed(() => {
+    // Prefer cardViewConfig if available
+    const explicitBody = this.columns().filter(c => c.cardViewConfig?.position === 'body');
+    if (explicitBody.length > 0) return explicitBody;
+
+    // Fallback
+    return this.columns().filter(c => c.cardRow && c.cardViewConfig?.position !== 'header' && c.cardViewConfig?.position !== 'none');
+  });
+
+  footerActionColumns = computed(() => {
+    return this.columns().filter(c =>
+      c.columnType === 'MOBILE' ||
+      c.columnType === 'EMAIL' ||
+      c.cardViewConfig?.footerActions?.showDetail
+    );
+  });
+
+  imageColumn = computed(() => {
+    // Prefer cardViewConfig if available
+    const configImage = this.columns().find(c => c.cardViewConfig?.position === 'image');
+    if (configImage) return configImage;
+
+    // Fallback to legacy
+    return this.columns().find(c => c.columnType === 'IMAGE');
+  });
 
   gridClasses = computed(() => {
     const count = Number(this.cardViewConfig()?.cardsPerRow ?? 4);
