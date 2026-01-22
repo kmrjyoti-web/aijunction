@@ -1,59 +1,121 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { ComponentRef, Injectable, Type, WritableSignal, signal, computed } from '@angular/core';
+import { Subject, Observable } from 'rxjs';
+import { SmartDrawerConfig } from '../../smart-drawer/smart-drawer.config';
 
-export type DrawerView = 'create' | 'edit' | 'details' | null;
+export class DrawerRef<R = any> {
+    private readonly _afterClosed = new Subject<R | undefined>();
+    componentInstance: any;
 
-export interface DrawerState<T = any> {
+    close(result?: R): void {
+        this._afterClosed.next(result);
+        this._afterClosed.complete();
+    }
+
+    afterClosed(): Observable<R | undefined> {
+        return this._afterClosed.asObservable();
+    }
+}
+
+export interface DrawerState {
     isOpen: boolean;
-    view: DrawerView;
-    data: T | null;
+    component: Type<any> | null;
+    config: SmartDrawerConfig;
+    inputs?: Record<string, any>;
     title?: string;
+    drawerRef?: DrawerRef<any>;
 }
 
 @Injectable({
     providedIn: 'root'
 })
-export class SmartDrawerHelperService<T = any> {
-    // Signals for reactive state
-    private state: WritableSignal<DrawerState<T>> = signal({
+export class SmartDrawerHelperService {
+    activeDrawer = signal<DrawerState>({
         isOpen: false,
-        view: null,
-        data: null,
-        title: ''
+        component: null,
+        config: {},
+        inputs: {},
+        title: '',
+        drawerRef: undefined
     });
 
-    // Read-only signals for consumers
-    isOpen = signal(false); // exposed separately for easier binding if needed, or derived
+    openDrawer<T, R = any>(
+        component: Type<T>,
+        title: string,
+        inputs: Partial<T> = {},
+        config: Partial<SmartDrawerConfig> = {}
+    ): DrawerRef<R> {
+        const drawerRef = new DrawerRef<R>();
 
-    constructor() {
-        // Sync isOpen signal
-    }
-
-    get currentState() {
-        return this.state.asReadonly();
-    }
-
-    open(view: DrawerView, data: T | null = null, title?: string) {
-        this.state.set({
-            isOpen: true,
-            view,
-            data,
-            title: title || this.getTitleForView(view)
+        // Subscribe to close to clean up signal
+        drawerRef.afterClosed().subscribe(() => {
+            this.close();
         });
-        this.isOpen.set(true);
+
+        this.activeDrawer.set({
+            isOpen: true,
+            component,
+            title,
+            inputs: inputs as Record<string, any>,
+            config: {
+                width: config.width || '400px',
+                mode: config.mode || 'drawer',
+                hasBackdrop: config.hasBackdrop ?? true,
+                ...config
+            },
+            drawerRef
+        });
+
+        return drawerRef;
     }
 
     close() {
-        this.state.update(s => ({ ...s, isOpen: false }));
-        this.isOpen.set(false);
-        // Optional: clear data after animation delay?
+        // If there's an active ref, ensure we close it properly
+        const currentRef = this.activeDrawer().drawerRef;
+        if (currentRef) {
+            // We don't call currentRef.close() here to avoid infinite loop 
+            // if usage was ref.close() -> service.close()
+            // But if specific logic requires it, we can check `closed` state
+        }
+
+        this.activeDrawer.update(state => ({
+            ...state,
+            isOpen: false
+        }));
+
+        // Allow animation to finish before clearing component?
+        // For now, immediate close signal
     }
 
-    private getTitleForView(view: DrawerView): string {
-        switch (view) {
-            case 'create': return 'Create New';
-            case 'edit': return 'Edit Record';
-            case 'details': return 'Details';
-            default: return 'Drawer';
-        }
+    // --- Backward Compatibility Layer for RowContactListComponent ---
+
+    // Derived signal for legacy isOpen check
+    isOpen = computed(() => this.activeDrawer().isOpen);
+
+    // Derived signal for legacy currentState check
+    currentState = computed(() => {
+        const state = this.activeDrawer();
+        return {
+            isOpen: state.isOpen,
+            view: state.inputs?.['view'] || null, // Map 'view' from inputs if present
+            data: state.inputs?.['data'] || null, // Map 'data' from inputs if present
+            title: state.title
+        };
+    });
+
+    // Legacy open method that maps to the new state structure
+    open(view: string, data: any, title: string) {
+        this.activeDrawer.update(s => ({
+            ...s,
+            isOpen: true,
+            component: null, // No dynamic component, relying on projected content
+            title: title,
+            // Store legacy 'view' and 'data' in inputs so the computed signal can retrieve them
+            inputs: { view, data },
+            config: {
+                ...s.config,
+                width: s.config.width || '600px', // Default width
+                mode: 'drawer'
+            }
+        }));
     }
 }
