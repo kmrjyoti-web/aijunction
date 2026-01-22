@@ -22,16 +22,20 @@
       </div>
 
       <!-- Center: Search (order-2) -->
+      @if (cfg.config.searchConfig?.enabled !== false) {
       <div class="flex-1 flex justify-center max-w-xl mx-4 min-w-0" title="Global Search (Alt + G)">
         <div class="relative w-full">
           <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <i class="pi pi-search text-gray-400"></i>
           </div>
           <input id="global-search-input" type="search" (input)="onGlobalSearch($event)" [value]="globalFilterTerm()"
-            placeholder="Search..."
+            placeholder="{{ cfg.config.searchConfig?.placeholder || 'Search...' }}"
             class="block w-full pl-10 pr-3 py-1.5 border border-gray-300 rounded-md leading-5 bg-white text-gray-900 placeholder-gray-400 focus:outline-none focus:placeholder-gray-500 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 text-sm">
         </div>
       </div>
+      } @else {
+      <div class="flex-1"></div>
+      }
 
       <!-- Right: Actions (order-3) -->
       <div class="flex flex-nowrap items-center justify-end gap-1.5 flex-shrink-0">
@@ -333,8 +337,8 @@
   }
 
   <!-- Main Content Area -->
-  <main #scrollContainer class="flex-grow overflow-auto p-2 outline-none" (scroll)="onContentScroll($event)"
-    (keydown)="handleContentKeydown($event)" (click)="scrollContainer().focus()" tabindex="0">
+  <main #scrollContainer class="flex-grow overflow-auto outline-none" (scroll)="onContentScroll($event)"
+    (keydown)="handleContentKeydown($event)" (click)="scrollContainer.focus()" tabindex="0">
     @if (loading() && data().length === 0) {
     @switch (viewMode()) {
     @case ('table') { <app-table-skeleton-loader [columns]="visibleTableColumns()" [rows]="pageSize()" /> }
@@ -355,19 +359,25 @@
     @switch (viewMode()) {
     @case ('table') { <app-table-view [columns]="visibleTableColumns()" [data]="data()" [sortColumn]="sortColumn()"
       [sortDirection]="sortDirection()" [primaryKey]="primaryKey()" [density]="currentDensity()"
-      [densityClass]="currentDensitySetting().cssClass" [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions"
-      [headerMenuConfig]="cfg.headerMenu" [enableMultiSelect]="cfg.config.enableMultiSelect ?? false"
-      [selectedIds]="selectedIds()" [activeFilters]="advancedFilters()" [customTemplate]="activeCustomTemplate()"
-      [loading]="loading()" [keyboardActiveRowIndex]="keyboardActiveRowIndex()" [pageSize]="pageSize()"
+      [densityClass]="currentDensitySetting().cssClass" [rowMenuConfig]="mergedRowMenu()"
+      [rowActions]="mergedRowActions()" [enableRowMenu]="cfg.config.enableRowMenu ?? true"
+      [enableRowMenuIcons]="cfg.config.enableRowMenuIcons ?? true"
+      [enableQuickActions]="cfg.config.enableQuickActions ?? true" [headerMenuConfig]="cfg.headerMenu"
+      [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [selectedIds]="selectedIds()"
+      [activeFilters]="advancedFilters()" [customTemplate]="activeCustomTemplate()" [loading]="loading()"
+      [keyboardActiveRowIndex]="keyboardActiveRowIndex()" [pageSize]="pageSize()"
       [isInfiniteScroll]="isInfiniteScroll()" [stripedRows]="cfg.config.stripedRows ?? true"
       [showGridlines]="cfg.config.showGridlines ?? false" [rowHover]="cfg.config.rowHover ?? true"
-      [footerConfig]="cfg.config.footerConfig" [styleConfig]="cfg.config.styleConfig" (sortChange)="handleSort($event)"
+      [footerConfig]="cfg.config.footerConfig" [styleConfig]="cfg.config.styleConfig"
+      [showFilterByColor]="cfg.config.showFilterByColor" (sortChange)="handleSort($event)"
       (rowAction)="handleRowAction($event)" (rowClicked)="handleRowClick($event)"
       (headerAction)="handleHeaderAction($event)" (columnReorder)="handleVisibleColumnReorder($event)"
-      (filterChange)="handleFilterChange($event)" (selectionChange)="handleSelectionChange($event)" /> }
+      (columnResize)="handleColumnResize($event)" (columnVisibilityChange)="handleColumnVisibilityChange($event)"
+      (filterChange)="handleFilterChange($event)" (selectionChange)="handleSelectionChange($event)"
+      (nextPage)="handleNextPage()" /> }
     @case ('card') { <app-card-view [columns]="allTableColumns()" [data]="data()" [primaryKey]="primaryKey()"
       [density]="currentDensity()" [densityClass]="currentDensitySetting().cssClass" [selectedIds]="selectedIds()"
-      [rowMenuConfig]="cfg.rowMenu" [rowActions]="cfg.rowActions"
+      [rowMenuConfig]="mergedRowMenu()" [rowActions]="mergedRowActions()"
       [enableMultiSelect]="cfg.config.enableMultiSelect ?? false" [cardViewConfig]="cfg.config.cardViewConfig"
       [customTemplate]="activeCustomTemplate()" [keyboardActiveRowIndex]="keyboardActiveRowIndex()"
       (selectionChange)="handleSelectionChange($event)" (rowAction)="handleRowAction($event)"

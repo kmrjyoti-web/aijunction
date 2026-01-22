@@ -128,6 +128,19 @@ import { MargThemeService, MargTheme } from '../../services/marg-theme.service';
                 </div>
             </div>
 
+            <!-- Menu Orientation -->
+            <div class="section">
+                <h4>Menu Orientation</h4>
+                <div class="mode-selector">
+                    <button [class.active]="themeService.theme().menuPosition === 'vertical'" (click)="update('menuPosition', 'vertical')">
+                        Vertical
+                    </button>
+                    <button [class.active]="themeService.theme().menuPosition === 'horizontal'" (click)="update('menuPosition', 'horizontal')">
+                        Horizontal
+                    </button>
+                </div>
+            </div>
+
          <div class="actions">
             <button class="reset-btn" (click)="themeService.reset()">Reset to Default</button>
          </div>

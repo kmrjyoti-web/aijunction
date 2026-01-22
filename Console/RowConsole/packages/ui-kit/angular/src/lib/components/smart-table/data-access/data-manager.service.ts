@@ -64,24 +64,24 @@ export class DataManagerService {
         return this.offlineDataService.getData(request);
 
       case 'HYBRID':
-        console.log('[DataManager] Using HYBRID strategy.');
+        console.log('[DataManager] Using HYBRID strategy (Local Search + Background Refresh).');
         this.connectionStatusService.setConnecting();
-        return this.onlineDataService.getData(request).pipe(
-          tap(response => {
-            console.log('[DataManager] HYBRID: Fetched online, updating local DB in background.');
+
+        // 1. Trigger background refresh from Online
+        this.onlineDataService.getData(request).subscribe({
+          next: (response) => {
+            console.log('[DataManager] HYBRID: Online data fetched. Updating Local DB.');
             this.connectionStatusService.setOnline();
-            // Fire-and-forget update to local DB
-            this.offlineDataService.bulkUpsert(response.data).subscribe({
-              next: () => console.log('[DataManager] HYBRID: Local DB updated successfully.'),
-              error: (dbErr) => console.error('[DataManager] HYBRID: Error updating local DB.', dbErr)
-            });
-          }),
-          catchError(err => {
-            console.warn('[DataManager] HYBRID: Online fetch failed, falling back to offline.', err);
+            this.offlineDataService.bulkUpsert(response.data).subscribe();
+          },
+          error: (err) => {
+            console.warn('[DataManager] HYBRID: Background fetch failed.', err);
             this.connectionStatusService.setOffline();
-            return this.offlineDataService.getData(request);
-          })
-        );
+          }
+        });
+
+        // 2. Return Local Data immediately
+        return this.offlineDataService.getData(request);
 
       case 'SYNC':
         console.log('[DataManager] Using SYNC strategy (reading from local DB).');

@@ -67,19 +67,25 @@ export function getValidationState(value: any, column: Column, fieldCode: string
 
         // Length Validation
         if (valValue.trim() !== '') {
+            // console.log(`[Validation] Checking length for ${column.code}: val=${valValue.length}, min=${valConfig.minLength}, max=${valConfig.maxLength}`);
+
             if (valConfig.minLength !== undefined && valConfig.minLength !== null && valValue.length < valConfig.minLength) {
+                console.log(`[Validation] MinLength failed for ${column.code}. Returning style with bgcolor.`);
                 return {
                     isValid: false,
                     style: {
+                        bgcolor: '#fff0f0', // Add background color to support color filtering
                         textcolor: valConfig.lengthErrorColor,
                         tooltip: `Minimum length is ${valConfig.minLength}`
                     }
                 };
             }
             if (valConfig.maxLength !== undefined && valConfig.maxLength !== null && valValue.length > valConfig.maxLength) {
+                console.log(`[Validation] MaxLength failed for ${column.code}. Returning style with bgcolor.`);
                 return {
                     isValid: false,
                     style: {
+                        bgcolor: '#fff0f0', // Add background color to support color filtering
                         textcolor: valConfig.lengthErrorColor,
                         tooltip: `Maximum length is ${valConfig.maxLength}`
                     }

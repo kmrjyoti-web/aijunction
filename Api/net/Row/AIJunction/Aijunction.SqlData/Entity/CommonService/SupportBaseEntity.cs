@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AvinyaCrm.SqlData.Domain.Entities.CommonService;
+namespace Aijunction.SqlData.Entity.CommonService;
 
 
 

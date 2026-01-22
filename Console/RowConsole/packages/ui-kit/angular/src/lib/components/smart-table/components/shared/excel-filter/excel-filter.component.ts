@@ -21,17 +21,25 @@ export class ExcelFilterComponent {
   data = input.required<Contact[]>();
   activeFilter = input<ActiveFilter | null>();
 
+  showColorFilter = input(false);
+  colorResolver = input<(row: any) => string | undefined>();
+  position = input<{ x: number, y: number } | null>(null);
+
   apply = output<{ filter?: ActiveFilter | null, sort?: { column: string, direction: 'asc' | 'desc' } }>();
   close = output<void>();
 
   // Text filter state
   searchTerm = signal('');
   selectedValues = signal<Set<string>>(new Set());
+  selectedColors = signal<Set<string>>(new Set());
 
   // Calendar filter state
   currentMonth = signal(new Date());
   rangeStart = signal<Date | null>(null);
   rangeEnd = signal<Date | null>(null);
+
+  // Submenu state
+  showColorSubmenu = signal(false);
 
   uniqueValues = computed(() => {
     const colCode = this.column().code;
@@ -39,6 +47,26 @@ export class ExcelFilterComponent {
       .map(item => String(item[colCode] ?? ''))
       .filter(value => value.trim() !== '');
     return [...new Set(values)].sort();
+  });
+
+  uniqueColors = computed(() => {
+    try {
+      const resolver = this.colorResolver();
+      const show = this.showColorFilter();
+      console.log('[ExcelFilter] uniqueColors calc. Show:', show, 'HasResolver:', !!resolver);
+
+      if (!resolver || !show) return [];
+
+      const colors = this.data()
+        .map(row => resolver(row) ?? '__NO_FILL__'); // Use special token for no color
+
+      const unique = [...new Set(colors)].sort();
+      console.log('[ExcelFilter] Found colors:', unique);
+      return unique;
+    } catch (e) {
+      console.error('[ExcelFilter] Error computing uniqueColors:', e);
+      return [];
+    }
   });
 
   filteredValues = computed(() => {
@@ -107,13 +135,20 @@ export class ExcelFilterComponent {
         } else {
           this.resetDateSelection();
         }
+      } else if (active && active.operator === 'contains' && active.type === 'select' && active.value2 === 'color') {
+        // Handle color filter restoration
+        if (active.value1) {
+          const colors = String(active.value1).split(',');
+          this.selectedColors.set(new Set(colors));
+        }
       } else {
         const allValues = this.uniqueValues();
-        if (active && active.value1) {
+        if (active && active.value1 && active.operator !== 'contains') {
           const values = String(active.value1).split(',');
           this.selectedValues.set(new Set(values));
         } else {
           this.selectedValues.set(new Set(allValues));
+          this.selectedColors.set(new Set()); // Clear colors if text filter active or none
         }
       }
     }, { allowSignalWrites: true });
@@ -143,6 +178,24 @@ export class ExcelFilterComponent {
       }
       return newSelected;
     });
+  }
+
+  toggleColor(color: string): void {
+    // For now, let's support single color selection or multi-select? 
+    // Excel usually does one color or "No Fill". Let's support multi for flexibility but maybe UI implies single.
+    // Let's go with multi-select logic like values.
+    this.selectedColors.update(current => {
+      const newSet = new Set(current);
+      if (newSet.has(color)) newSet.delete(color);
+      else newSet.add(color);
+      return newSet;
+    });
+    // If we are filtering by color, we should probably clear value selection? 
+    // Or can they coexist? Usually mutually exclusive in Excel "Filter by Color" vs "Filter by Value".
+    // Let's enforce mutual exclusivity for simplicity: selecting a color clears values.
+    if (this.selectedColors().size > 0) {
+      // this.selectedValues.set(new Set()); // Optional: clear values
+    }
   }
 
   handleApply(): void {
@@ -177,6 +230,21 @@ export class ExcelFilterComponent {
         this.apply.emit({ filter: null });
       }
     } else {
+      // Check for color filter first
+      const colors = Array.from(this.selectedColors());
+      if (colors.length > 0) {
+        const newFilter: ActiveFilter = {
+          code: this.column().code,
+          name: this.column().name,
+          type: 'select',
+          operator: 'contains', // Using 'contains' as a proxy for "IN" or custom logic
+          value1: colors.join(','),
+          value2: 'color' // Marker to indicate this is a color filter
+        };
+        this.apply.emit({ filter: newFilter });
+        return;
+      }
+
       const selected = Array.from(this.selectedValues());
       const allUnique = this.uniqueValues();
       if (selected.length === 0 || selected.length === allUnique.length) {
@@ -196,6 +264,7 @@ export class ExcelFilterComponent {
       this.resetDateSelection();
     } else {
       this.selectedValues.set(new Set());
+      this.selectedColors.set(new Set());
       this.searchTerm.set('');
     }
     this.apply.emit({ filter: null });

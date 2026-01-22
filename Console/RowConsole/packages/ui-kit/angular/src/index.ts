@@ -22,5 +22,7 @@ export * from './lib/components/sync-indicator/sync-indicator.component';
 
 // Smart Drawer & Helpers
 export * from './lib/components/smart-table/services/smart-drawer-helper.service';
-export * from './lib/components/smart-table/components/smart-drawer/smart-drawer.component';
+export * from './lib/components/smart-drawer/smart-drawer.component';
+export * from './lib/components/smart-drawer/smart-drawer.config';
+export * from './lib/components/smart-drawer/smart-drawer.util';
 export * from './lib/components/smart-table/models/data-provider.interface';

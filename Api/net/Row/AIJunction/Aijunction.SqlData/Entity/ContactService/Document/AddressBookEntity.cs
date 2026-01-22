@@ -3,129 +3,49 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aijunction.SqlData.Entity.ContactService.Address;
+namespace Aijunction.SqlData.Entity.ContactService.Document;
 
-[Table("AddressBook", Schema = "Mst")]
-public class AddressBookEntity : MasterBaseEntity
+[Table("DocumentBook", Schema = "CS.Mst")]
+public class DocumentBookEntity : MasterBaseEntity
 {
     // 🔑 Primary Key
     [Key]
-    [Column("address_uniq_id")]
+    [Column("document_book_unique_id")]
     [Unicode(false)] // ✅ Add this line
     [StringLength(36)]
-    public required string AddressUniqId { get; set; }
-    [Column("communication_reference_type")]
+    public required string DocumentBookUniqueId { get; set; }
+    [Column("document_book_global_id")]
     [StringLength(100)]
-    public string? CommunicationReferenceType { get; set; }
-    [Column("communication_reference_id")]
+    public string? DocumentBookGlobalId { get; set; }
+    [Column("document_book_offline_id")]
     [StringLength(100)]
-    public string? CommunicationReferenceId { get; set; }
+    public string? DocumentBookOfflineId { get; set; }
+    [Column("document_type_code")]
+    [StringLength(100)]
+    public string? DocumentTypeCode { get; set; }
+    [Column("document_global_id")]
+    [StringLength(100)]
+    public string? DocumentUniqueId { get; set; }
     // 🏷️ Address Type
-    [Column("address_type_code")]
-    [StringLength(20)]
-    public string? AddressTypeCode { get; set; }
-
-    // 📍 Address Lines
-    [Column("address1")]
-    [StringLength(250)]
-    public string? Address1 { get; set; }
-
-    [Column("address2")]
-    [StringLength(250)]
-    public string? Address2 { get; set; }
-
-    [Column("address3")]
-    [StringLength(250)]
-    public string? Address3 { get; set; }
-
-    // 🧭 Location Details
-    [Column("pin_code")]
-    [StringLength(10)]
-    public string? PinCode { get; set; }
-
-    [Column("location")]
-    [StringLength(100)]
-    public string? Location { get; set; }
-
-    [Column("city")]
-    [StringLength(100)]
-    public string? City { get; set; }
-
-    [Column("state")]
-    [StringLength(100)]
-    public string? State { get; set; }
-
-    [Column("country")]
-    [StringLength(100)]
-    public string? Country { get; set; }
-
-    [Column("continent")]
-    [StringLength(100)]
-    public string? Continent { get; set; }
-
-    [Column("nearest_land_mark")]
-    [StringLength(150)]
-    public string? NearestLandMark { get; set; }
-
-    // 🌐 Geo Location
-    [Column("latitude")]
+    [Column("document_create_date")]
+    public DateTime? DocumentCreateDate { get; set; }
+    [Column("document_expiry_date")]
+    public DateTime? DocumentExpiryDate { get; set; }
+    [Column("document_no")]
     [StringLength(50)]
-    public string? Latitude { get; set; }
-
-    [Column("longitude")]
+    public string? DocumentNo { get; set; }
+    [Column("document_url")]
     [StringLength(50)]
-    public string? Longitude { get; set; }
-
-    // 📅 Visit & Logistics Info
-    [Column("visit_time_slot_code")]
-    [StringLength(20)]
-    public string? VisitTimeSlotCode { get; set; }
-
-    [Column("holiday")]
-    [StringLength(100)]
-    public string? Holiday { get; set; }
-
-    [Column("holiday_visit_status_code")]
-    [StringLength(20)]
-    public string? HolidayVisitStatusCode { get; set; }
-
-    [Column("is_primary_address")]
-    public bool? IsPrimaryAddress { get; set; }
-
-    // 👤 Contact Person Info
-    [Column("contact_person")]
-    [StringLength(100)]
-    public string? ContactPerson { get; set; }
-
-    [Column("contact_detail")]
-    [StringLength(100)]
-    public string? ContactDetail { get; set; }
-
-    // 🔧 Miscellaneous Fields
-    [Column("other_field_a")]
-    [StringLength(100)]
-    public string? OtherFieldA { get; set; }
-
-    [Column("other_field_b")]
-    [StringLength(100)]
-    public string? OtherFieldB { get; set; }
-
-    [Column("other_field_c")]
-    [StringLength(100)]
-    public string? OtherFieldC { get; set; }
-
-    [Column("other_field_d")]
-    [StringLength(100)]
-    public string? OtherFieldD { get; set; }
-
-    [Column("other_field_e")]
-    [StringLength(100)]
-    public string? OtherFieldE { get; set; }
-
-    [Column("other_field_f")]
-    [StringLength(100)]
-    public string? OtherFieldF { get; set; }
-
+    public string? DocumentUrl { get; set; }
+    [Column("document_view_type")]
+    [StringLength(50)]
+    public string? DocumentViewType { get; set; }
+    [Column("document_download_type")]
+    [StringLength(50)]
+    public string? DocumentDownloadType { get; set; }
+    [Column("document_notification_type")]
+    [StringLength(50)]
+    public string? DocumentNotificationType { get; set; }
     [Column("config_json")]
     [Unicode(false)]
     public string? ConfigJson { get; set; }

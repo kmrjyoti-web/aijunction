@@ -1,27 +1,36 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+import { ScrollingModule, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal, viewChild, ElementRef, effect } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Column, MaskConfig, RowMenuItem, ActiveFilter, FooterConfig, FooterColumn, RowActionItem, StyleConfig } from '../../../../models/table-config.model';
+import { Column, RowActionItem, RowMenuItem, RowMenuSubItem, StyleConfig, ValidationConfig, FooterConfig, ActiveFilter, FooterColumn, MaskConfig } from '../../../../models/table-config.model';
 import { maskString as maskUtil } from '../../../../utils/masking.util';
 import { getValidationState, ValidationState } from '../../../../utils/validation.util';
 import { RowMenuComponent } from '../../row-menu/row-menu.component';
 import { HeaderMenuComponent } from '../../header-menu/header-menu.component';
-import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
 import { Density } from '../../../../models/density.model';
 import { ExcelFilterComponent } from '../../../shared/excel-filter/excel-filter.component';
+import { TableSkeletonLoaderComponent } from './table-skeleton-loader.component';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-table-view',
   standalone: true,
-  imports: [CommonModule, RowMenuComponent, HeaderMenuComponent, ClickOutsideDirective, DatePipe, ExcelFilterComponent],
+  imports: [CommonModule, CdkMenuModule, OverlayModule, RowMenuComponent, HeaderMenuComponent, ExcelFilterComponent, ScrollingModule],
   templateUrl: './table-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'block h-full overflow-hidden' // Ensure host constrains height for virtual scroll
+  }
 })
 export class TableViewComponent {
-  columns = input.required<Column[]>();
   data = input.required<any[]>();
+  columns = input.required<Column[]>();
+  primaryKey = input.required<string>();
+  loading = input<boolean>(false);
+  dataSource = computed(() => this.data()); // For virtual scroll, we just use the data array
+
   sortColumn = input.required<string | null>();
   sortDirection = input.required<'asc' | 'desc'>();
-  primaryKey = input('organization_id');
   density = input<Density>('cozy');
   densityClass = input('');
   rowMenuConfig = input.required<RowMenuItem[]>();
@@ -29,8 +38,11 @@ export class TableViewComponent {
   headerMenuConfig = input<RowMenuItem[] | undefined>();
   selectedIds = input(new Set<any>());
   enableMultiSelect = input(false);
+  enableRowMenu = input(true);
+  enableQuickActions = input(true);
+  enableRowMenuIcons = input(true);
   customTemplate = input<string | null>(null);
-  loading = input<boolean>(false);
+  // loading = input<boolean>(false); // Duplicate removed
   keyboardActiveRowIndex = input<number | null>(null);
   pageSize = input(10);
   isInfiniteScroll = input(false);
@@ -40,21 +52,144 @@ export class TableViewComponent {
   rowHover = input<boolean>(true);
   footerConfig = input<FooterConfig | undefined>();
   styleConfig = input<StyleConfig | undefined>();
+  showFilterByColor = input<boolean>(false);
 
   sortChange = output<{ column: string; direction: 'asc' | 'desc' }>();
   rowAction = output<{ action: string; row: any }>();
   headerAction = output<{ action: string; selectedIds: any[] }>();
   selectionChange = output<Set<any>>();
   columnReorder = output<Column[]>();
+  columnResize = output<{ columnCode: string, width: string }>();
+  columnVisibilityChange = output<string>(); // Emits code of column to hide
   rowClicked = output<any>();
   filterChange = output<{ code: string, filter: ActiveFilter | null }>();
+  nextPage = output<void>();
+
+  // Element Queries
+  viewport = viewChild.required(CdkVirtualScrollViewport);
+  headerContainer = viewChild<ElementRef<HTMLElement>>('headerContainer');
+  footerContainer = viewChild<ElementRef<HTMLElement>>('footerContainer');
+
+  scrollbarWidth = signal(0);
+
+  // Resize State
+  private resizeState = signal<{ index: number, startX: number, startWidth: number } | null>(null);
+  columnWidths = signal<{ [code: string]: string }>({}); // Local overrides during resize
+
+  constructor() {
+    // Scroll Sync Effect & Scrollbar Width Calculation
+    effect((onCleanup) => {
+      const vp = this.viewport();
+      const data = this.data(); // Trigger on data change to re-check scrollbar
+
+      if (!vp) return;
+
+      // Check scrollbar width
+      const checkScrollbar = () => {
+        const el = vp.elementRef.nativeElement;
+        const width = el.offsetWidth - el.clientWidth;
+        this.scrollbarWidth.set(width);
+      };
+
+      // Initial check and check after render
+      setTimeout(checkScrollbar, 0);
+
+      const sub = vp.elementScrolled().subscribe(() => {
+        const offset = vp.elementRef.nativeElement.scrollLeft;
+        const header = this.headerContainer()?.nativeElement;
+        const footer = this.footerContainer()?.nativeElement;
+
+        if (header) header.scrollLeft = offset;
+        if (footer) footer.scrollLeft = offset;
+      });
+
+      onCleanup(() => sub.unsubscribe());
+      onCleanup(() => sub.unsubscribe());
+    });
+
+    // Infinite Scroll Listener
+    effect((onCleanup) => {
+      const vp = this.viewport();
+      if (!this.isInfiniteScroll() || !vp) return;
+
+      const sub = vp.elementScrolled().subscribe(() => {
+        const offset = vp.measureScrollOffset('bottom');
+        // console.log('[TableView] Scroll offset bottom:', offset);
+        if (offset < 50 && !this.loading()) { // Threshold 50px
+          // console.log('[TableView] Reached bottom, emitting nextPage');
+          this.nextPage.emit();
+        }
+      });
+
+      onCleanup(() => sub.unsubscribe());
+    });
+
+    // Global Resize Listeners
+    effect((onCleanup) => {
+      if (this.resizeState()) {
+        const moveHandler = (e: MouseEvent) => this.onResizing(e);
+        const upHandler = () => this.onResizeEnd();
+
+        document.addEventListener('mousemove', moveHandler);
+        document.addEventListener('mouseup', upHandler);
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none'; // Prevent text selection
+
+        onCleanup(() => {
+          document.removeEventListener('mousemove', moveHandler);
+          document.removeEventListener('mouseup', upHandler);
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+        });
+      }
+    });
+
+    // Initialize local widths from inputs when columns change, IF we want to strictly sync.
+    // However, input 'columns' has the width. We use 'columnWidths' signal for live dragging overrides.
+    effect(() => {
+      const cols = this.columns();
+      // We don't necessarily need to reset columnWidths here unless we want to clear overrides on external update.
+      // For now, let's keep overrides if the column code matches.
+    });
+  }
+
+  // ... (Existing properties) ...
 
   private draggedColumnIndex = signal<number | null>(null);
   private dragOverIndex = signal<number | null>(null);
   private unmaskedCells = signal<Set<string>>(new Set());
-  openMenuRowId = signal<any | null>(null);
+  openMenuRow = signal<any | null>(null);
+  clickedColumnCode = signal<string | null>(null); // Track which column was clicked
   isHeaderMenuOpen = signal(false);
   contextMenuPosition = signal<{ x: number, y: number } | null>(null);
+
+  // Dynamic Menu Configuration
+  mergedRowMenuConfig = computed(() => {
+    const baseConfig = this.rowMenuConfig();
+    const colCode = this.clickedColumnCode();
+
+    // Only add system actions if a column was clicked
+    if (!colCode) return baseConfig;
+
+    const systemActions: RowMenuItem[] = [
+      {
+        label: 'System Actions', // Group label (might affect display depending on implementation)
+        items: [
+          { label: 'Copy Cell Value', action: 'system:copy', icon: 'pi pi-copy' },
+          { label: 'Filter by This Value', action: 'system:filter', icon: 'pi pi-filter' },
+          { label: 'Hide This Column', action: 'system:hide', icon: 'pi pi-eye-slash' },
+          // Separator visual might be handled by CSS or specific item type if supported.
+          // For now, these are standard items.
+        ]
+      }
+    ];
+
+    // Prepend system actions. 
+    // Note: If RowMenuComponent expects top-level items to be sections/groups, this works.
+    // If it expects flat list, we might need a different approach. 
+    // Looking at TableConfig, RowMenuItem has 'items', so it is a group/section.
+    return [...systemActions, ...baseConfig];
+  });
 
   openFilterMenuForColumn = signal<Column | null>(null);
 
@@ -80,19 +215,77 @@ export class TableViewComponent {
 
   columnOffsets = computed(() => {
     const allCols = this.columns();
+    const widthOverrides = this.columnWidths();
+
     const offsets: (string | null)[] = new Array(allCols.length).fill(null);
-    let runningOffset = 0;
+    let runningTotal = '0px';
 
     for (let i = 0; i < allCols.length; i++) {
       const col = allCols[i];
       if (col.frozen) {
-        offsets[i] = `${runningOffset}px`;
-        const width = col.width ? parseInt(col.width, 10) : 150;
-        runningOffset += width;
+        offsets[i] = runningTotal;
+        // Use override if exists, else col.width, else default
+        const colWidth = widthOverrides[col.code] ?? col.width ?? '150px';
+        runningTotal = `calc(${runningTotal} + ${colWidth})`;
       }
     }
     return offsets;
   });
+
+  // Helper to get effective width for template binding
+  getColumnWidth(col: Column): string {
+    return this.columnWidths()[col.code] ?? col.width ?? '150px';
+  }
+
+  // ... (footerData logic) ...
+
+  // --- Resize Logic ---
+  onResizeStart(event: MouseEvent, index: number): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+    // Only left click
+    if (event.button !== 0) return;
+
+    const col = this.columns()[index];
+    const widthStr = this.columnWidths()[col.code] ?? col.width ?? '150px';
+    const startWidth = parseInt(widthStr, 10) || 150; // naive parsing, robust enough for px
+
+    this.resizeState.set({
+      index,
+      startX: event.clientX,
+      startWidth
+    });
+  }
+
+  onResizing(event: MouseEvent): void {
+    const state = this.resizeState();
+    if (!state) return;
+
+    const delta = event.clientX - state.startX;
+    const newWidth = Math.max(50, state.startWidth + delta); // Min width 50px
+
+    const col = this.columns()[state.index];
+    this.columnWidths.update(curr => ({
+      ...curr,
+      [col.code]: `${newWidth}px`
+    }));
+  }
+
+  onResizeEnd(): void {
+    const state = this.resizeState();
+    if (state) {
+      const col = this.columns()[state.index];
+      const finalWidth = this.columnWidths()[col.code];
+
+      this.columnResize.emit({
+        columnCode: col.code,
+        width: finalWidth
+      });
+
+      this.resizeState.set(null);
+    }
+  }
 
   footerData = computed(() => {
     const config = this.footerConfig();
@@ -161,6 +354,9 @@ export class TableViewComponent {
   });
 
   onSort(columnCode: string) {
+    // Prevent sort if resizing
+    if (this.resizeState()) return;
+
     if (!this.columns().find(c => c.code === columnCode)?.sortable) return;
 
     let direction: 'asc' | 'desc' = 'asc';
@@ -212,43 +408,107 @@ export class TableViewComponent {
   }
 
   // --- Menu Logic ---
-  onRowContextMenu(event: MouseEvent, row: any): void {
-    // Select the row if not already selected. Right-clicking a new row selects it exclusively.
-    // Use generic access for organization_id or prefer primaryKey
-    // IMPORTANT: TableViewComponent needs primaryKey to access ID generally.
-    // Assuming 'organization_id' is NOT generic. We need to use primaryKey input here.
-    // However, in this file, we can use item[this.primaryKey()]
+  onRowContextMenu(event: MouseEvent, row: any, col?: Column): void {
     const pk = this.primaryKey();
-    if (!this.selectedIds().has(row[pk])) {
-      this.selectionChange.emit(new Set([row[pk]]));
+    const rowId = row[pk];
+    // console.log('[TableView] Context menu triggered for row:', rowId, 'Col:', col?.code);
+
+    // Select the row if not already selected.
+    if (!this.selectedIds().has(rowId)) {
+      this.selectionChange.emit(new Set([rowId]));
     }
-    event.preventDefault();
-    this.openMenuRowId.set(row[pk]);
-    this.contextMenuPosition.set({ x: event.clientX, y: event.clientY });
+
+    event.preventDefault(); // Prevent browser context menu
+    event.stopPropagation(); // Stop bubbling (important if nested)
+
+    if (this.enableRowMenu()) {
+      this.openMenuRow.set(row);
+      this.clickedColumnCode.set(col?.code ?? null);
+      this.contextMenuPosition.set({ x: event.clientX, y: event.clientY });
+      // console.log('[TableView] Menu opened at:', { x: event.clientX, y: event.clientY });
+    }
   }
 
-  toggleRowMenu(event: MouseEvent, rowId: any): void {
+  toggleRowMenu(event: MouseEvent, row: any): void {
     event.stopPropagation();
-    this.contextMenuPosition.set(null);
-    this.openMenuRowId.update(currentId => currentId === rowId ? null : rowId);
+    if (this.openMenuRow() === row) {
+      this.closeRowMenu();
+    } else {
+      const button = event.currentTarget as HTMLElement;
+      const rect = button.getBoundingClientRect();
+      this.contextMenuPosition.set({
+        x: rect.right - 224,
+        y: rect.bottom + 5
+      });
+      this.openMenuRow.set(row);
+    }
   }
+
+  filterMenuPosition = signal<{ x: number, y: number } | null>(null);
 
   openFilterMenu(col: Column, event: MouseEvent): void {
     event.stopPropagation();
+    console.log('[TableView] Opening filter menu for', col.code);
+
+    // Calculate fixed position
+    const button = event.currentTarget as HTMLElement;
+    const rect = button.getBoundingClientRect();
+    this.filterMenuPosition.set({
+      // Align right edge of menu with right edge of button (approx)
+      // Menu width is w-72 (18rem = 288px)
+      x: Math.max(10, rect.right - 288),
+      y: rect.bottom + 5
+    });
+
     this.openFilterMenuForColumn.set(col);
   }
 
   closeFilterMenu(): void {
+    console.log('[TableView] Closing filter menu');
     this.openFilterMenuForColumn.set(null);
+    this.filterMenuPosition.set(null);
   }
 
   closeRowMenu(): void {
-    this.openMenuRowId.set(null);
+    // console.log('[TableView] Closing row menu');
+    this.openMenuRow.set(null);
+    this.clickedColumnCode.set(null);
     this.contextMenuPosition.set(null);
   }
 
   handleRowMenuAction(event: { action: string; row: any }): void {
-    this.rowAction.emit(event);
+    const action = event.action;
+    const row = event.row;
+    const colCode = this.clickedColumnCode();
+
+    if (action.startsWith('system:')) {
+      // Handle System Actions
+      if (action === 'system:copy' && colCode) {
+        const val = row[colCode];
+        navigator.clipboard.writeText(String(val)).then(() => {
+          console.log('Copied to clipboard:', val);
+          // Optional: Show toast
+        });
+      } else if (action === 'system:filter' && colCode) {
+        const val = row[colCode];
+        this.filterChange.emit({
+          code: colCode,
+          filter: {
+            code: colCode,
+            name: colCode, // Name lookup might be better but code works
+            type: 'text', // Infer type? For now text/select.
+            operator: 'contains',
+            value1: String(val)
+          }
+        });
+      } else if (action === 'system:hide' && colCode) {
+        this.columnVisibilityChange.emit(colCode);
+      }
+    } else {
+      // Emit Standard Actions
+      this.rowAction.emit(event);
+    }
+
     this.closeRowMenu();
   }
 
@@ -256,6 +516,17 @@ export class TableViewComponent {
     this.headerAction.emit({ action, selectedIds: Array.from(this.selectedIds()) });
     this.isHeaderMenuOpen.set(false);
   }
+
+  // Density Row Height Map
+  rowHeight = computed(() => {
+    switch (this.density()) {
+      case 'comfortable': return 60;
+      case 'cozy': return 50;
+      case 'compact': return 36;
+      case 'ultra-compact': return 28;
+      default: return 36;
+    }
+  });
 
   // --- Drag and Drop ---
   onDragStart(index: number): void {
@@ -358,9 +629,13 @@ export class TableViewComponent {
     return value.startsWith('#') || value.startsWith('rgb');
   }
 
-  getCellClass(row: any, column: Column): string {
+  trackByPrimaryKey = (index: number, item: any) => {
+    return item[this.primaryKey()];
+  };
+
+  getCellClass(row: any, col: any): string {
     const parts = [this.densityClass()];
-    const val = this.getCellValidation(row, column);
+    const val = this.getCellValidation(row, col);
 
     if (!val.isValid && val.style) {
       if (!this.isHexColor(val.style.bgcolor)) {
@@ -371,5 +646,13 @@ export class TableViewComponent {
       }
     }
     return parts.filter(p => p && p.trim().length > 0).join(' ');
+  }
+
+  getColorResolverForColumn(column: Column) {
+    return (row: any) => {
+      const style = this.getCellValidation(row, column).style;
+      // console.log(`[TableView] Color Resolve ${column.code}:`, style?.bgcolor);
+      return style?.bgcolor;
+    };
   }
 }

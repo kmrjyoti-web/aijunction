@@ -4,30 +4,47 @@ using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.CrmService;
-[Table("LeadFilterDetail", Schema = "CRM.Fld")]
-public class LeadFilterEntity : MasterBaseEntity
+[Table("LeadRequirementDetail", Schema = "CRM.Mst")]
+public class LeadRequirementDetailEntity : MasterBaseEntity
 {
     [Key]
-    [Column("lead_filter_id")]
+    [Column("lead_requirement_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string LeadFilterId { get; set; } = Guid.NewGuid().ToString();
+    public string LeadRequirementId { get; set; } = Guid.NewGuid().ToString();
     [Column("Lead_uniq_id")]
     [MaxLength(50)]
     [Unicode(false)]
     public string? LeadUniqId { get; set; }
     [Required]
-    [Column("filter_type")] // Department,Designation,Category,Groud
+    [Column("requirement_type")] 
     [MaxLength(50)]
-    public string FilterType { get; set; } = null!;
-    [Column("filter_status")] // System_Filter,App_Filter,Web_Filter,Offline_Filter
+    public string RequirementType { get; set; } = null!;
+    [Column("requirement_category")] 
     [MaxLength(50)]
-    public string FilterStatus { get; set; } = null!;
-    [Column("filter_unique_id")] // Filter Id Like Department_id
+    public string RequirementCategory { get; set; } = null!;
+    [Column("requirement_group")] 
     [MaxLength(50)]
-    public string FilterUniqueId { get; set; } = null!;
-    [Column("filter_code")] // If Anu User Defiend Code Like Department_id
+    public string RequirementGroup { get; set; } = null!;
+    [Column("requirement_status")] 
     [MaxLength(50)]
-    public string FilterCode { get; set; } = null!;
+    public string RequirementStatus { get; set; } = null!;
+    [Column("requirement_sys_type")] 
+    [MaxLength(50)]
+    public string RequirementSysType { get; set; } = null!;
+    [Column("product_id")] 
+    [MaxLength(50)]
+    public string ProductId { get; set; } = null!;
+    [Column("requirement_detail")]
+    [MaxLength(50)]
+    public string RequirementDetail { get; set; } = null!;
+    [Column("requirement_duration")] 
+    [MaxLength(50)]
+    public string RequirementDuration { get; set; } = null!;
+    [Column("requirement_budget_min")] 
+    public decimal RequirementBudgetMin { get; set; } = 0;
+    [Column("requirement_budget_max")] 
+    public decimal RequirementBudgetMax { get; set; } = 0;
+   
     
 }

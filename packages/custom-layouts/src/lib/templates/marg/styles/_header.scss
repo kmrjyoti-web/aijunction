@@ -73,6 +73,55 @@
     .right-section {
         display: flex;
         align-items: center;
+        gap: 10px; // Spacing between elements
+
+        .divider {
+            height: 24px;
+            width: 1px;
+            background-color: #E0E0E0; // Light grey divider
+            margin: 0 5px;
+        }
+
+        .header-special-btn {
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            background: transparent; // No background
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.1s, opacity 0.2s;
+
+            .special-icon {
+                width: 20px;
+                height: 20px;
+                stroke-width: 2; // Make them slightly bolder
+            }
+
+            &:active {
+                transform: scale(0.95);
+            }
+
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05); // Subtle hover effect
+                border-radius: 4px;
+            }
+
+            &.quick-action {
+                .special-icon {
+                    color: #ffffff; // White icon
+                }
+            }
+
+            &.app-switch {
+                .special-icon {
+                    color: #ffffff; // White icon
+                }
+            }
+        }
 
         .toolbar-actions {
             display: flex;

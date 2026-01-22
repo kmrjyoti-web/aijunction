@@ -4,6 +4,15 @@ import { Injectable } from '@angular/core';
 // But to save time and duplication, I'll assume usage of existing interfaces or quick re-definition.
 // Let's redefine common interfaces in shared/models if needed, but imports are fine for types.
 
+export interface FieldDefinition {
+    name: string;
+    type: 'string' | 'number' | 'boolean' | 'date' | 'object' | 'array';
+    length?: number;
+    isEncrypted: boolean;
+    isPrimary?: boolean;
+    isIndexed?: boolean;
+}
+
 export interface TableMaster {
     Table_Name: string;
     Table_Code: string; // PK
@@ -18,12 +27,34 @@ export interface TableMaster {
     encryption_field: string[];
     caching: boolean;
     caching_ttl: number;
+    fields?: FieldDefinition[];
 }
 
 export interface ApiConfiguration {
     API_CODE: string; // PK
     Api_End_point: string;
     method: string;
+}
+
+export interface BackupHistory {
+    id?: number;
+    name: string;
+    type: 'MANUAL' | 'AUTO';
+    blob: Blob;
+    createdAt: Date;
+}
+
+export interface BackupProfile {
+    id?: number;
+    name: string;      // e.g. "Hourly Transactions"
+    isEnabled: boolean;
+    frequency: 'INTERVAL' | 'DAILY' | 'WEEKLY'; // Interval (e.g. every 10m) or Time (Every Day at 10 AM)
+    intervalValue?: number; // Minutes
+    timeOfDay?: string;     // "10:30"
+    backupType: 'FULL' | 'DIFFERENTIAL'; // Full or "Since Last Success"
+    tables: string[];       // Specific tables or ['*'] for all
+    lastRunAt?: number;
+    lastSuccessAt?: number; // Used as the "Start Time" for next Differential backup
 }
 
 @Injectable({
@@ -36,6 +67,8 @@ export class AppDb extends Dexie {
     RowContact!: Table<any, string>; // Using any for now to avoid circular dependency with UI-Kit
     SyncLog!: Table<any, number>;    // Using any for now
     SyncMeta!: Table<any, string>;
+    DatabaseBackups!: Table<BackupHistory, number>;
+    BackupProfiles!: Table<BackupProfile, number>;
 
     constructor() {
         const dbName = 'AIJunctionDB_Refactored';
@@ -45,15 +78,17 @@ export class AppDb extends Dexie {
         // "AIJunctionDB" was used before. Let's stick to it if we want to keep data, or migrated.
         // I will use 'AIJunctionDB' to persist data.
 
-        // Schema V3 (Added SyncMeta)
-        this.version(3).stores({
+        // Schema V5 (Added BackupProfiles)
+        this.version(5).stores({
             TableMaster: 'Table_Code, Table_Name, Sync_Frequency',
             ApiConfiguration: 'API_CODE, Api_End_point',
             _recycleBin: '++id, originalTable, deletedAt',
             RowContact: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus', // PK & Indexable fields
 
             SyncLog: '++id, entityType, status, timestamp', // PK & Indexable fields
-            SyncMeta: 'id, updated_at'
+            SyncMeta: 'id, updated_at',
+            DatabaseBackups: '++id, name, type, createdAt',
+            BackupProfiles: '++id, name, isEnabled'
         });
     }
 

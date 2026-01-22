@@ -51,7 +51,7 @@ export class LayoutService {
         this.isSidebarClosed.update(v => !v);
     }
 
-    setMenuPosition(position: 'vertical' | 'horizontal') {
+    setMenuOrientation(position: 'vertical' | 'horizontal') {
         this.menuPosition.set(position);
     }
 

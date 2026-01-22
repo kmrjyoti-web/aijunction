@@ -19,6 +19,12 @@
       [class.text-indigo-600]="activeTab() === 'style'" [class.text-gray-500]="activeTab() !== 'style'">
       Style
     </button>
+    <button (click)="activeTab.set('search')"
+      class="flex-1 px-3 py-1.5 text-xs font-medium rounded-md transition-all duration-200"
+      [class.bg-white]="activeTab() === 'search'" [class.shadow-sm]="activeTab() === 'search'"
+      [class.text-indigo-600]="activeTab() === 'search'" [class.text-gray-500]="activeTab() !== 'search'">
+      Search
+    </button>
   </div>
 
   <form [formGroup]="form" class="space-y-6 pb-20">
@@ -149,6 +155,28 @@
           </label>
         </div>
       </div>
+
+      <!-- Functional Toggles added in Round 3 -->
+      <div class="grid grid-cols-2 gap-4 bg-indigo-50/50 p-3 rounded-lg border border-indigo-100/50">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-700">Multi-Select</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableMultiSelect" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-medium text-gray-700">Column Freezing</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableFreeze" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+      </div>
     </section>
 
 
@@ -186,24 +214,6 @@
           <span class="text-sm text-gray-700">Row Hover Effect</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" formControlName="rowHover" class="sr-only peer">
-            <div
-              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-            </div>
-          </label>
-        </div>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Multi-Select</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableMultiSelect" class="sr-only peer">
-            <div
-              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
-            </div>
-          </label>
-        </div>
-        <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Column Freezing</span>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" formControlName="enableFreeze" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -250,11 +260,37 @@
       </div>
 
       <div class="grid grid-cols-2 gap-4">
-        <!-- Feature Toggles -->
         <div class="flex items-center justify-between">
-          <span class="text-sm text-gray-700">Row Menu (3-dot)</span>
+          <div class="flex flex-col">
+            <span class="text-sm text-gray-700 font-medium">Icon Actions</span>
+            <span class="text-[10px] text-gray-400">Edit, Delete icons</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableQuickActions" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="text-sm text-gray-700 font-medium">3-Dot Menu</span>
+            <span class="text-[10px] text-gray-400">Context menu actions</span>
+          </div>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" formControlName="enableRowMenu" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <span class="text-sm text-gray-700 font-medium">Menu Icons</span>
+            <span class="text-[10px] text-gray-400">Show icons in 3-dot menu</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="enableRowMenuIcons" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -264,6 +300,15 @@
           <span class="text-sm text-gray-700">Header Actions</span>
           <label class="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" formControlName="enableHeaderActions" class="sr-only peer">
+            <div
+              class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+            </div>
+          </label>
+        </div>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-700">Filter by Colour</span>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" formControlName="showFilterByColor" class="sr-only peer">
             <div
               class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
             </div>
@@ -442,6 +487,7 @@
     @if(activeTab() === 'columns') {
     <div class="space-y-4" formArrayName="columns" cdkDropList (cdkDropListDropped)="drop($event)">
       @for(col of columnsArray.controls; track col.get('code')?.value) {
+      @if (col.get('showOnColumnChooser')?.value !== false) {
       <div [formGroupName]="$index" cdkDrag
         class="p-3 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col gap-3 bg-white">
 
@@ -674,7 +720,138 @@
 
       </div>
       }
+      }
     </div>
+    }
+
+    <!-- 7. Search Settings (Search Tab) -->
+    @if(activeTab() === 'search') {
+    <section class="space-y-6">
+      <div class="flex items-center gap-2 border-b border-gray-100 pb-2">
+        <i class="pi pi-search text-indigo-500"></i>
+        <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider">Global Search Configuration</h3>
+      </div>
+
+      <!-- Global Search Toggle -->
+      <div class="flex items-center justify-between bg-indigo-50 p-3 rounded-lg border border-indigo-100">
+        <div class="flex items-center gap-2">
+          <i class="pi pi-search-plus text-indigo-600"></i>
+          <span class="text-sm font-medium text-indigo-900">Enable Global Search</span>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" formControlName="enableSearch" class="sr-only peer">
+          <div
+            class="w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-indigo-600">
+          </div>
+        </label>
+      </div>
+
+      @if(form.get('enableSearch')?.value) {
+      <div class="space-y-4">
+        <!-- Placeholder -->
+        <div class="relative">
+          <i class="pi pi-info-circle absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+          <input type="text" formControlName="searchPlaceholder" placeholder=" "
+            class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+          <label
+            class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+            Search Placeholder
+          </label>
+        </div>
+
+        <!-- Debounce & Highlight -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="relative">
+            <i class="pi pi-clock absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10"></i>
+            <input type="number" formControlName="searchDebounceTime" placeholder=" "
+              class="peer block w-full rounded-md border border-gray-300 bg-white px-3 py-2.5 pl-10 text-sm text-gray-900 focus:border-indigo-600 focus:outline-none focus:ring-0" />
+            <label
+              class="absolute left-10 top-2 z-10 origin-[0] -translate-y-4 scale-75 bg-white px-2 text-sm text-gray-500 duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-indigo-600">
+              Debounce (ms)
+            </label>
+          </div>
+          <div class="flex items-center justify-between px-2">
+            <span class="text-xs text-gray-600">Highlight Match</span>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" formControlName="searchHighlightMatch" class="sr-only peer">
+              <div
+                class="w-7 h-4 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-indigo-600">
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Search Fields Selector -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between">
+            <label class="text-xs font-bold text-gray-400 uppercase">Search Fields & Order</label>
+            <div class="relative" (clickOutside)="showSearchFieldDropdown.set(false)">
+              <button type="button" (click)="showSearchFieldDropdown.set(!showSearchFieldDropdown())"
+                class="text-xs text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
+                title="Add a column to global search">
+                <i class="pi pi-plus-circle"></i> Add Field
+              </button>
+              <!-- Simple dropdown for adding fields -->
+              @if (showSearchFieldDropdown()) {
+              <div
+                class="absolute right-0 top-full mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg z-50 max-h-48 overflow-y-auto">
+                @for(col of getAvailableColumns(); track col.code) {
+                <button type="button" (click)="addSearchField(col.code); showSearchFieldDropdown.set(false)"
+                  class="w-full text-left px-3 py-2 text-xs hover:bg-gray-50 border-b border-gray-50 last:border-0"
+                  [title]="'Add ' + col.name + ' to search'">
+                  {{col.name}}
+                </button>
+                }
+                @if(getAvailableColumns().length === 0) {
+                <div class="px-3 py-2 text-xs text-gray-400 italic">No more fields</div>
+                }
+              </div>
+              }
+            </div>
+          </div>
+
+          <!-- Drag and Drop List -->
+          <div formArrayName="searchFieldConfigs" cdkDropList (cdkDropListDropped)="dropSearchField($event)"
+            class="space-y-2">
+            @for(ctrl of searchFieldsArray.controls; track ctrl.get('code')?.value) {
+            <div [formGroupName]="$index" cdkDrag
+              class="flex items-center gap-2 p-2 bg-white border border-gray-200 rounded-md shadow-sm group">
+              <i class="pi pi-bars text-gray-300 cursor-move" cdkDragHandle title="Drag to reorder search priority"></i>
+              <div class="flex-1 min-w-0">
+                <div class="text-[10px] font-mono text-gray-400">{{ctrl.get('code')?.value}}</div>
+                <div class="text-xs font-medium text-gray-700 truncate"
+                  [title]="getColumn(ctrl.get('code')?.value)?.name || ctrl.get('code')?.value">
+                  {{ getColumn(ctrl.get('code')?.value)?.name || ctrl.get('code')?.value }}
+                </div>
+              </div>
+
+              <!-- Pattern/Wildcard Selector -->
+              <select formControlName="operator"
+                class="text-[10px] bg-gray-50 border border-gray-200 rounded px-1 py-0.5 focus:outline-none focus:border-indigo-500"
+                title="Search pattern for this field">
+                <option value="CONTAINS">Contains</option>
+                <option value="STARTS_WITH">Starts With</option>
+                <option value="ENDS_WITH">Ends With</option>
+                <option value="EXACT">Exact</option>
+              </select>
+
+              <button type="button" (click)="removeSearchField($index)"
+                class="text-gray-300 hover:text-red-500 transition-colors" title="Remove from global search">
+                <i class="pi pi-times-circle text-xs"></i>
+              </button>
+            </div>
+            }
+            @if(searchFieldsArray.length === 0) {
+            <div class="text-center p-4 border-2 border-dashed border-gray-100 rounded-lg">
+              <p class="text-[10px] text-gray-400 italic">No fields selected for global search. All columns will be
+                searched by default.</p>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </section>
     }
 
   </form>

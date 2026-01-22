@@ -4,8 +4,11 @@ import { map, switchMap } from 'rxjs/operators';
 import { ApiRequest, ApiResponse } from '@ai-junction/core';
 import { Contact } from '../online-data.service';
 import { DatabaseService } from './database.service';
+import { getValidationState } from '../../utils/validation.util';
 import { EncryptionService } from './encryption.service';
 import { ConfigService } from '../config.service';
+
+import { SmartTableSearchService } from '../../services/search/smart-table-search.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +17,7 @@ export class OfflineDataService {
   private db = inject(DatabaseService);
   private encryptionService = inject(EncryptionService);
   private configService = inject(ConfigService);
+  private searchService = inject(SmartTableSearchService);
 
   /**
    * Saves a bulk of contacts to the local IndexedDB, encrypting them first if needed.
@@ -52,103 +56,36 @@ export class OfflineDataService {
 
     // --- Filtering ---
     if (search_filters.length > 0) {
-      // This `filter` approach is powerful but can be slower on very large datasets
-      // as it doesn't use IndexedDB indexes for filtering.
+      // Use the Generic Search Service
+      // This allows complex logic (Validation, Global, Date) to be handled uniformly.
+      const tableConfig = this.configService.config();
+
       collection = collection.filter(contact => {
-        // Decrypt once per record for filtering efficiency.
+        // Value Accessor handles decryption
+        const valueAccessor = (row: any, field: string) => {
+          // We can decrypt the whole record once if performance is okay,
+          // OR decrypt on demand.
+          // Currently, OfflineDataService decrypted specific fields or the whole record.
+          // Decrypting the whole record once per row is safest for complex logic.
+          // But we only have `contact` (encrypted) here.
+
+          // Optimisation: We could cache decrypted record?
+          // For now, let's decrypt once per row as before:
+          const decrypted = this.encryptionService.decryptRecord(row);
+          return decrypted[field];
+        };
+
+        // BETTER APPROACH:
+        // The SearchContext needs a ValueAccessor.
+        // We can decrypt the record ONCE here, and close over it in the accessor.
         const decryptedContact = this.encryptionService.decryptRecord(contact);
+        const simpleAccessor = (row: any, field: string) => decryptedContact[field];
 
-        return search_filters.every(filter => {
-          if (!filter.parameter_code || !filter.parameter_value) return true;
+        // "row" passed to matches() will be the encrypted 'contact', but accessor ignores it and uses 'decryptedContact'.
+        // Or we pass 'decryptedContact' as the row?
+        // Strategically, passing 'decryptedContact' as the 'row' is cleaner for strategies.
 
-          const filterValue = filter.parameter_value.toLowerCase();
-
-          // Handle Global Search
-          if (filter.parameter_code === 'GS') {
-            const dateColumns = this.configService.config().columns
-              .filter(c => c.columnType === 'DATE')
-              .map(c => c.code);
-
-            const range = filterValue.split(' to ');
-            let isDateRange = false;
-            let fromDate: Date | null = null;
-            let toDate: Date | null = null;
-
-            if (range.length === 2) {
-              const from = new Date(range[0].trim());
-              const to = new Date(range[1].trim());
-              if (!isNaN(from.getTime()) && !isNaN(to.getTime())) {
-                isDateRange = true;
-                fromDate = from;
-                toDate = to;
-                toDate.setHours(23, 59, 59, 999);
-              }
-            }
-
-            if (globalFilterFields && globalFilterFields.length > 0) {
-              return globalFilterFields.some(field => {
-                const fieldValue = decryptedContact[field];
-                if (!fieldValue) return false;
-
-                // Date field logic
-                if (dateColumns.includes(field)) {
-                  const contactDate = new Date(fieldValue as string);
-                  if (isNaN(contactDate.getTime())) return false;
-
-                  if (isDateRange) {
-                    return contactDate >= fromDate! && contactDate <= toDate!;
-                  } else {
-                    return String(fieldValue).toLowerCase().includes(filterValue);
-                  }
-                }
-
-                // Non-date field logic
-                return String(fieldValue).toLowerCase().includes(filterValue);
-              });
-            }
-            // Fallback to old behavior
-            return (
-              String(decryptedContact.organization_name || '').toLowerCase().includes(filterValue) ||
-              String(decryptedContact.contact_person || '').toLowerCase().includes(filterValue) ||
-              String(decryptedContact.communication_detail || '').toLowerCase().includes(filterValue) ||
-              String(decryptedContact.email_id || '').toLowerCase().includes(filterValue) ||
-              String(decryptedContact.created_time || '').toLowerCase().includes(filterValue)
-            );
-          }
-
-          const columnDef = this.configService.config().columns.find(c => c.code === filter.parameter_code);
-          if (columnDef?.columnType === 'DATE') {
-            const contactDateVal = decryptedContact[filter.parameter_code];
-            if (!contactDateVal) return false;
-            const contactDate = new Date(contactDateVal as string);
-            if (isNaN(contactDate.getTime())) return false;
-            contactDate.setUTCHours(0, 0, 0, 0);
-
-            if (filter.wildcard_operator === 'BETWEEN') {
-              if (!filter.parameter_value.includes(',')) return false;
-              const [startStr, endStr] = filter.parameter_value.split(',');
-              const startDate = new Date(startStr + 'T00:00:00Z');
-              const endDate = new Date(endStr + 'T00:00:00Z');
-              if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) return false;
-              endDate.setUTCHours(23, 59, 59, 999);
-              return contactDate >= startDate && contactDate <= endDate;
-            } else if (filter.wildcard_operator === 'EXACT') {
-              const filterDate = new Date(filter.parameter_value + 'T00:00:00Z');
-              if (isNaN(filterDate.getTime())) return false;
-              return contactDate.getTime() === filterDate.getTime();
-            }
-            return false; // Fail safe
-          }
-
-          const contactValue = String(decryptedContact[filter.parameter_code] || '').toLowerCase();
-          // Handle multi-select from Excel-like filter (comma-separated values)
-          if (filterValue.includes(',')) {
-            const filterValues = filterValue.split(',');
-            return filterValues.includes(contactValue);
-          }
-          // Handle Column/Advanced Filters
-          return contactValue.includes(filterValue);
-        });
+        return this.searchService.matches(decryptedContact, search_filters, tableConfig, (r, f) => r[f]);
       });
     }
 

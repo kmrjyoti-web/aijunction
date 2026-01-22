@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, inject, signal, computed, effect, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import * as feather from 'feather-icons';
 import { LayoutService } from '../../../../utils/layout.service';
 import { MargLayoutService, MenuItem } from '../../services/marg-layout.service';
@@ -77,6 +78,7 @@ import { MargLayoutService, MenuItem } from '../../services/marg-layout.service'
 export class MargSidebarComponent implements AfterViewInit {
     layoutService = inject(LayoutService);
     margLayoutService = inject(MargLayoutService);
+    private router = inject(Router);
 
     // Search Signal
     searchText = signal('');
@@ -141,7 +143,7 @@ export class MargSidebarComponent implements AfterViewInit {
         if (event.key === 'ArrowDown') {
             this.focusedIndex.update(i => Math.min(i + 1, items.length - 1));
             event.preventDefault();
-            this.scrollToFocused(); // Implement if needed
+            this.scrollToFocused();
         } else if (event.key === 'ArrowUp') {
             this.focusedIndex.update(i => Math.max(i - 1, 0));
             event.preventDefault();
@@ -152,8 +154,7 @@ export class MargSidebarComponent implements AfterViewInit {
                 if (current.hasSub) {
                     this.toggleItem(current);
                 } else {
-                    // It's a leaf node or link
-                    // trigger click or routing
+                    this.toggleItem(current);
                 }
                 event.preventDefault();
             }
@@ -161,7 +162,7 @@ export class MargSidebarComponent implements AfterViewInit {
     }
 
     scrollToFocused() {
-        // Placeholder for scrolling logic
+        // Placeholder
     }
 
     ngAfterViewInit() {
@@ -171,24 +172,16 @@ export class MargSidebarComponent implements AfterViewInit {
     toggleItem(item: MenuItem) {
         if (item.hasSub) {
             item.expanded = !item.expanded;
-            // Re-run feather replace to render icons in new sub-menu items
             setTimeout(() => feather.replace());
         } else {
-            // Activate single item
             this.menuItems.forEach(i => i.active = false);
-            // Also deactivate all subitems visually if needed, but 'active' property on subitems isn't tracked globally in this simple model
-            // For now just mark this item active
             item.active = true;
 
-            // Handle routing if link exists
             if (item.link) {
-                // router.navigate...
+                this.router.navigate([item.link]);
             }
         }
     }
-
-    // Hover Logic for Collapsed State
-    isHovered = false;
 
     @HostListener('mouseenter')
     onMouseEnter() {
@@ -196,6 +189,9 @@ export class MargSidebarComponent implements AfterViewInit {
             this.isHovered = true;
         }
     }
+
+    // Hover Logic
+    isHovered = false;
 
     @HostListener('mouseleave')
     onMouseLeave() {

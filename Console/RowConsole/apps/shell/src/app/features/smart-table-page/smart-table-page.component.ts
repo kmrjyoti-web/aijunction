@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SmartTableComponent, DataManagerService, ConfigService, DATA_PROVIDER_TOKEN } from '@ai-junction/ui-kit';
+import { SmartTableComponent, DataManagerService, ConfigService, DATA_PROVIDER_TOKEN, SMART_TABLE_DEFAULT_CONFIG } from '@ai-junction/ui-kit';
 import { RowContactDataService } from '@ai-junction/core';
-
+import { ROW_CONTACT_CONFIG } from './row-contact.config';
 
 @Component({
   selector: 'app-smart-table-page',
@@ -19,7 +19,8 @@ import { RowContactDataService } from '@ai-junction/core';
     ConfigService,
     DataManagerService,
     RowContactDataService,
-    { provide: DATA_PROVIDER_TOKEN, useExisting: RowContactDataService }
+    { provide: DATA_PROVIDER_TOKEN, useExisting: RowContactDataService },
+    { provide: SMART_TABLE_DEFAULT_CONFIG, useValue: ROW_CONTACT_CONFIG }
   ]
 })
 export class SmartTablePageComponent { }

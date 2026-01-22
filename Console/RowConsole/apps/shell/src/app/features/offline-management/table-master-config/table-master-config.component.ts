@@ -2,13 +2,13 @@ import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LocalDbService } from '@ai-junction/platform-angular';
-import { TableMaster } from '@ai-junction/platform-core';
+import { TableMaster, DatabaseBackupService } from '@ai-junction/core';
 
 @Component({
-    selector: 'app-table-master-config',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
-    template: `
+  selector: 'app-table-master-config',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
+  template: `
     <div>
       <!-- List View -->
       <table class="w-full text-sm text-left text-gray-500 mb-4">
@@ -31,6 +31,22 @@ import { TableMaster } from '@ai-junction/platform-core';
           </tr>
         </tbody>
       </table>
+
+      <div class="flex gap-4 mb-4">
+        <!-- Backup Actions -->
+        <button (click)="exportBackup()" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+            Export Backup
+        </button>
+        
+        <div class="relative">
+            <button class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800">
+                Import Backup
+            </button>
+            <input type="file" (change)="onFileSelected($event)" 
+                   class="absolute inset-0 opacity-0 cursor-pointer" 
+                   accept=".json">
+        </div>
+      </div>
 
       <!-- Simple Form (Toggleable) -->
       <button (click)="isEditing.set(!isEditing())" class="bg-blue-500 text-white px-4 py-2 rounded">
@@ -76,56 +92,88 @@ import { TableMaster } from '@ai-junction/platform-core';
   `
 })
 export class TableMasterConfigComponent implements OnInit {
-    tables = signal<TableMaster[]>([]);
-    isEditing = signal(false);
+  tables = signal<TableMaster[]>([]);
+  isEditing = signal(false);
 
-    currentTable: TableMaster = this.getEmptyTable();
+  currentTable: TableMaster = this.getEmptyTable();
+  isLoading = signal(false);
 
-    constructor(private localDb: LocalDbService) { }
+  constructor(
+    private localDb: LocalDbService,
+    private backupService: DatabaseBackupService
+  ) { }
 
-    ngOnInit() {
-        this.loadTables();
+  ngOnInit() {
+    this.loadTables();
+  }
+
+  loadTables() {
+    this.localDb.getAllTables().subscribe(data => {
+      this.tables.set(data);
+    });
+  }
+
+  edit(table: TableMaster) {
+    this.currentTable = { ...table };
+    this.isEditing.set(true);
+  }
+
+  async save() {
+    // Validate schema basic
+    if (!this.currentTable.Table_Name || !this.currentTable.Table_Schema) return;
+
+    if (this.currentTable.Table_Code) {
+      await this.localDb.addTable(this.currentTable); // Update usually same as add/put
     }
 
-    loadTables() {
-        this.localDb.getAllTables().subscribe(data => {
-            this.tables.set(data);
-        });
+    this.isEditing.set(false);
+    this.loadTables();
+    this.currentTable = this.getEmptyTable();
+  }
+
+  async exportBackup() {
+    try {
+      await this.backupService.exportDatabase();
+    } catch (error) {
+      alert('Export failed: ' + error);
     }
+  }
 
-    edit(table: TableMaster) {
-        this.currentTable = { ...table };
-        this.isEditing.set(true);
-    }
-
-    async save() {
-        // Validate schema basic
-        if (!this.currentTable.Table_Name || !this.currentTable.Table_Schema) return;
-
-        if (this.currentTable.Table_Code) {
-            await this.localDb.addTable(this.currentTable); // Update usually same as add/put
+  async onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      if (confirm('Are you sure you want to restore? This will overwrite existing data.')) {
+        try {
+          this.isLoading.set(true);
+          await this.backupService.importDatabase(file);
+          alert('Restore completed successfully!');
+          this.loadTables();
+        } catch (error) {
+          alert('Restore failed: ' + error);
+        } finally {
+          this.isLoading.set(false);
         }
-
-        this.isEditing.set(false);
-        this.loadTables();
-        this.currentTable = this.getEmptyTable();
+      }
     }
+    // Reset input
+    event.target.value = '';
+  }
 
-    private getEmptyTable(): TableMaster {
-        return {
-            Table_Code: '',
-            Table_Name: '',
-            Table_Schema: '',
-            Sync_Frequency: 'M',
-            sync_frequency_value: 10,
-            What_Operation_Allowed: ['I', 'U', 'D', 'R'],
-            Recycle_Soft_Delete: false,
-            schema_validate_server: 'DAILY',
-            sync_warning_type: 'WARNING',
-            Encryption: false,
-            encryption_field: [],
-            caching: false,
-            caching_ttl: 300
-        };
-    }
+  private getEmptyTable(): TableMaster {
+    return {
+      Table_Code: '',
+      Table_Name: '',
+      Table_Schema: '',
+      Sync_Frequency: 'M',
+      sync_frequency_value: 10,
+      What_Operation_Allowed: ['I', 'U', 'D', 'R'],
+      Recycle_Soft_Delete: false,
+      schema_validate_server: 'DAILY',
+      sync_warning_type: 'WARNING',
+      Encryption: false,
+      encryption_field: [],
+      caching: false,
+      caching_ttl: 300
+    };
+  }
 }

@@ -5,33 +5,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.ContactService.Address;
 
-[Table("Address", Schema = "CRM.Mst")]
-public class CrmMstAddressEntity : MasterBaseEntity
+[Table("AddressBook", Schema = "CS.Mst")]
+public class AddressBookEntity : MasterBaseEntity
 {
     // 🔑 Primary Key
     [Key]
-    [Column("address_uniq_id")]
+    [Column("address_unique_id")]
     [Unicode(false)] // ✅ Add this line
     [StringLength(36)]
-    public required string AddressUniqId { get; set; }
-
-    // 🔗 Related Entity Identifiers
-    [Column("row_contact_id")]
-    [StringLength(36)]
-    public string? RowContactId { get; set; }
-
-    [Column("contact_book_id")]
-    [StringLength(36)]
-    public string? ContactBookId { get; set; }
-
-    [Column("contact_person_id")]
-    [StringLength(36)]
-    public string? ContactPersonId { get; set; }
-
-    [Column("company_unique_id")]
-    [StringLength(36)]
-    public string? CompanyUniqueId { get; set; }
-
+    public required string AddressUniqueId { get; set; }
+    [Column("address_global_id")]
+    [StringLength(100)]
+    public string? AddressGlobalId { get; set; }
+    [Column("address_offline_id")]
+    [StringLength(100)]
+    public string? AddressOfflineId { get; set; }
+    
+    [Column("organization_global_id")]
+    [StringLength(100)]
+    public string? OrganizationGlobalId { get; set; }
+    [Column("contact_global_id")]
+    [StringLength(100)]
+    public string? ContactGlobalId { get; set; }
     // 🏷️ Address Type
     [Column("address_type_code")]
     [StringLength(20)]

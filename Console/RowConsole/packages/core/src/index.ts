@@ -1,6 +1,7 @@
 // DB Exports
 export * from './lib/db/dexie/app-db';
 export * from './lib/db/dexie/db-migrations';
+export * from './lib/db/dexie/database-backup.service';
 
 // Repositories
 export * from './lib/db/repositories/api-endpoint.repo';

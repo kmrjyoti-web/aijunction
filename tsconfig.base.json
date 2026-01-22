@@ -29,6 +29,12 @@
       ],
       "custom-layouts": [
         "packages/custom-layouts/src/index.ts"
+      ],
+      "@ai-junction/ui-kit": [
+        "packages/ui-kit/angular/src/index.ts"
+      ],
+      "@ai-junction/core": [
+        "packages/core/src/index.ts"
       ]
     }
   },

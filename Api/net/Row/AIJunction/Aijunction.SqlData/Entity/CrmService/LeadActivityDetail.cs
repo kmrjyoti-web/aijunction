@@ -4,45 +4,48 @@ using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.CrmService;
-[Table("LeadWorkFlowDetail", Schema = "CRM.Wf")]
-public class LeadWorkFlowDetailEntity : MasterBaseEntity
+[Table("LeadActivityDetail", Schema = "CRM.Wf")]
+public class LeadActivityDetailEntity : MasterBaseEntity
 {
     [Key]
-    [Column("workflow_id")]
+    [Column("activity_global_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string WorkflowId { get; set; } = Guid.NewGuid().ToString();
-    [Column("lead_uniq_id")]
+    public string ActivityGlobalId { get; set; } = Guid.NewGuid().ToString();
+    [Column("lead_global_id")]
     [MaxLength(50)]
     [Unicode(false)]
-    public string? LeadUniqId { get; set; }
+    public string? LeadGlobalId { get; set; }
     [Required]
-    [Column("workflow_type")] // Department,Designation,Category,Groud
+    [Column("activity_type")] // Department,Designation,Category,Groud
     [MaxLength(50)]
-    public string WorkflowType { get; set; } = null!;
-    [Column("workflow_child_type")] // Department,Designation,Category,Groud
+    public string ActivityType { get; set; } = null!;
+    [Column("activity_child_type")] // Department,Designation,Category,Groud
     [MaxLength(50)]
-    public string WorkflowChildType { get; set; } = null!;
-    [Column("workflow_status")] // System_Filter,App_Filter,Web_Filter,Offline_Filter
+    public string ActivityChildType { get; set; } = null!;
+    [Column("activity_status")] // System_Filter,App_Filter,Web_Filter,Offline_Filter
     [MaxLength(50)]
-    public string WorkflowStatus { get; set; } = null!;
-    [Column("workflow_child_status")] // System_Filter,App_Filter,Web_Filter,Offline_Filter
+    public string ActivityStatus { get; set; } = null!;
+    [Column("activity_child_status")] // System_Filter,App_Filter,Web_Filter,Offline_Filter
     [MaxLength(50)]
-    public string WorkflowChildStatus { get; set; } = null!;
-    [Column("workflow_category")] // Filter Id Like Department_id
+    public string ActivityChildStatus { get; set; } = null!;
+    [Column("activity_category")] // Filter Id Like Department_id
     [MaxLength(50)]
-    public string WorkFlowCategory { get; set; } = null!;
-    [Column("workflow_child_category")] // Filter Id Like Department_id
+    public string ActivityCategory { get; set; } = null!;
+    [Column("activity_child_category")] // Filter Id Like Department_id
     [MaxLength(50)]
-    public string WorkFlowChildCategory { get; set; } = null!;
-    [Column("workflow_group")] // Filter Id Like Department_id
+    public string ActivityChildCategory { get; set; } = null!;
+    [Column("activity__group")] // Filter Id Like Department_id
     [MaxLength(50)]
-    public string WorkFlowGroup { get; set; } = null!;
-    [Column("workflow_child_group")] // Filter Id Like Department_id
+    public string ActivityGroup { get; set; } = null!;
+    [Column("activity_child_group")] // Filter Id Like Department_id
     [MaxLength(50)]
-    public string WorkFlowChildGroup { get; set; } = null!;
-    [Column("filter_code")] // If Anu User Defiend Code Like Department_id
+    public string ActivityChildGroup { get; set; } = null!;
+    [Column("activity_created_date")] // If Anu User Defiend Code Like Department_id
+    public DateTime ActivityCreatedDate { get; set; } 
+    [Column("activity_created_by")] // Filter Id Like Department_id
     [MaxLength(50)]
-    public string FilterCode { get; set; } = null!;
+    public string ActivityCreatedBy { get; set; } = null!;
+    
     
 }

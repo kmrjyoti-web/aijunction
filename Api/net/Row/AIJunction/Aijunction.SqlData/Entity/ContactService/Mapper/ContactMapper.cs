@@ -1,42 +1,51 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Aijunction.SqlData.Entity.CommonService;
+using Aijunction.SqlData.Entity.ContactService.Contact;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aijunction.SqlData.Entity.ContactService.Contact;
+namespace Aijunction.SqlData.Entity.ContactService.Mapper;
 
-[Table("Contact", Schema = "CRM.Map")]
-[Index(nameof(ContactId), Name = "IX_CrmMapContact_ContactId")]
-[Index(nameof(OrganizationId), Name = "IX_CrmMapContact_CompanyId")]
-[Index(nameof(RowContactId), Name = "IX_CrmMapContact_RowContactId")]
-public class CrmMapContactEntity : MasterBaseEntity
+[Table("Contact", Schema = "CS.Map")]
+[Index(nameof(ContactGlobalId), Name = "IX_CrmMapContact_ContactGlobalId")]
+[Index(nameof(OrganizationGlobalId), Name = "IX_CrmMapContact_CompanyGlobalId")]
+[Index(nameof(RowContactGlobalId), Name = "IX_CrmMapContact_RowContactGlobalId")]
+public class ContactMapperEntity : MasterBaseEntity
 {
     // 🔑 Primary Key
     [Key]
-    [Column("contact_mapping_id")]
+    [Column("contact_mapping_unique_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string ContactMappingId { get; set; } = Guid.NewGuid().ToString();
+    public required string ContactMappingUniqueId { get; set; } 
+    [Column("contact_mapping_global_id")]
+    [MaxLength(50)]
+    [Unicode(false)]
+    public string? ContactMappingGlobalId { get; set; }
+    [Column("contact_mapping_offline_id")]
+    [MaxLength(50)]
+    [Unicode(false)]
+    public string? ContactMappingOfflineId { get; set; }
 
     // 🔗 Foreign Keys
-    [Column("contact_id")]
+    [Column("contact_global_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string? ContactId { get; set; }
-    [Column("company_id")]
+    public string? ContactGlobalId { get; set; }
+    [Column("organization_global_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string? OrganizationId { get; set; }
-    [Column("row_contact_id")]
+    public string? OrganizationGlobalId { get; set; }
+    [Column("row_contact_global_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string? RowContactId { get; set; }
-    [Column("designation_id")]
+    public string? RowContactGlobalId { get; set; }
+    [Column("designation_global_id")]
     [MaxLength(36)]
-    public string? DesignationId { get; set; }
-    [Column("department_id")]
+    public string? DesignationGlobalId { get; set; }
+    [Column("department_global_id")]
     [MaxLength(36)]
-    public string? DepartmentId { get; set; }
+    public string? DepartmentGlobalId { get; set; }
     [Column("system_contact_group_code")]
     [MaxLength(100)]
     [Unicode(false)]
@@ -109,8 +118,8 @@ public class CrmMapContactEntity : MasterBaseEntity
     public string? ConfigJson { get; set; }
 
     // 🔁 Navigation Properties
-    [ForeignKey(nameof(ContactId))]
-    public virtual CrmMstContactEntity? Contact { get; set; }
+    [ForeignKey(nameof(ContactGlobalId))]
+    public virtual MstContactEntity? Contact { get; set; }
 
    
     

@@ -286,23 +286,76 @@ export class RowContactDataService {
 
             // Apply Filters
             if (search_filters && search_filters.length > 0) {
+                const searchConfig = this.configService.config()?.config?.searchConfig;
+                const fallbackGlobalFields = this.configService.config()?.config?.globalFilterFields || [];
+
                 const filterFn = (record: any) => {
                     return search_filters.every((filter: any) => {
-                        if (!filter.parameter_code || !filter.parameter_value) return true;
+                        const filterValue = String(filter.parameter_value || '').toLowerCase().trim();
+                        if (!filter.parameter_code || !filterValue) return true;
 
-                        // Handle comma-separated values (Multi-select)
-                        const filterValues = String(filter.parameter_value).split(',').map(v => v.trim().toLowerCase());
+                        // 1. Handle Global Search (GS)
+                        if (filter.parameter_code === 'GS') {
+                            if (searchConfig?.enabled === false) return true;
 
+                            // Helper to match a field with basic operator support
+                            const matchField = (code: string, operator: string = 'CONTAINS'): boolean => {
+                                // Support both direct key and camelCase mapped key
+                                let val = '';
+                                if (record[code] !== undefined && record[code] !== null) {
+                                    val = String(record[code]);
+                                } else {
+                                    const camelCode = code.replace(/_([a-z])/g, (g: any) => g[1].toUpperCase());
+                                    if (record[camelCode] !== undefined && record[camelCode] !== null) {
+                                        val = String(record[camelCode]);
+                                    }
+                                }
+
+                                val = val.toLowerCase();
+                                switch (operator) {
+                                    case 'STARTS_WITH': return val.startsWith(filterValue);
+                                    case 'ENDS_WITH': return val.endsWith(filterValue);
+                                    case 'EXACT': return val === filterValue;
+                                    case 'CONTAINS':
+                                    default: return val.includes(filterValue);
+                                }
+                            };
+
+                            // Priority 1: fieldConfigs (detailed per-field config)
+                            if (searchConfig?.fieldConfigs && searchConfig.fieldConfigs.length > 0) {
+                                return searchConfig.fieldConfigs.some(cfg => matchField(cfg.code, cfg.operator));
+                            }
+
+                            // Priority 2: fields (simple array) OR globalFilterFields (legacy/default list)
+                            const targetFields = (searchConfig?.fields && searchConfig.fields.length > 0)
+                                ? searchConfig.fields
+                                : fallbackGlobalFields;
+
+                            if (targetFields.length > 0) {
+                                return targetFields.some(f => matchField(f));
+                            }
+
+                            // Priority 3: Absolute Fallback - Search all keys in record
+                            return Object.keys(record).some(k => {
+                                // Avoid searching internal/meta keys starting with underscore or rowContext
+                                if (k.startsWith('_') || k === 'syncStatus' || k === 'lastModified') return false;
+                                return matchField(k);
+                            });
+                        }
+
+                        // 2. Handle Regular Column/Field Filters
+                        const filterValues = filterValue.split(',').map(v => v.trim());
                         let recordValue = '';
-                        if (record[filter.parameter_code]) {
+                        if (record[filter.parameter_code] !== undefined && record[filter.parameter_code] !== null) {
                             recordValue = String(record[filter.parameter_code]);
                         } else {
                             const camelCode = filter.parameter_code.replace(/_([a-z])/g, (g: any) => g[1].toUpperCase());
-                            if (record[camelCode]) recordValue = String(record[camelCode]);
+                            if (record[camelCode] !== undefined && record[camelCode] !== null) {
+                                recordValue = String(record[camelCode]);
+                            }
                         }
 
                         const lowerRecordValue = recordValue.toLowerCase();
-                        // Check if record matches ANY of the provided filter values
                         return filterValues.some(fv => lowerRecordValue.includes(fv));
                     });
                 };

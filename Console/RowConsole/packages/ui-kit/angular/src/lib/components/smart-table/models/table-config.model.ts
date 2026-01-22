@@ -1,4 +1,7 @@
 import { Density, DensitySetting } from './density.model';
+import { InjectionToken } from '@angular/core';
+
+export const SMART_TABLE_DEFAULT_CONFIG = new InjectionToken<TableConfig>('SMART_TABLE_DEFAULT_CONFIG');
 
 export interface TableConfig {
   feature: string;
@@ -80,8 +83,11 @@ export interface Config {
   rowHover?: boolean;
   globalFilterFields?: string[];
   enableColumnChooser: boolean;
+  showFilterByColor?: boolean;
   exportConfig?: ExportConfig;
   enableRowMenu: boolean;
+  enableRowMenuIcons?: boolean;
+  enableQuickActions?: boolean;
   enableHeaderActions: boolean;
   enableSavedQueries: boolean;
   enableConfigButton: boolean;
@@ -97,8 +103,23 @@ export interface Config {
   cardViewConfig?: CardViewConfig;
   emptyStateConfig?: EmptyStateConfig;
   footerConfig?: FooterConfig;
+  searchConfig?: SearchConfig;
   styleConfig?: StyleConfig;
   autoSync?: boolean;
+}
+
+export interface SearchFieldConfig {
+  code: string;
+  operator?: 'STARTS_WITH' | 'ENDS_WITH' | 'EXACT' | 'CONTAINS';
+}
+
+export interface SearchConfig {
+  enabled: boolean;
+  fields: string[]; // Keep for backward compatibility or rename
+  fieldConfigs?: SearchFieldConfig[]; // New: Detailed config per field
+  placeholder?: string;
+  debounceTime?: number;
+  highlightMatch?: boolean;
 }
 
 export interface StyleConfig {
@@ -270,6 +291,7 @@ export interface RowMenuSubItem {
   action?: string;
   shortcut?: string;
   items?: RowMenuSubItem[]; // Recursive property for sub-menus
+  disable?: (row: any) => boolean;
 }
 
 export interface RowActionItem {

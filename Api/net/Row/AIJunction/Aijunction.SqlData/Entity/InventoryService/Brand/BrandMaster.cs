@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aijunction.SqlData.Entity.ContactService.Brand
+namespace Aijunction.SqlData.Entity.InventoryService.Brand
 {
-    [Table("Brand", Schema = "Mst")] // 🔁 adjust table name if needed
+    [Table("Brand", Schema = "INV.Mst")] // 🔁 adjust table name if needed
     public class BrandMasterEntity : MasterBaseEntity
     {
         [Key]

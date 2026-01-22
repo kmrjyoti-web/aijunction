@@ -6,10 +6,12 @@ import { TableConfig, DataStrategy } from '../../../../models/table-config.model
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Subject, takeUntil } from 'rxjs';
 
+import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
+
 @Component({
   selector: 'app-config-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, DragDropModule],
+  imports: [CommonModule, ReactiveFormsModule, DragDropModule, ClickOutsideDirective],
   templateUrl: './config-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -23,6 +25,10 @@ export class ConfigFormComponent implements OnDestroy {
 
   get columnsArray(): FormArray {
     return this.form.get('columns') as FormArray;
+  }
+
+  get searchFieldsArray(): FormArray {
+    return this.form.get('searchFieldConfigs') as FormArray;
   }
 
   drop(event: CdkDragDrop<any[]>) {
@@ -42,13 +48,51 @@ export class ConfigFormComponent implements OnDestroy {
     this.form.updateValueAndValidity();
   }
 
+  dropSearchField(event: CdkDragDrop<any[]>) {
+    const previousIndex = event.previousIndex;
+    const currentIndex = event.currentIndex;
+
+    if (previousIndex === currentIndex) return;
+
+    const item = this.searchFieldsArray.at(previousIndex);
+    this.searchFieldsArray.removeAt(previousIndex, { emitEvent: false });
+    this.searchFieldsArray.insert(currentIndex, item, { emitEvent: false });
+
+    this.form.updateValueAndValidity();
+  }
+
+  addSearchField(code: string) {
+    if (!code) return;
+    const exists = this.searchFieldsArray.controls.some(c => c.get('code')?.value === code);
+    if (!exists) {
+      this.searchFieldsArray.push(this.fb.group({
+        code: [code],
+        operator: ['CONTAINS']
+      }));
+    }
+  }
+
+  removeSearchField(index: number) {
+    this.searchFieldsArray.removeAt(index);
+  }
+
+  getAvailableColumns() {
+    const selectedCodes = this.searchFieldsArray.controls.map(c => c.get('code')?.value);
+    return (this.config()?.columns || []).filter(c => !selectedCodes.includes(c.code) && c.columnType !== 'ACTION' && c.columnType !== 'CHECKBOX');
+  }
+
+  getColumn(code: string) {
+    return (this.config()?.columns || []).find(c => c.code === code);
+  }
+
   readonly dataStrategies: DataStrategy[] = ['SYNC', 'ONLINE_FIRST', 'OFFLINE_FIRST', 'HYBRID'];
   readonly pagingModes = ['paginator', 'infinite'];
   readonly infiniteScrollBehaviors = ['append', 'replace'];
   readonly paginatorPositions = ['top', 'bottom', 'both'];
   readonly toolbarButtonModes = ['iconAndText', 'iconOnly'];
 
-  activeTab = signal<'general' | 'columns' | 'style'>('general');
+  activeTab = signal<'general' | 'columns' | 'style' | 'search'>('general');
+  showSearchFieldDropdown = signal(false);
 
   constructor() {
     this.form = this.fb.group({
@@ -67,8 +111,10 @@ export class ConfigFormComponent implements OnDestroy {
       cardsPerRow: [4],
       enableFooter: [false],
       enableRowMenu: [false],
+      enableRowMenuIcons: [true],
       enableHeaderActions: [false],
       enableSavedQueries: [false],
+      showFilterByColor: [true],
       enableChipFilters: [false],
       enableFreeze: [false],
       toolbarButtonMode: ['iconAndText'],
@@ -78,7 +124,13 @@ export class ConfigFormComponent implements OnDestroy {
       enableTransparency: [false],
       transparencyOpacity: [90], // Default 90%
       backgroundImageUrl: [''],
+      enableQuickActions: [true],
       autoSizeOffset: [0],
+      enableSearch: [true],
+      searchPlaceholder: ['Search...'],
+      searchDebounceTime: [300],
+      searchHighlightMatch: [true],
+      searchFieldConfigs: this.fb.array([]),
       columns: this.fb.array([])
     });
 
@@ -103,8 +155,11 @@ export class ConfigFormComponent implements OnDestroy {
           cardsPerRow: currentConfig.config.cardViewConfig?.cardsPerRow ?? 4,
           enableFooter: currentConfig.config.footerConfig?.enabled ?? false,
           enableRowMenu: currentConfig.config.enableRowMenu,
+          enableRowMenuIcons: currentConfig.config.enableRowMenuIcons ?? true,
+          enableQuickActions: currentConfig.config.enableQuickActions ?? true,
           enableHeaderActions: currentConfig.config.enableHeaderActions,
           enableSavedQueries: currentConfig.config.enableSavedQueries,
+          showFilterByColor: currentConfig.config.showFilterByColor ?? true,
           enableChipFilters: currentConfig.config.enableChipFilters ?? false,
           enableFreeze: currentConfig.config.enableFreeze ?? false,
           toolbarButtonMode: currentConfig.config.toolbarButtonMode ?? 'iconAndText',
@@ -114,8 +169,39 @@ export class ConfigFormComponent implements OnDestroy {
           enableTransparency: currentConfig.config.styleConfig?.enableTransparency ?? false,
           transparencyOpacity: currentConfig.config.styleConfig?.transparencyOpacity ?? 90,
           backgroundImageUrl: currentConfig.config.styleConfig?.backgroundImageUrl ?? '',
-          autoSizeOffset: currentConfig.config.sizerConfig?.autoSizeOffset ?? 0
+          autoSizeOffset: currentConfig.config.sizerConfig?.autoSizeOffset ?? 0,
+          enableSearch: currentConfig.config.searchConfig?.enabled ?? true,
+          searchPlaceholder: currentConfig.config.searchConfig?.placeholder ?? 'Search...',
+          searchDebounceTime: currentConfig.config.searchConfig?.debounceTime ?? 300,
+          searchHighlightMatch: currentConfig.config.searchConfig?.highlightMatch ?? true,
         }, { emitEvent: false }); // Prevent feedback loop with valueChanges
+
+        // Patch Search Field Configs
+        const searchFieldsArray = this.form.get('searchFieldConfigs') as FormArray;
+        const currentSearchConfig = currentConfig.config.searchConfig;
+
+        // If we have fieldConfigs, use them. If not, use 'fields' (strings) to populate defaults.
+        let targetFieldConfigs: any[] = [];
+        if (currentSearchConfig?.fieldConfigs && currentSearchConfig.fieldConfigs.length > 0) {
+          targetFieldConfigs = currentSearchConfig.fieldConfigs;
+        } else if (currentSearchConfig?.fields && currentSearchConfig.fields.length > 0) {
+          targetFieldConfigs = currentSearchConfig.fields.map(f => ({ code: f, operator: 'CONTAINS' }));
+        }
+
+        // Sync Search Fields Array
+        while (searchFieldsArray.length > targetFieldConfigs.length) {
+          searchFieldsArray.removeAt(searchFieldsArray.length - 1, { emitEvent: false });
+        }
+        while (searchFieldsArray.length < targetFieldConfigs.length) {
+          searchFieldsArray.push(this.fb.group({
+            code: [''],
+            operator: ['CONTAINS']
+          }), { emitEvent: false });
+        }
+
+        targetFieldConfigs.forEach((f, i) => {
+          searchFieldsArray.at(i).patchValue(f, { emitEvent: false });
+        });
 
         // Patch Columns FormArray (Sync in-place to preserve focus)
         const columnsArray = this.form.get('columns') as FormArray;
@@ -154,7 +240,8 @@ export class ConfigFormComponent implements OnDestroy {
             emptyBackgroundColor: ['bg-yellow-50'],
             validationMinLength: [null],
             validationMaxLength: [null],
-            lengthErrorColor: ['bg-orange-50 text-orange-600']
+            lengthErrorColor: ['bg-orange-50 text-orange-600'],
+            showOnColumnChooser: [true]
           }), { emitEvent: false });
         }
 
@@ -191,7 +278,8 @@ export class ConfigFormComponent implements OnDestroy {
             emptyBackgroundColor: col.validation?.emptyBackgroundColor ?? 'bg-yellow-50',
             validationMinLength: col.validation?.minLength ?? null,
             validationMaxLength: col.validation?.maxLength ?? null,
-            lengthErrorColor: col.validation?.lengthErrorColor ?? 'bg-orange-50 text-orange-600'
+            lengthErrorColor: col.validation?.lengthErrorColor ?? 'bg-orange-50 text-orange-600',
+            showOnColumnChooser: col.showOnColumnChooser ?? true
           }, { emitEvent: false });
         });
       }
@@ -268,11 +356,24 @@ export class ConfigFormComponent implements OnDestroy {
         }
 
         updatedConfig.config.enableRowMenu = formValue.enableRowMenu;
+        updatedConfig.config.enableRowMenuIcons = formValue.enableRowMenuIcons;
+        updatedConfig.config.enableQuickActions = formValue.enableQuickActions;
         updatedConfig.config.enableHeaderActions = formValue.enableHeaderActions;
         updatedConfig.config.enableSavedQueries = formValue.enableSavedQueries;
+        updatedConfig.config.showFilterByColor = formValue.showFilterByColor;
         updatedConfig.config.enableChipFilters = formValue.enableChipFilters;
         updatedConfig.config.enableFreeze = formValue.enableFreeze;
         updatedConfig.config.toolbarButtonMode = formValue.toolbarButtonMode;
+
+        // Map Search Config back
+        updatedConfig.config.searchConfig = {
+          enabled: formValue.enableSearch,
+          placeholder: formValue.searchPlaceholder,
+          debounceTime: Number(formValue.searchDebounceTime),
+          highlightMatch: formValue.searchHighlightMatch,
+          fieldConfigs: formValue.searchFieldConfigs || [],
+          fields: (formValue.searchFieldConfigs || []).map((f: any) => f.code)
+        };
 
         if (!updatedConfig.config.sizerConfig) {
           // Fallback if missing, though it should exist given defaults
@@ -330,7 +431,8 @@ export class ConfigFormComponent implements OnDestroy {
                   minLength: colForm.validationMinLength ? Number(colForm.validationMinLength) : undefined,
                   maxLength: colForm.validationMaxLength ? Number(colForm.validationMaxLength) : undefined,
                   lengthErrorColor: colForm.lengthErrorColor
-                }
+                },
+                showOnColumnChooser: colForm.showOnColumnChooser
               });
             } else {
               console.warn(`[ConfigForm] Column with code ${colForm.code} not found in current config.`);

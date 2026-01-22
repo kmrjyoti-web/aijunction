@@ -20,8 +20,56 @@ export class DbManagementFacade {
     ) {
         this.tables = this.tableStore.tables;
         this.endpoints = this.apiStore.endpoints;
-        // Signal for logs? Or just a simple fetch for now since we don't have a store for it yet.
-        // Let's rely on liveQuery or manual fetch. For simplicity, manual fetch in this iteration.
+    }
+
+    getSystemTables(): TableMaster[] {
+        return [
+            {
+                Table_Code: 'SYS_TM',
+                Table_Name: 'TableMaster',
+                Table_Schema: 'Table_Code, Table_Name, Sync_Frequency',
+                Sync_Frequency: 'D',
+                sync_frequency_value: 0,
+                What_Operation_Allowed: ['R'],
+                Recycle_Soft_Delete: false,
+                schema_validate_server: 'DAILY',
+                sync_warning_type: 'WARNING',
+                Encryption: false,
+                encryption_field: [],
+                caching: false,
+                caching_ttl: 0
+            },
+            {
+                Table_Code: 'SYS_SL',
+                Table_Name: 'SyncLog',
+                Table_Schema: '++id, entityType, status, timestamp',
+                Sync_Frequency: 'M',
+                sync_frequency_value: 0,
+                What_Operation_Allowed: ['R'],
+                Recycle_Soft_Delete: false,
+                schema_validate_server: 'DAILY',
+                sync_warning_type: 'WARNING',
+                Encryption: false,
+                encryption_field: [],
+                caching: false,
+                caching_ttl: 0
+            },
+            {
+                Table_Code: 'SYS_DB',
+                Table_Name: 'DatabaseBackups',
+                Table_Schema: '++id, name, type, createdAt',
+                Sync_Frequency: 'M',
+                sync_frequency_value: 0,
+                What_Operation_Allowed: ['R'],
+                Recycle_Soft_Delete: false,
+                schema_validate_server: 'DAILY',
+                sync_warning_type: 'WARNING',
+                Encryption: false,
+                encryption_field: [],
+                caching: false,
+                caching_ttl: 0
+            }
+        ];
     }
 
     loadAll() {
@@ -32,6 +80,34 @@ export class DbManagementFacade {
     }
 
     private async ensureDefaults() {
+        // Seed RowContact into TableMaster so it's manageable
+        const contactTable = await this.tableRepo['db'].table('TableMaster').get('SYS_RC');
+        if (!contactTable) {
+            await this.tableRepo.addOrUpdate({
+                Table_Code: 'SYS_RC',
+                Table_Name: 'RowContact',
+                Table_Schema: 'rowContactUniqueId, contactPerson, organizationName, mobileNumber, emailId, syncStatus',
+                Sync_Frequency: 'M',
+                sync_frequency_value: 1,
+                What_Operation_Allowed: ['R', 'U', 'D', 'I'],
+                Recycle_Soft_Delete: true,
+                schema_validate_server: 'DAILY',
+                sync_warning_type: 'WARNING',
+                Encryption: true,
+                encryption_field: ['mobileNumber', 'emailId'],
+                caching: true,
+                caching_ttl: 300,
+                fields: [
+                    { name: 'rowContactUniqueId', type: 'string', isEncrypted: false, isPrimary: true, isIndexed: true },
+                    { name: 'contactPerson', type: 'string', isEncrypted: false, isIndexed: true },
+                    { name: 'organizationName', type: 'string', isEncrypted: false, isIndexed: true },
+                    { name: 'mobileNumber', type: 'string', isEncrypted: true, isIndexed: true },
+                    { name: 'emailId', type: 'string', isEncrypted: true, isIndexed: true },
+                    { name: 'syncStatus', type: 'string', isEncrypted: false, isIndexed: true }
+                ]
+            });
+        }
+
         const existing = await this.apiRepo.db.table('ApiConfiguration').get('SMART_TABLE');
         if (!existing) {
             await this.apiRepo.put({

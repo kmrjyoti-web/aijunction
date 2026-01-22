@@ -1,7 +1,7 @@
-import { Component, inject, ViewChild, AfterViewInit, DestroyRef } from '@angular/core';
+import { Component, inject, ViewChild, AfterViewInit, DestroyRef, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SmartTableComponent, TableConfig, SmartDrawerComponent, SmartDrawerHelperService } from "../../../../ui-kit/angular/src";
+import { SmartTableComponent, TableConfig, SmartDrawerComponent, SmartDrawerHelperService, SmartDrawerConfig } from "../../../../ui-kit/angular/src";
 import { ROW_CONTACT_TABLE_CONFIG } from './row-contact-table.config';
 import { ConfigService } from '../../../../ui-kit/angular/src/lib/components/smart-table/data-access/config.service';
 import { DATA_PROVIDER_TOKEN } from '../../../../ui-kit/angular/src/lib/components/smart-table/models/data-provider.interface';
@@ -34,6 +34,14 @@ export class RowContactListComponent implements AfterViewInit {
     private syncManager = inject(SyncManagerService);
     private destroyRef = inject(DestroyRef);
 
+    drawerConfig: SmartDrawerConfig = {
+        title: 'Contact Details',
+        mode: 'drawer',
+        showClose: true,
+        showMaximize: true,
+        showMinimize: true
+    };
+
     constructor() {
         // Initialize the local ConfigService with our specific configuration, allowing persistence to override
         this.configService.initConfig(ROW_CONTACT_TABLE_CONFIG);
@@ -43,6 +51,12 @@ export class RowContactListComponent implements AfterViewInit {
         if (ROW_CONTACT_TABLE_CONFIG.config.dataStrategy) {
             this.configService.updateDataStrategy(ROW_CONTACT_TABLE_CONFIG.config.dataStrategy);
         }
+
+        // Keep drawerConfig sync'd with helper title
+        effect(() => {
+            const state = this.drawerHelper.currentState();
+            this.drawerConfig.title = state.title || '';
+        });
 
         console.log('[RowContactListComponent] Config Initialized.');
     }

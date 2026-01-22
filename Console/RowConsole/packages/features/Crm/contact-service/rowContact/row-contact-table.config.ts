@@ -22,6 +22,7 @@ export const ROW_CONTACT_TABLE_CONFIG: TableConfig = {
         enableHeaderActions: true,
         enableSavedQueries: true,
         enableConfigButton: true,
+        showFilterByColor: true,
         enableChipFilters: true,
         enableMultiSelect: true,
         defaultRows: 10,
@@ -58,6 +59,8 @@ export const ROW_CONTACT_TABLE_CONFIG: TableConfig = {
             name: 'Avatar',
             code: 'avatarUrl',
             display: 'none',
+            visible: false,
+            showOnColumnChooser: false,
             columnType: 'IMAGE',
             cardHeader: false
         },
@@ -83,7 +86,12 @@ export const ROW_CONTACT_TABLE_CONFIG: TableConfig = {
             columnType: 'TEXT',
             sortable: true,
             filterable: true,
-            listRow: true
+            listRow: true,
+            genericValidation: {
+                minLength: 3,
+                bgcolor: '#e6fffa', // Light Green (just for demo, technically it's error color but we use it for styling here)
+                tooltip: 'Valid Organization'
+            }
         },
         {
             index: 3,
@@ -100,7 +108,7 @@ export const ROW_CONTACT_TABLE_CONFIG: TableConfig = {
             name: 'Phone',
             code: 'communicationDetail',
             display: 'table_cell',
-            columnType: 'TEXT',
+            columnType: 'MOBILE',
             sortable: true,
             filterable: true,
             cardRow: true
@@ -113,16 +121,31 @@ export const ROW_CONTACT_TABLE_CONFIG: TableConfig = {
             columnType: 'TEXT',
             sortable: true,
             filterable: true,
-            cardRow: true
+            cardRow: true,
+            genericValidation: {
+                maxLength: 4, // "Google" (6) will fail. "Web" (3) will pass.
+                bgcolor: '#ffe6e6', // Light Red for long sources
+                tooltip: 'Source name too long'
+            }
         }
     ],
     rowMenu: [
         {
             label: 'Actions',
             items: [
-                { label: 'Edit', icon: 'pi pi-pencil', action: 'edit' },
-                { label: 'Delete', icon: 'pi pi-trash', action: 'delete' }
+                {
+                    label: 'Edit s', icon: 'pi pi-pencil', action: 'edit',
+                    items: [
+                        { label: 'Sub Item 1', icon: 'pi pi-user', action: 'sub1' },
+                        { label: 'Sub Item 2', icon: 'pi pi-cog', action: 'sub2' }
+                    ]
+                },
+                { label: 'Delete s', icon: 'pi pi-trash', action: 'delete' }
             ]
         }
+    ],
+    rowActions: [
+        { label: 'Edit', icon: 'pi pi-pencil', action: 'edit' },
+        { label: 'Delete', icon: 'pi pi-trash', action: 'delete', color: 'text-red-500' }
     ]
 };

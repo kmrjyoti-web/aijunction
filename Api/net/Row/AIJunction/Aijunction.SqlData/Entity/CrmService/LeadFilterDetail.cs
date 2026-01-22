@@ -4,18 +4,18 @@ using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.CrmService;
-[Table("ContactFilterDetail", Schema = "CS.Fld")]
-public class ContactFilterEntity : MasterBaseEntity
+[Table("LeadFilterDetail", Schema = "CRM.Fld")]
+public class LeadFilterEntity : MasterBaseEntity
 {
     [Key]
-    [Column("contact_filter_id")]
+    [Column("lead_filter_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string ContactFilterId { get; set; } = Guid.NewGuid().ToString();
-    [Column("contact_uniq_id")]
+    public string LeadFilterId { get; set; } = Guid.NewGuid().ToString();
+    [Column("Lead_global_id")]
     [MaxLength(50)]
     [Unicode(false)]
-    public string? ContactUniqId { get; set; }
+    public string? LeadGlobalId { get; set; }
     [Required]
     [Column("filter_type")] // Department,Designation,Category,Groud
     [MaxLength(50)]

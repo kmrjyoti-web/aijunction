@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, WritableSignal, viewChild, ElementRef, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, WritableSignal, viewChild, ElementRef, output, input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfigService } from '../../data-access/config.service';
 
@@ -154,6 +154,14 @@ export class SmartTableComponent {
   showMobileActionsMenu = signal(false);
   allTableColumns = signal<Column[]>([]);
   visibleTableColumns = signal<Column[]>([]);
+
+  // Actions & Menu Inputs (Optional overrides for config)
+  rowActions = input<any[] | null>(null);
+  rowMenu = input<any[] | null>(null);
+
+  // Merged Actions & Menu
+  mergedRowActions = computed(() => this.rowActions() ?? this.config().rowActions);
+  mergedRowMenu = computed(() => this.rowMenu() ?? this.config().rowMenu);
 
   // Generic Outputs
   toolbarAction = output<string>();
@@ -411,7 +419,7 @@ export class SmartTableComponent {
       const defaultVisibleCodes = new Set(all.filter(c => c.display === 'table_cell').map(c => c.code));
       const savedVisibleCodes = savedState?.visibleColumnCodes ? new Set(savedState.visibleColumnCodes) : null;
 
-      const visibleCols = all.filter(c => {
+      let visibleCols = all.filter(c => {
         // 1. If explicit visibility is set in config (e.g. via Column Manager), use it.
         if (c.visible !== undefined) {
           // console.log(`[SmartTable] Column ${c.code} explicit visibility:`, c.visible);
@@ -424,6 +432,45 @@ export class SmartTableComponent {
         // 3. Fallback to default logic
         return defaultVisibleCodes.has(c.code);
       });
+
+      // Round 3: Inject missing CHECKBOX/ACTION columns if enabled
+      const hasCheckbox = visibleCols.some(c => c.columnType === 'CHECKBOX');
+      const multiSelectEnabled = this.config().config.enableMultiSelect;
+      if (multiSelectEnabled && !hasCheckbox) {
+        const checkboxCol = all.find(c => c.columnType === 'CHECKBOX') || {
+          index: -1,
+          name: 'Select',
+          code: 'select_box',
+          display: 'table_cell',
+          columnType: 'CHECKBOX',
+          width: '50px',
+          align: 'center',
+          sortable: false,
+          filterable: false,
+          frozen: true,
+          showOnColumnChooser: false
+        } as Column;
+        visibleCols = [checkboxCol, ...visibleCols];
+      }
+
+      const hasAction = visibleCols.some(c => c.columnType === 'ACTION');
+      const rowMenuEnabled = this.config().config.enableRowMenu ?? true;
+      const quickActionsEnabled = this.config().config.enableQuickActions ?? true;
+      if ((rowMenuEnabled || quickActionsEnabled) && !hasAction) {
+        const actionCol = all.find(c => c.columnType === 'ACTION') || {
+          index: 999,
+          name: 'Action',
+          code: 'action',
+          display: 'table_cell',
+          columnType: 'ACTION',
+          width: '120px',
+          align: 'center',
+          sortable: false,
+          filterable: false,
+          showOnColumnChooser: false
+        } as Column;
+        visibleCols = [...visibleCols, actionCol];
+      }
 
       console.log('[SmartTable] Config Update. Computed Visible Cols:', visibleCols.length, visibleCols.map(c => c.code));
       this.visibleTableColumns.set(visibleCols);
@@ -513,7 +560,7 @@ export class SmartTableComponent {
   }
 
   private setupStatePersistence(): void {
-    effect(() => {
+    effect((onCleanup) => {
       const state: TableState = {
         viewMode: this.viewMode(),
         currentPage: this.currentPage(),
@@ -525,7 +572,14 @@ export class SmartTableComponent {
         visibleColumnCodes: this.visibleTableColumns().map(c => c.code),
         activeLayouts: this.activeLayouts(),
       };
-      this.persistenceService.saveState('smartTableState', state);
+
+      const timeout = setTimeout(() => {
+        this.persistenceService.saveState('smartTableState', state);
+      }, 500);
+
+      onCleanup(() => {
+        clearTimeout(timeout);
+      });
     });
   }
 
@@ -741,6 +795,39 @@ export class SmartTableComponent {
     this.configService.updateFullConfig(newConfig);
   }
 
+  handleColumnResize(event: { columnCode: string, width: string }): void {
+    const currentConfig = this.config();
+    const newConfig = JSON.parse(JSON.stringify(currentConfig)) as TableConfig;
+
+    const col = newConfig.columns.find(c => c.code === event.columnCode);
+    if (col) {
+      col.width = event.width;
+      this.configService.updateFullConfig(newConfig);
+      console.log(`[SmartTable] Column ${event.columnCode} resized to ${event.width}`);
+    }
+  }
+
+  handleColumnVisibilityChange(columnCode: string): void {
+    const currentConfig = this.config();
+    const newConfig = JSON.parse(JSON.stringify(currentConfig)) as TableConfig;
+
+    const col = newConfig.columns.find(c => c.code === columnCode);
+    if (col) {
+      col.visible = false;
+      this.configService.updateFullConfig(newConfig);
+      console.log(`[SmartTable] Column ${columnCode} hidden`);
+      // Optional: Show toast "Column hidden. Use 'Columns' menu to restore."
+    }
+  }
+
+  handleNextPage(): void {
+    if (this.loading() || this.allDataLoaded()) return;
+
+    console.log('[SmartTable] handleNextPage triggered. Fetching page:', this.currentPage() + 1);
+    this.currentPage.update(p => p + 1);
+    this.fetchPage(this.currentPage(), true); // true = append
+  }
+
   private checkAndFetchForFill(): void {
     // Use a small timeout to allow the DOM to update with the new data
     setTimeout(() => {
@@ -806,7 +893,7 @@ export class SmartTableComponent {
     });
   }
 
-  fetchPage(page: number): void {
+  fetchPage(page: number, append: boolean = false): void {
     if (page < 1) return;
     this.loading.set(true);
 
@@ -818,7 +905,12 @@ export class SmartTableComponent {
     this.dataManager.getData(request).subscribe({
       next: response => {
         console.log(`[SmartTable] fetchPage success. Data received: ${response.data.length} records. Total: ${response.total_records}`);
-        this.data.set(response.data);
+        if (append) {
+          this.data.update(currentData => [...currentData, ...response.data]);
+        } else {
+          this.data.set(response.data);
+        }
+
         this.totalRecords.set(response.total_records);
         this.currentPage.set(page);
         this.loading.set(false);

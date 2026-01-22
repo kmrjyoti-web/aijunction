@@ -4,7 +4,7 @@ using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.ContactService.Contact;
-[Table("Contact", Schema = "Mst")]
+[Table("Contact", Schema = "CS.Mst")]
 [Index(nameof(UserContactCode), IsUnique = true, Name = "UX_CrmMstContact_UserContactCode")]
 [Index(nameof(SystemContactCode), IsUnique = true, Name = "UX_CrmMstContact_SystemContactCode")]
 public class MstContactEntity : MasterBaseEntity
@@ -14,7 +14,15 @@ public class MstContactEntity : MasterBaseEntity
     [Column("contact_unique_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string ContactUniqueId { get; set; } = Guid.NewGuid().ToString();
+    public required string ContactUniqueId { get; set; } 
+    [Column("contact_global_id")]
+    [MaxLength(50)]
+    [Unicode(false)]
+    public string? ContactGlobalId { get; set; }
+    [Column("contact_offline_id")]
+    [MaxLength(50)]
+    [Unicode(false)]
+    public string? ContactOfflineId { get; set; }
     // 📇 Codes
     [Column("user_contact_code")]
     [MaxLength(25)]

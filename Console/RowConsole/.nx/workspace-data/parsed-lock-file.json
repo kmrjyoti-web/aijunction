@@ -9927,6 +9927,15 @@
         "hash": "sha512-Ckej0NS6jxQ4Po3OrSQBFddayRhTCic2DoCAG5zacOfOVB9P2Q5Xc5uL/nVa7ZVs+HdMnvUPzLFCB/JwpB6Csg=="
       }
     },
+    "npm:dexie-export-import": {
+      "type": "npm",
+      "name": "npm:dexie-export-import",
+      "data": {
+        "version": "4.1.4",
+        "packageName": "dexie-export-import",
+        "hash": "sha512-3bw171qUuOTWSYLXI7C/0M6p1X65Rho3tu1IvD9By8jn0+3t3dLSkDlZ1BC6MbABl3kRlhtGigzC+SF+qcS5Og=="
+      }
+    },
     "npm:didyoumean": {
       "type": "npm",
       "name": "npm:didyoumean",
@@ -28317,6 +28326,11 @@
     {
       "source": "npm:detect-port",
       "target": "npm:debug",
+      "type": "static"
+    },
+    {
+      "source": "npm:dexie-export-import",
+      "target": "npm:dexie",
       "type": "static"
     },
     {

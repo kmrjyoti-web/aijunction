@@ -127,7 +127,18 @@ export class PaginatorComponent {
   }
 
   onPageSizeChange(event: Event): void {
-    const newSize = parseInt((event.target as HTMLSelectElement).value, 10);
-    this.pageSizeChange.emit(newSize);
+    const newVal = parseInt((event.target as HTMLSelectElement).value, 10);
+    if (newVal === -1) {
+      if (this.totalRecords() > 2000) {
+        // Confirmation? For now just emit total
+        // Or actually, smart-table might want to know "All" was selected.
+        // But the input is pageSize. So we set it to totalRecords.
+        this.pageSizeChange.emit(this.totalRecords());
+      } else {
+        this.pageSizeChange.emit(this.totalRecords());
+      }
+    } else {
+      this.pageSizeChange.emit(newVal);
+    }
   }
 }

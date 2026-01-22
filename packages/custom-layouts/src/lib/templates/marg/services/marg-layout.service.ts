@@ -49,7 +49,22 @@ export class MargLayoutService {
         { label: 'CRM', icon: 'users', hasSub: true, subItems: [{ label: 'Customer List', icon: 'circle' }] },
         { label: 'Other Products', icon: 'package' },
         { label: 'Utilities & Tools', icon: 'tool' },
-        { label: 'Online Store', icon: 'home' }
+        { label: 'Online Store', icon: 'home' },
+        {
+            label: 'Development', icon: 'code', hasSub: true,
+            subItems: [
+                { label: 'UIKit', icon: 'circle', link: '/dev-controls' },
+                { label: 'Smart Table', icon: 'circle', link: '/smart-table' }
+            ]
+        },
+        {
+            label: 'Management', icon: 'database', hasSub: true,
+            subItems: [
+                { label: 'DB Management', icon: 'database', link: '/management/db' },
+                { label: 'API Management', icon: 'server', link: '/management/api' },
+                { label: 'Cache Management', icon: 'hard-drive', link: '/management/cache' }
+            ]
+        }
     ];
 
     init() {

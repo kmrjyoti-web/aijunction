@@ -59,7 +59,8 @@ export class MargLayoutService {
             label: 'Development', icon: 'code', hasSub: true,
             subItems: [
                 { label: 'UIKit', icon: 'circle', link: '/dev-controls' },
-                { label: 'Smart Table', icon: 'circle', link: '/smart-table' }
+                { label: 'Smart Table', icon: 'circle', link: '/smart-table' },
+                { label: 'Smart Drawer', icon: 'circle', link: '/smart-drawer-sample' }
             ]
         },
         {

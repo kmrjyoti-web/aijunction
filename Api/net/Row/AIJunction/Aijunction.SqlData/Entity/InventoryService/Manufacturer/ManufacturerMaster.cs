@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aijunction.SqlData.Entity.ContactService.Manufacturer
+namespace Aijunction.SqlData.Entity.InventoryService.Manufacturer
 {
-    [Table("Manufacturer", Schema = "Mst")] // 🔁 adjust table name if needed
+    [Table("Manufacturer", Schema = "INV.Mst")] // 🔁 adjust table name if needed
     public class BrandMasterEntity : MasterBaseEntity
     {
         [Key]
         [Column("manufacturer_Unique_id")]
         [MaxLength(250)]
         [Unicode(false)]
-        public string ManufacturerUniqueId { get; set; } = Guid.NewGuid().ToString();
+        public required string ManufacturerUniqueId { get; set; } 
         [Column("user_manufacturer_code")]
         [MaxLength(50)]
         [Unicode(false)]

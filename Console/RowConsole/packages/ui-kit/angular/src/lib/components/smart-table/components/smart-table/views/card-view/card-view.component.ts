@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Column, MaskConfig, RowMenuItem, CardViewConfig, RowActionItem } from '../../../../models/table-config.model';
 import { getValidationState, ValidationState } from '../../../../utils/validation.util';
 import { maskString as maskUtil } from '../../../../utils/masking.util';
-import { RowMenuComponent } from '../../row-menu/row-menu.component';
+
 import { ClickOutsideDirective } from '../../../../directives/click-outside.directive';
 import { DynamicItemComponent } from '../../../shared/dynamic-item/dynamic-item.component';
 import { Density } from '../../../../models/density.model';
@@ -11,7 +11,7 @@ import { Density } from '../../../../models/density.model';
 @Component({
   selector: 'app-card-view',
   standalone: true,
-  imports: [CommonModule, RowMenuComponent, ClickOutsideDirective, DynamicItemComponent],
+  imports: [CommonModule, ClickOutsideDirective, DynamicItemComponent],
   templateUrl: './card-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -16,8 +16,21 @@
           "zone.js"
         ],
         "tsConfig": "apps/shell/tsconfig.app.json",
-        "assets": [],
+        "assets": [
+          "apps/shell/src/favicon.ico",
+          "apps/shell/src/assets",
+          {
+            "input": "packages/ui-kit/assets",
+            "glob": "**/*",
+            "output": "assets/app-master-data"
+          }
+        ],
         "styles": [
+          "node_modules/primeicons/primeicons.css",
+          "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+          "node_modules/material-icons/iconfont/material-icons.css",
+          "node_modules/codemirror/lib/codemirror.css",
+          "node_modules/codemirror/theme/neo.css",
           "apps/shell/src/styles.scss"
         ],
         "scripts": [],

@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
-namespace Aijunction.SqlData.Entity.ContactService.Contact;
-[Table("ContactFilterDetail", Schema = "Mst")]
+namespace Aijunction.SqlData.Entity.InventoryService.Brand;
+[Table("Brand", Schema = "INV.Fl")]
 public class ContactFilterEntity : MasterBaseEntity
 {
     [Key]
-    [Column("contact_filter_id")]
+    [Column("brand_filter_id")]
     [MaxLength(36)]
     [Unicode(false)]
-    public string ContactFilterId { get; set; } = Guid.NewGuid().ToString();
-    [Column("contact_uniq_id")]
+    public string BrandFilterId { get; set; } = Guid.NewGuid().ToString();
+    [Column("brand_uniq_id")]
     [MaxLength(50)]
     [Unicode(false)]
-    public string? ContactUniqId { get; set; }
+    public string? BrandUniqId { get; set; }
     [Required]
     [Column("filter_type")] // Department,Designation,Category,Groud
     [MaxLength(50)]

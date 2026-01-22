@@ -4,7 +4,7 @@ using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
 namespace Aijunction.SqlData.Entity.CrmService;
-[Table("Lead", Schema = "CS.Mst")]
+[Table("Lead", Schema = "CRM.Mst")]
 public class CrmLeadEntity : MasterBaseEntity
 {
     // 🔑 Primary Key
@@ -13,6 +13,12 @@ public class CrmLeadEntity : MasterBaseEntity
     [MaxLength(36)]
     [Unicode(false)]
     public string LeadUniqueId { get; set; } = Guid.NewGuid().ToString();
+    [Column("lead_global_id")]
+    [MaxLength(50)]
+    public string? LeadGlobalId { get; set; }
+    [Column("lead_offline_id")]
+    [MaxLength(50)]
+    public string? LeadOfflineId { get; set; }
     // 📇 Codes
     [Column("user_lead_code")]
     [MaxLength(25)]
@@ -23,12 +29,12 @@ public class CrmLeadEntity : MasterBaseEntity
     [Unicode(false)]
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public string? SystemLeadCode { get; set; } 
-    [Column("contact_person_unique_id")]
+    [Column("contact_person_global_id")]
     [MaxLength(20)]
-    public string? ContactPersonUniqueId { get; set; }
-    [Column("organization_unique_id")]
+    public string? ContactPersonGlobalId { get; set; }
+    [Column("organization_global_id")]
     [MaxLength(100)]
-    public string? OrganizationUniqueId { get; set; }
+    public string? OrganizationGlobalId { get; set; }
     [Column("requirement_detail_json")]
     public string? RequirementDetailJson { get; set; }
     [Column("filter_detail_json")]
@@ -39,9 +45,28 @@ public class CrmLeadEntity : MasterBaseEntity
     public string? OtherDetailJson { get; set; }
     [Column("config_json")]
     public string? ConfigJson { get; set; }
+    [Column("lead_detail_json")]
+    public string? LeadDetailJson { get; set; }
     [Column("is_data_incomplete")]
     public bool? IsDataIncomplete { get; set; }
     [Column("last_activity_datetime")]
     public DateTime? LastActivityDateTime { get; set; }
+    [Column("header_filter_ida")]
+    [MaxLength(50)]
+    public string? HeaderFilterIdA { get; set; }
+    [Column("header_filter_idb")]
+    [MaxLength(50)]
+    public string? HeaderFilterIdB { get; set; }
+    [Column("header_filter_idc")]
+    [MaxLength(50)]
+    public string? HeaderFilterIdC { get; set; }
+    [Column("header_filter_idd")]
+    [MaxLength(50)]
+    public string? HeaderFilterIdD { get; set; }
+    [Column("header_filter_ide")]
+    [MaxLength(50)]
+    public string? HeaderFilterIdE { get; set; }
+
+
     
 }

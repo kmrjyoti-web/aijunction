@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using AvinyaCrm.SqlData.Domain.Entities.CommonService;
+using Aijunction.SqlData.Entity.CommonService;
 using Microsoft.EntityFrameworkCore;
 
-namespace AvinyaCrm.SqlData.Domain.Entities.InventoryService;
+namespace Aijunction.SqlData.Entity.InventoryService.Product;
 [Table("ProductFilterDetail", Schema = "INV.MS")]
 public class ProductFilterEntity : MasterBaseEntity
 {
@@ -12,10 +12,10 @@ public class ProductFilterEntity : MasterBaseEntity
     [MaxLength(36)]
     [Unicode(false)]
     public string ProductFilterId { get; set; } = Guid.NewGuid().ToString();
-    [Column("product_uniq_id")]
+    [Column("product_global_id")]
     [MaxLength(50)]
     [Unicode(false)]
-    public string? ProductUniqId { get; set; }
+    public string? ProductGlobalId { get; set; }
     [Required]
     [Column("filter_type")]
     [MaxLength(50)]

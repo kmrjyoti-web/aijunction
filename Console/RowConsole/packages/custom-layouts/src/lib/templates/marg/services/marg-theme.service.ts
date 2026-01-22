@@ -158,6 +158,17 @@ export class MargThemeService {
             return '#' + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (B < 255 ? B < 1 ? 0 : B : 255) * 0x100 + (G < 255 ? G < 1 ? 0 : G : 255)).toString(16).slice(1);
         };
 
+        // Helper to add alpha to hex
+        const addAlpha = (hex: string, alpha: number) => {
+            if (hex && hex.startsWith('#')) {
+                const r = parseInt(hex.substring(1, 3), 16);
+                const g = parseInt(hex.substring(3, 5), 16);
+                const b = parseInt(hex.substring(5, 7), 16);
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+            return hex;
+        };
+
         // Colors
         root.style.setProperty('--marg-header-bg', theme.headerBg);
         root.style.setProperty('--marg-sidebar-bg', theme.sidebarBg);
@@ -192,17 +203,6 @@ export class MargThemeService {
             const content = document.querySelector('.marg-content') as HTMLElement;
             if (content) content.style.backgroundImage = 'none';
 
-            // Helper to add alpha to hex
-            const addAlpha = (hex: string, alpha: number) => {
-                if (hex && hex.startsWith('#')) {
-                    const r = parseInt(hex.substring(1, 3), 16);
-                    const g = parseInt(hex.substring(3, 5), 16);
-                    const b = parseInt(hex.substring(5, 7), 16);
-                    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-                }
-                return hex;
-            };
-
             root.style.setProperty('--marg-header-bg', addAlpha(theme.headerBg, theme.bgOpacity));
             root.style.setProperty('--marg-sidebar-bg', addAlpha(theme.sidebarBg, theme.bgOpacity));
             root.style.setProperty('--marg-footer-bg', addAlpha(footerBg, theme.bgOpacity));
@@ -228,7 +228,21 @@ export class MargThemeService {
 
         // Menu Position
         if (this.layoutService.menuPosition() !== theme.menuPosition) {
-            this.layoutService.setMenuPosition(theme.menuPosition);
+            this.layoutService.setMenuOrientation(theme.menuPosition);
         }
+
+        // --- Smart Drawer Theme Integration ---
+        // Header matches sidebar header or a lighter shade
+        root.style.setProperty('--drawer-header-bg', addAlpha(theme.headerBg, 0.05));
+        root.style.setProperty('--drawer-footer-bg', '#ffffff');
+
+        // Use theme accent for drawer highlights
+        root.style.setProperty('--drawer-accent-color', theme.accent);
+
+        // Borders
+        root.style.setProperty('--drawer-header-border', 'rgba(0,0,0,0.08)');
+
+        // Text
+        root.style.setProperty('--drawer-text-color', theme.headerBg); // Use header color for strong text
     }
 }

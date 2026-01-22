@@ -161,6 +161,14 @@ export class MargMenuComponent implements AfterViewInit {
                 { label: 'Row Contacts', icon: 'circle', link: '/row-contact' }
             ]
         },
+        {
+            label: 'Development', icon: 'code', hasSub: true,
+            subItems: [
+                { label: 'UIKit', icon: 'circle', link: '/dev-controls' },
+                { label: 'Smart Table', icon: 'circle', link: '/smart-table' },
+                { label: 'Smart Drawer', icon: 'circle', link: '/smart-drawer-sample' }
+            ]
+        },
         { label: 'Report', icon: 'file-text' },
         { label: 'Utilities', icon: 'tool' }
     ];

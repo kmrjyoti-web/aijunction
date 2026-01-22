@@ -1,7 +1,7 @@
-<div class="w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-20"
+<div class="w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-[1000]"
   [class.origin-top-right]="!position()" [class.absolute]="!position()" [class.right-0]="!position()"
   [class.mt-2]="!position()" [class.fixed]="!!position()" [style.left]="position() ? (position()!.x + 'px') : null"
-  [style.top]="position() ? (position()!.y + 'px') : null">
+  [style.top]="position() ? (position()!.y + 'px') : null" (clickOutside)="clickOutside.emit()">
   @for (group of menuConfig(); track group.label; let first = $first) {
   @if (!first) {
   <hr class="border-gray-200">
@@ -21,8 +21,10 @@
         class="flex items-center justify-between px-3 py-2 text-sm text-gray-700 transition-colors duration-150"
         role="menuitem">
         <div class="flex items-center gap-3">
+          @if(showIcons()) {
           @if(item.icon) {<i [class]="item.icon + ' w-4 text-center'"></i>}
           @else { <span class="w-4"></span> }
+          }
           <span>{{ item.label }}</span>
         </div>
 
@@ -36,10 +38,12 @@
         </div>
       </a>
 
-      <!-- Sub-menu -->
+
       @if (item.items && openSubMenu() === item.label) {
       <div
-        class="absolute left-full -top-1 ml-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30">
+        class="absolute -top-1 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-30"
+        [class.left-full]="subMenuDirection() === 'right'" [class.ml-1]="subMenuDirection() === 'right'"
+        [class.right-full]="subMenuDirection() === 'left'" [class.mr-1]="subMenuDirection() === 'left'">
         <div class="py-1" role="menu" aria-orientation="vertical">
           @for (subItem of item.items; track subItem.label) {
           <a (click)="onActionClick(subItem)" [class.cursor-pointer]="!!subItem.action && !isItemDisabled(subItem)"
@@ -49,8 +53,10 @@
             class="flex items-center justify-between px-3 py-2 text-sm text-gray-700 transition-colors duration-150"
             role="menuitem">
             <div class="flex items-center gap-3">
+              @if(showIcons()) {
               @if(subItem.icon) {<i [class]="subItem.icon + ' w-4 text-center'"></i>}
               @else { <span class="w-4"></span> }
+              }
               <span>{{ subItem.label }}</span>
             </div>
             @if (subItem.shortcut) {

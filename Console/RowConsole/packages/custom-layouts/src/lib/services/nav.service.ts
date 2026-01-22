@@ -103,6 +103,19 @@ export class NavService {
                     type: 'link',
                     active: false,
                     path: '/smart-table'
+                },
+                {
+                    title: 'Smart Drawer',
+                    type: 'sub',
+                    active: false,
+                    children: [
+                        {
+                            title: 'Demo',
+                            type: 'link',
+                            active: false,
+                            path: '/smart-drawer-sample'
+                        }
+                    ]
                 }
             ]
         }

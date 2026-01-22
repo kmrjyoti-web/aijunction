@@ -33,6 +33,10 @@ import { RouterModule, RouterLink, RouterLinkActive } from '@angular/router';
              class="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 transition-colors">
              Sync Logs
           </a>
+          <a routerLink="backups" routerLinkActive="bg-blue-50 text-blue-700 font-medium"
+             class="flex items-center px-3 py-2 text-sm text-gray-700 rounded-md hover:bg-gray-100 transition-colors">
+             Backups & Restore
+          </a>
            <!-- Dashboard overview linking back to main mgmt page if desired, or we keep 'db' as default -->
         </nav>
       </aside>

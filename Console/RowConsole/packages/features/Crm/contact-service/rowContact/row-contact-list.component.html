@@ -4,8 +4,7 @@
     </app-smart-table>
 
     <!-- Smart Drawer -->
-    <app-smart-drawer [isOpen]="drawerHelper.isOpen()" [title]="drawerHelper.currentState().title || ''"
-        (close)="drawerHelper.close()">
+    <smart-drawer [config]="drawerConfig" [open]="drawerHelper.isOpen()" (closed)="drawerHelper.close()">
 
         <!-- Dynamic Content based on view -->
         @if (drawerHelper.currentState().view === 'create' || drawerHelper.currentState().view === 'details' ||
@@ -13,5 +12,5 @@
         <app-verify-contact [data]="drawerHelper.currentState().data"></app-verify-contact>
         }
 
-    </app-smart-drawer>
+    </smart-drawer>
 </div>

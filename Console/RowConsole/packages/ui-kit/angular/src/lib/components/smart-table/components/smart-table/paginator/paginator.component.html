@@ -43,6 +43,7 @@
         @for(size of pageSizeOptions(); track size) {
         <option [value]="size" [selected]="size === pageSize()">{{ size }}</option>
         }
+        <option [value]="-1" [selected]="pageSize() === totalRecords() && totalRecords() > 100">All</option>
       </select>
     </div>
     <button (click)="autoSizingToggle.emit()"

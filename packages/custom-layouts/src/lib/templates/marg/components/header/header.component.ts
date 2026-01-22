@@ -31,6 +31,17 @@ import { LayoutSwitcherComponent } from '../../../common/layout-switcher/layout-
       </div>
 
       <div class="right-section">
+        
+        <!-- New Buttons -->
+        <button class="header-special-btn quick-action" (click)="openQuickActions()" title="Quick Action (Ctrl+K)">
+            <i data-feather="zap" class="special-icon"></i>
+        </button>
+        <button class="header-special-btn app-switch" (click)="openAppSwitcher()" title="My Apps">
+            <i data-feather="grid" class="special-icon"></i>
+        </button>
+
+        <div class="divider"></div>
+
         <div class="user-profile">
              <i data-feather="user"></i>
         </div>
@@ -59,10 +70,12 @@ import { LayoutSwitcherComponent } from '../../../common/layout-switcher/layout-
                     <i data-feather="settings" class="icon"></i>
                     <span>Settings</span>
                 </div>
-                <div class="action-item" (click)="openShortcuts.emit()">
-                    <i data-feather="command" class="icon"></i> <!-- Shortcut -->
+                <!-- Removed duplicate Shortcut item as per request to focus on Quick Action -->
+                <!-- <div class="action-item" (click)="openShortcuts.emit()">
+                    <i data-feather="command" class="icon"></i> 
                     <span>Shortcut</span>
-                </div>
+                </div> --> 
+                <!-- Keeping existing items -->
                 <div class="action-item">
                     <i data-feather="clock" class="icon"></i>
                     <span>History</span>
@@ -93,6 +106,16 @@ export class MargHeaderComponent implements AfterViewInit {
 
     toggleMobileMenu() {
         this.isMobileMenuOpen = !this.isMobileMenuOpen;
+    }
+
+    openQuickActions() {
+        console.log('Quick Actions Clicked');
+        this.openShortcuts.emit(); // Reusing existing shortcut event for now
+    }
+
+    openAppSwitcher() {
+        console.log('App Switcher Clicked');
+        // Logic to open App Switcher
     }
 
     ngAfterViewInit() {
