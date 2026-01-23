@@ -60,7 +60,9 @@ export class MargLayoutService {
             subItems: [
                 { label: 'UIKit', icon: 'circle', link: '/dev-controls' },
                 { label: 'Smart Table', icon: 'circle', link: '/smart-table' },
-                { label: 'Smart Drawer', icon: 'circle', link: '/smart-drawer-sample' }
+                { label: 'Smart Drawer', icon: 'circle', link: '/smart-drawer-sample' },
+                { label: 'Smart Autocomplete', icon: 'circle', link: '/smart-autocomplete-sample' }
+
             ]
         },
         {

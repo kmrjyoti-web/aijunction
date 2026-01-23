@@ -1,0 +1,128 @@
+<!-- src/app/shared/ui/smart-autocomplete/components/smart-autocomplete/smart-autocomplete.component.html -->
+
+<div class="smart-autocomplete relative w-full" cdkOverlayOrigin #autoOrigin="cdkOverlayOrigin">
+
+    <!-- Floating Label Input Group -->
+    <div class="relative group">
+        <!-- Icon (Absolute Left) -->
+        <i *ngIf="icon" [class]="icon"
+            class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 z-10 transition-colors group-focus-within:text-blue-500"></i>
+
+        <!-- Input -->
+        <input type="text" [attr.id]="inputId"
+            class="block w-full px-3 py-2.5 text-sm font-semibold text-gray-900 bg-white border border-gray-300 dark:border-gray-600 rounded-md appearance-none focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 peer transition-all duration-200"
+            [class.pl-9]="!!icon" [class.pl-3]="!icon" [value]="store.query()"
+            (input)="onInputChange($any($event.target).value)" (keydown)="onInputKeyDown($event)"
+            (focus)="panelOpen = true" placeholder=" " />
+
+        <!-- Floating Label -->
+        <label [attr.for]="inputId" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform bg-white px-1 z-10 origin-[0] 
+                      top-0 -translate-y-1/2 scale-75 
+                      peer-focus:px-1 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 
+                      peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 
+                      peer-focus:top-0 peer-focus:scale-75 peer-focus:-translate-y-1/2
+                      pointer-events-none" [class.left-8]="!!icon" [class.left-2]="!icon">
+            {{ label }} <span *ngIf="required" class="text-red-500">*</span>
+        </label>
+
+        <!-- Clear Button -->
+        @if (showClear && store.query()) {
+        <button type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 transition-colors"
+            (click)="onResetFilters()">
+            <i class="fa fa-times text-xs"></i>
+        </button>
+        }
+    </div>
+
+
+    <div class="mt-1 text-xs pl-1">
+        @if (store.isLoading()) {
+        <span class="text-blue-500"><i class="fa fa-circle-notch fa-spin mr-1"></i> Loading...</span>
+        }
+        @if (store.errorMessage()) {
+        <span class="text-red-500">
+            {{ store.errorMessage() }}
+        </span>
+        }
+    </div>
+
+    @if (showFilterSummary && activeFilters.length > 0) {
+    <div class="mt-2 text-xs text-gray-700 flex flex-wrap items-center gap-1.5 pl-1">
+        <span class="font-medium text-gray-400 uppercase text-[10px]">Filtering By</span>
+        @for (f of activeFilters; track f; let i = $index) {
+        <span
+            class="px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-100 flex items-center gap-1">
+            <span class="opacity-60">{{ getLabelForCode(f.parameter_code) }}:</span>
+            <span class="font-bold">{{ f.parameter_value }}</span>
+        </span>
+        }
+    </div>
+    }
+</div>
+
+<ng-template cdkConnectedOverlay [cdkConnectedOverlayOrigin]="autoOrigin" [cdkConnectedOverlayOpen]="
+    panelOpen &&
+    (showHelperDropdown ||
+      store.items().length > 0 ||
+      (hasSearched && !store.isLoading()))
+  " [cdkConnectedOverlayPositions]="overlayPositions" [cdkConnectedOverlayOffsetY]="4"
+    [cdkConnectedOverlayHasBackdrop]="false">
+    <div class="bg-white border border-gray-200 shadow-xl rounded-md p-2 space-y-2 overflow-auto z-[9999]"
+        [ngStyle]="getPanelStyles()" (mousedown)="$event.preventDefault()">
+        @if (showHelperDropdown && helperItems.length > 0) {
+        <div>
+            <div class="text-[0.72rem] font-semibold text-gray-700 mb-1">
+                Search helper (↑/↓, Enter)
+            </div>
+            <ul class="text-[0.72rem] divide-y divide-gray-100">
+                @for (item of helperItems; track item; let i = $index) {
+                <li [ngClass]="{
+            'bg-blue-50 text-blue-900 border border-blue-300 shadow-sm':
+              helperActiveIndex === i,
+            'hover:bg-gray-50': helperActiveIndex !== i,
+            'cursor-pointer': true,
+            'py-1 px-2 flex items-center justify-between': true
+          }">
+                    @if (isFieldItem(item)) {
+                    <span class="flex items-center gap-2">
+                        <span class="font-mono text-[0.7rem] bg-gray-100 px-1.5 py-0.5 rounded">
+                            {{ item.code }}
+                        </span>
+                        <span>{{ item.label }}</span>
+                    </span>
+                    } @else {
+                    <span>
+                        {{ item.label }}
+                    </span>
+                    }
+                </li>
+                }
+            </ul>
+        </div>
+        }
+
+        @if (store.config(); as cfg) {
+        @switch (currentViewMode) {
+        @case ('table') {
+        <app-smart-autocomplete-table-view [config]="cfg" [items]="store.items()" (rowSelect)="onRowSelect($event)">
+        </app-smart-autocomplete-table-view>
+        } @case ('cards') {
+        <app-smart-autocomplete-card-view [config]="cfg" [items]="store.items()" (rowSelect)="onRowSelect($event)">
+        </app-smart-autocomplete-card-view>
+        } @default {
+        <app-smart-autocomplete-general-view [config]="cfg" [items]="store.items()" (rowSelect)="onRowSelect($event)">
+        </app-smart-autocomplete-general-view>
+        } }
+
+        @if (
+        store.hasCompletedSearch() &&
+        !store.isLoading() &&
+        store.items().length === 0
+        ) {
+        <app-smart-autocomplete-empty-view (resetRequested)="onResetFilters()"
+            (createNewRequested)="onCreateNewRequested()">
+        </app-smart-autocomplete-empty-view>
+        } }
+    </div>
+</ng-template>
